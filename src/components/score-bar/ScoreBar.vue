@@ -1,5 +1,14 @@
 <script setup>
-    console.log("yeey")
+    import { defineProps } from 'vue';
+    import Game from '../../game.js';
+
+    const props = defineProps({
+        game: {
+            type: Game,
+            required: true
+        }
+    });
+    console.log(props.game);
 </script>
 
 <template>
