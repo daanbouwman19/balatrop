@@ -6,8 +6,6 @@ export class Screen {
 
         this.width = canvas.width;
         this.height = canvas.height;
-
-        this.entities = [];
     }
 
     clear() {

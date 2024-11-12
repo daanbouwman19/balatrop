@@ -1,7 +1,8 @@
 <script setup>
     import { ref, onMounted, defineProps } from 'vue';
     import { Screen } from './screen.js';
-    import Game from '../../game.js'
+    import Game from '../../game.js';
+    import { CardEntity } from './entity/impl/cardEntity.js';
     
     const props = defineProps({
         game: {
@@ -15,6 +16,9 @@
 
     const entities = [];
 
+
+    // GAME INITIALIZATION
+
     onMounted(() => {
         const canvas = canvasRef.value;
         const ctx = canvas.getContext('2d');
@@ -25,10 +29,14 @@
         screen.clear();
         screen.background("#000000")
 
+    // constructor(x, y, width, height, color) {
+        entities.push(new CardEntity(5, 5, 10, 10, "#FF0000"));
 
         loop();
     });
 
+
+    // GAME LOOP
     
     const loop = () => {
         
@@ -37,6 +45,7 @@
         });
 
         entities.forEach(entity => {
+            console.log(entity);
             entity.draw(screen);
         });
 
