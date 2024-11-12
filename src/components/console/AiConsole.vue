@@ -1,8 +1,7 @@
 <script setup>
-
-console.log("hello!")
-
+    console.log("yeey")
 </script>
+
 <template>
     <div></div>
 </template>
