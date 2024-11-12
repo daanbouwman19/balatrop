@@ -14,5 +14,5 @@ console.log(gameRef);
 
 <template>
   <HelloWorld/>
-  <MainCanvas :gameRef="gameRef"/>
+  <MainCanvas :game="gameRef"/>
 </template>
