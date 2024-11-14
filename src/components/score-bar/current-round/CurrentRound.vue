@@ -19,7 +19,7 @@ defineProps({
     <div>
         <CurrentRoundScore :game="game"/>
         <CurrentScore :game="game"/>
-        <HandInformation/>
+        <HandInformation :game="game"/>
         <CurrentMoney/>
     </div>
 </template>

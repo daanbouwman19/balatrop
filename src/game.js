@@ -8,5 +8,7 @@ export default class Game {
         this.currentMulti = 0;
 
         this.duitseFranken = 0;
+        this.hands = 5;
+        this.discards = 5;
     }
 }
