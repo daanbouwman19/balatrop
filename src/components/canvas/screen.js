@@ -6,6 +6,19 @@ export class Screen {
 
         this.width = canvas.width;
         this.height = canvas.height;
+
+        this.c = () => this.context;
+
+        this.mouse = {
+            x: 0,
+            y: 0
+        };
+    }
+
+    updateMousePosition(event) {
+        const rect = this.canvas.getBoundingClientRect();
+        this.mouse.x = event.clientX - rect.left;
+        this.mouse.y = event.clientY - rect.top;
     }
 
     clear() {
@@ -20,6 +33,10 @@ export class Screen {
     drawRectangle(x, y, width, height, color) {
         this.context.fillStyle = color;
         this.context.fillRect(x, y, width, height);
+    }
+
+    drawImage(x, y, image) {
+        this.context.drawImage(image, x, y);
     }
 
 }

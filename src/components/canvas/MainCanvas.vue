@@ -13,6 +13,7 @@
     console.log(props.game);
 
     const canvasRef = ref(null);
+    var screen = null;
 
     const entities = [];
 
@@ -21,14 +22,21 @@
 
     onMounted(() => {
         const canvas = canvasRef.value;
+
+        canvas.width = canvas.clientWidth;
+        canvas.height = canvas.clientHeight;
+
         const ctx = canvas.getContext('2d');
         ctx.fillStyle = 'red';
         ctx.fillRect(10, 10, 150, 100);
 
-        const screen = new Screen(canvas);
+        screen = new Screen(canvas);
         screen.clear();
+        canvas.addEventListener('mousemove', (e) => {
+            screen.updateMousePosition(e)
+        });
 
-    // constructor(x, y, width, height, color) {
+        // constructor(x, y, width, height, color)
         entities.push(new CardEntity(5, 5, 10, 10, "#FF0000"));
 
         loop();
@@ -36,16 +44,20 @@
 
     // GAME LOOP
     
+    let t = 0;
     const loop = () => {
-        
-        entities.forEach(entity => {
-            entity.update();
-        });
+        t++;
+        if (screen != null) {
+            screen.background("#000000");
 
-        entities.forEach(entity => {
-            console.log(entity);
-            entity.draw(screen);
-        });
+            entities.forEach(entity => {
+                entity.update(t);
+            });
+
+            entities.forEach(entity => {
+                entity.draw(screen, t);
+            });
+        }
 
         requestAnimationFrame(loop);
     }

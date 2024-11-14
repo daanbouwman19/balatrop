@@ -6,11 +6,11 @@ export default class Entity {
         this.y = y;
     }
 
-    draw(screen) {
-        console.log(screen);
+    draw(screen, t) {
+        
     }
 
-    update() {
+    update(t) {
 
     }
 
