@@ -1,5 +1,5 @@
 <script setup>
-import EnemyCard from './enemy/EnemyCard.vue';
+import EnemyStats from './enemy/EnemyStats.vue';
 import EnemyHeader from './enemy/EnemyHeader.vue';
 import CurrentScore from './current-round/CurrentScore.vue';
 import CurrentRoundScore from './current-round/CurrentRoundScore.vue';
@@ -22,7 +22,7 @@ const enemyName = "BIG Blind";
     <div class="mx-2 my-6 w-auto h-full py-2 text-text-color overflow-visible spacing">
         <div class="h-full w-52 bg-score-board-background flex flex-col flex-1 justify-center shadow-inner gap" > 
             <EnemyHeader class="mx-auto w-[90%] p-1" :enemyName="enemyName"/>
-            <EnemyCard class="w-[90%]"/>
+            <EnemyStats class="w-[90%]"/>
             <CurrentRoundScore :game="game"/>
             <CurrentScore :game="game"/>
             <HandInformation :game="game"/>

@@ -1,19 +1,23 @@
 <script setup>
-import { defineProps } from 'vue';
+import { computed, defineProps } from 'vue';
 import Game from '../../../game.js';
 
-defineProps({
+const props = defineProps({
     game: {
         type: Game,
         required: true
     }
 });
 
+const currentHandScore = computed(() => {
+    return props.game.currentMulti * props.game.currentScore
+});
+
 </script>
 
 <template>
     <div class="bg-score-board-background-dark flex flex-col content-center items-center text-xl">
-        <span class="p-1">{{ game.currentHandScore }}</span>
+        <span class="p-1">{{ currentHandScore }}</span>
         <div class="flex flex-row content-center items-center">
             <div>
                 <span class="text-white">{{ game.currentScore }}</span>

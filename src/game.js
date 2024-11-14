@@ -7,7 +7,6 @@ export default class Game {
         this.totalPoints = 0;
 
         this.currentScore = 0;
-        this.currentHandScore = 0;
         this.currentMulti = 0;
 
         this.duitseFranken = 10000;
