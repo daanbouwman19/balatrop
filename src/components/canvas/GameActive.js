@@ -10,6 +10,8 @@ export class GameActive {
 
 
         this.pokemon_cards = this.initializePokemonCards()
+        this.player_deck = this.initializeDeck()
+        this.drawed_this_round = []
 
         // Game
         this.hand_cards = [];
@@ -59,13 +61,21 @@ export class GameActive {
     handleClick(event) {
     }
 
+    drawCard() {
+        let card;
+        do {
+            card = this.player_deck[Math.floor(Math.random() * this.player_deck.length)];
+        } while (this.drawed_this_round.includes(card));
 
+        this.drawed_this_round.push(card);
+        this.hand_cards.push(card)
+    }
 
 
     refillHand() {
         const HAND_SIZE = 8;
         while (this.hand_cards.length < HAND_SIZE) {
-            this.addRandomCard();
+            this.drawCard();
         }
     }
 
@@ -100,7 +110,33 @@ export class GameActive {
     }
 
     initializePokemonCards() {
-        return []
+        const pokemonCards = [];
+        const context = require.context('../../assets/pokemon', false, /\.json$/);
+
+        context.keys().forEach((key) => {
+            const pokemonData = context(key);
+            const card = {
+                name: pokemonData.name,
+                value: pokemonData.order % 5+1,   
+                image: pokemonData.sprite,
+                evolvedFrom: pokemonData.evolvedFrom,
+                evolvesTo: pokemonData.evolvesTo,
+                entity: null
+            };
+            pokemonCards.push(card);
+        });
+        return pokemonCards;
+    }
+
+    initializeDeck() {
+        const deck = [];
+        this.pokemon_cards.forEach(card => {
+            if (card.evolvedFrom === null && deck.length < 40) {
+                deck.push(card);
+            }
+        });
+        console.log(deck)
+        return deck;
     }
 
 }
