@@ -35,8 +35,10 @@
         canvas.addEventListener('mousemove', (e) => {
             screen.updateMousePosition(e)
         });
-        canvas.addEventListener('touchmove', (e) => {
-            screen.updateMousePosition(e)
+        window.addEventListener('resize', () => {
+            let width = canvas.clientWidth;
+            let height = canvas.clientHeight;
+            screen.resize(width, height);
         });
 
         // constructor(x, y, width, height, color)
@@ -51,7 +53,7 @@
     const loop = () => {
         t++;
         if (screen != null) {
-            screen.background("#000000");
+            screen.background("#1a1a1a");
 
             entities.forEach(entity => {
                 entity.update(t);

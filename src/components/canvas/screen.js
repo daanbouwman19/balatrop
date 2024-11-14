@@ -15,6 +15,11 @@ export class Screen {
         };
     }
 
+    resize(width, height) {
+        this.width = this.canvas.width = width;
+        this.height = this.canvas.height = height;
+    }
+
     updateMousePosition(event) {
         const rect = this.canvas.getBoundingClientRect();
         this.mouse.x = event.clientX - rect.left;
