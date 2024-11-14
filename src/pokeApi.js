@@ -2,8 +2,8 @@
 const Pokedex = require("pokeapi-js-wrapper");
 
 const customOptions = {
-    cache: true,
-    cacheImages: true
+    cache: false,
+    cacheImages: false
 };
 const P = new Pokedex.Pokedex(customOptions);
 
