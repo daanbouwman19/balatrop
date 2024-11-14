@@ -1,0 +1,24 @@
+{
+    "name": "krabby",
+    "order": 156,
+    "types": [
+        {
+            "slot": 1,
+            "type": {
+                "name": "water",
+                "url": "https://pokeapi.co/api/v2/type/11/"
+            }
+        }
+    ],
+    "cries": {
+        "latest": "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/latest/98.ogg",
+        "legacy": "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/legacy/98.ogg"
+    },
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/98.png",
+    "Evolves": [
+        {
+            "name": "kingler",
+            "file": "157_kingler.json"
+        }
+    ]
+}

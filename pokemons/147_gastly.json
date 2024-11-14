@@ -1,0 +1,31 @@
+{
+    "name": "gastly",
+    "order": 147,
+    "types": [
+        {
+            "slot": 1,
+            "type": {
+                "name": "ghost",
+                "url": "https://pokeapi.co/api/v2/type/8/"
+            }
+        },
+        {
+            "slot": 2,
+            "type": {
+                "name": "poison",
+                "url": "https://pokeapi.co/api/v2/type/4/"
+            }
+        }
+    ],
+    "cries": {
+        "latest": "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/latest/92.ogg",
+        "legacy": "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/legacy/92.ogg"
+    },
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/92.png",
+    "Evolves": [
+        {
+            "name": "haunter",
+            "file": "148_haunter.json"
+        }
+    ]
+}

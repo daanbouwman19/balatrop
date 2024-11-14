@@ -1,0 +1,26 @@
+{
+    "name": "aerodactyl",
+    "order": 232,
+    "types": [
+        {
+            "slot": 1,
+            "type": {
+                "name": "rock",
+                "url": "https://pokeapi.co/api/v2/type/6/"
+            }
+        },
+        {
+            "slot": 2,
+            "type": {
+                "name": "flying",
+                "url": "https://pokeapi.co/api/v2/type/3/"
+            }
+        }
+    ],
+    "cries": {
+        "latest": "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/latest/142.ogg",
+        "legacy": "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/legacy/142.ogg"
+    },
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/142.png",
+    "Evolves": []
+}

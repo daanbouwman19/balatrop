@@ -1,0 +1,24 @@
+{
+    "name": "shellder",
+    "order": 145,
+    "types": [
+        {
+            "slot": 1,
+            "type": {
+                "name": "water",
+                "url": "https://pokeapi.co/api/v2/type/11/"
+            }
+        }
+    ],
+    "cries": {
+        "latest": "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/latest/90.ogg",
+        "legacy": "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/legacy/90.ogg"
+    },
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/90.png",
+    "Evolves": [
+        {
+            "name": "cloyster",
+            "file": "146_cloyster.json"
+        }
+    ]
+}

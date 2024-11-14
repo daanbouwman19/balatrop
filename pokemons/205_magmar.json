@@ -1,0 +1,18 @@
+{
+    "name": "magmar",
+    "order": 205,
+    "types": [
+        {
+            "slot": 1,
+            "type": {
+                "name": "fire",
+                "url": "https://pokeapi.co/api/v2/type/10/"
+            }
+        }
+    ],
+    "cries": {
+        "latest": "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/latest/126.ogg",
+        "legacy": "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/legacy/126.ogg"
+    },
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/126.png"
+}

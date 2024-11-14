@@ -1,0 +1,24 @@
+{
+    "name": "machop",
+    "order": 107,
+    "types": [
+        {
+            "slot": 1,
+            "type": {
+                "name": "fighting",
+                "url": "https://pokeapi.co/api/v2/type/2/"
+            }
+        }
+    ],
+    "cries": {
+        "latest": "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/latest/66.ogg",
+        "legacy": "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/legacy/66.ogg"
+    },
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/66.png",
+    "Evolves": [
+        {
+            "name": "machoke",
+            "file": "108_machoke.json"
+        }
+    ]
+}

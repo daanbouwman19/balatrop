@@ -1,0 +1,18 @@
+{
+    "name": "pikachu",
+    "order": 35,
+    "types": [
+        {
+            "slot": 1,
+            "type": {
+                "name": "electric",
+                "url": "https://pokeapi.co/api/v2/type/13/"
+            }
+        }
+    ],
+    "cries": {
+        "latest": "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/latest/25.ogg",
+        "legacy": "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/legacy/25.ogg"
+    },
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png"
+}

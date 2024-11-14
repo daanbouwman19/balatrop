@@ -1,0 +1,24 @@
+{
+    "name": "vulpix",
+    "order": 66,
+    "types": [
+        {
+            "slot": 1,
+            "type": {
+                "name": "fire",
+                "url": "https://pokeapi.co/api/v2/type/10/"
+            }
+        }
+    ],
+    "cries": {
+        "latest": "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/latest/37.ogg",
+        "legacy": "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/legacy/37.ogg"
+    },
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/37.png",
+    "Evolves": [
+        {
+            "name": "ninetales",
+            "file": "068_ninetales.json"
+        }
+    ]
+}

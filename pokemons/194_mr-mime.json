@@ -1,0 +1,25 @@
+{
+    "name": "mr-mime",
+    "order": 194,
+    "types": [
+        {
+            "slot": 1,
+            "type": {
+                "name": "psychic",
+                "url": "https://pokeapi.co/api/v2/type/14/"
+            }
+        },
+        {
+            "slot": 2,
+            "type": {
+                "name": "fairy",
+                "url": "https://pokeapi.co/api/v2/type/18/"
+            }
+        }
+    ],
+    "cries": {
+        "latest": "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/latest/122.ogg",
+        "legacy": "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/legacy/122.ogg"
+    },
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/122.png"
+}

@@ -1,0 +1,24 @@
+{
+    "name": "voltorb",
+    "order": 158,
+    "types": [
+        {
+            "slot": 1,
+            "type": {
+                "name": "electric",
+                "url": "https://pokeapi.co/api/v2/type/13/"
+            }
+        }
+    ],
+    "cries": {
+        "latest": "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/latest/100.ogg",
+        "legacy": "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/legacy/100.ogg"
+    },
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/100.png",
+    "Evolves": [
+        {
+            "name": "electrode",
+            "file": "159_electrode.json"
+        }
+    ]
+}

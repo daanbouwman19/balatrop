@@ -1,0 +1,754 @@
+[
+  {
+    "speciesName": "bulbasaur",
+    "speciesId": 1,
+    "evolvesTo": [
+      {
+        "speciesName": "ivysaur",
+        "speciesId": 2,
+        "evolvesTo": [
+          {
+            "speciesName": "venusaur",
+            "speciesId": 3,
+            "evolvesTo": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "speciesName": "charmander",
+    "speciesId": 4,
+    "evolvesTo": [
+      {
+        "speciesName": "charmeleon",
+        "speciesId": 5,
+        "evolvesTo": [
+          {
+            "speciesName": "charizard",
+            "speciesId": 6,
+            "evolvesTo": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "speciesName": "squirtle",
+    "speciesId": 7,
+    "evolvesTo": [
+      {
+        "speciesName": "wartortle",
+        "speciesId": 8,
+        "evolvesTo": [
+          {
+            "speciesName": "blastoise",
+            "speciesId": 9,
+            "evolvesTo": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "speciesName": "caterpie",
+    "speciesId": 10,
+    "evolvesTo": [
+      {
+        "speciesName": "metapod",
+        "speciesId": 11,
+        "evolvesTo": [
+          {
+            "speciesName": "butterfree",
+            "speciesId": 12,
+            "evolvesTo": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "speciesName": "weedle",
+    "speciesId": 13,
+    "evolvesTo": [
+      {
+        "speciesName": "kakuna",
+        "speciesId": 14,
+        "evolvesTo": [
+          {
+            "speciesName": "beedrill",
+            "speciesId": 15,
+            "evolvesTo": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "speciesName": "pidgey",
+    "speciesId": 16,
+    "evolvesTo": [
+      {
+        "speciesName": "pidgeotto",
+        "speciesId": 17,
+        "evolvesTo": [
+          {
+            "speciesName": "pidgeot",
+            "speciesId": 18,
+            "evolvesTo": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "speciesName": "rattata",
+    "speciesId": 19,
+    "evolvesTo": [
+      {
+        "speciesName": "raticate",
+        "speciesId": 20,
+        "evolvesTo": []
+      }
+    ]
+  },
+  {
+    "speciesName": "spearow",
+    "speciesId": 21,
+    "evolvesTo": [
+      {
+        "speciesName": "fearow",
+        "speciesId": 22,
+        "evolvesTo": []
+      }
+    ]
+  },
+  {
+    "speciesName": "ekans",
+    "speciesId": 23,
+    "evolvesTo": [
+      {
+        "speciesName": "arbok",
+        "speciesId": 24,
+        "evolvesTo": []
+      }
+    ]
+  },
+  {
+    "speciesName": "sandshrew",
+    "speciesId": 27,
+    "evolvesTo": [
+      {
+        "speciesName": "sandslash",
+        "speciesId": 28,
+        "evolvesTo": []
+      }
+    ]
+  },
+  {
+    "speciesName": "nidoran-f",
+    "speciesId": 29,
+    "evolvesTo": [
+      {
+        "speciesName": "nidorina",
+        "speciesId": 30,
+        "evolvesTo": [
+          {
+            "speciesName": "nidoqueen",
+            "speciesId": 31,
+            "evolvesTo": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "speciesName": "nidoran-m",
+    "speciesId": 32,
+    "evolvesTo": [
+      {
+        "speciesName": "nidorino",
+        "speciesId": 33,
+        "evolvesTo": [
+          {
+            "speciesName": "nidoking",
+            "speciesId": 34,
+            "evolvesTo": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "speciesName": "vulpix",
+    "speciesId": 37,
+    "evolvesTo": [
+      {
+        "speciesName": "ninetales",
+        "speciesId": 38,
+        "evolvesTo": []
+      }
+    ]
+  },
+  {
+    "speciesName": "zubat",
+    "speciesId": 41,
+    "evolvesTo": [
+      {
+        "speciesName": "golbat",
+        "speciesId": 42,
+        "evolvesTo": []
+      }
+    ]
+  },
+  {
+    "speciesName": "oddish",
+    "speciesId": 43,
+    "evolvesTo": [
+      {
+        "speciesName": "gloom",
+        "speciesId": 44,
+        "evolvesTo": [
+          {
+            "speciesName": "vileplume",
+            "speciesId": 45,
+            "evolvesTo": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "speciesName": "paras",
+    "speciesId": 46,
+    "evolvesTo": [
+      {
+        "speciesName": "parasect",
+        "speciesId": 47,
+        "evolvesTo": []
+      }
+    ]
+  },
+  {
+    "speciesName": "venonat",
+    "speciesId": 48,
+    "evolvesTo": [
+      {
+        "speciesName": "venomoth",
+        "speciesId": 49,
+        "evolvesTo": []
+      }
+    ]
+  },
+  {
+    "speciesName": "diglett",
+    "speciesId": 50,
+    "evolvesTo": [
+      {
+        "speciesName": "dugtrio",
+        "speciesId": 51,
+        "evolvesTo": []
+      }
+    ]
+  },
+  {
+    "speciesName": "meowth",
+    "speciesId": 52,
+    "evolvesTo": [
+      {
+        "speciesName": "persian",
+        "speciesId": 53,
+        "evolvesTo": []
+      }
+    ]
+  },
+  {
+    "speciesName": "psyduck",
+    "speciesId": 54,
+    "evolvesTo": [
+      {
+        "speciesName": "golduck",
+        "speciesId": 55,
+        "evolvesTo": []
+      }
+    ]
+  },
+  {
+    "speciesName": "mankey",
+    "speciesId": 56,
+    "evolvesTo": [
+      {
+        "speciesName": "primeape",
+        "speciesId": 57,
+        "evolvesTo": []
+      }
+    ]
+  },
+  {
+    "speciesName": "growlithe",
+    "speciesId": 58,
+    "evolvesTo": [
+      {
+        "speciesName": "arcanine",
+        "speciesId": 59,
+        "evolvesTo": []
+      }
+    ]
+  },
+  {
+    "speciesName": "poliwag",
+    "speciesId": 60,
+    "evolvesTo": [
+      {
+        "speciesName": "poliwhirl",
+        "speciesId": 61,
+        "evolvesTo": [
+          {
+            "speciesName": "poliwrath",
+            "speciesId": 62,
+            "evolvesTo": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "speciesName": "abra",
+    "speciesId": 63,
+    "evolvesTo": [
+      {
+        "speciesName": "kadabra",
+        "speciesId": 64,
+        "evolvesTo": [
+          {
+            "speciesName": "alakazam",
+            "speciesId": 65,
+            "evolvesTo": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "speciesName": "machop",
+    "speciesId": 66,
+    "evolvesTo": [
+      {
+        "speciesName": "machoke",
+        "speciesId": 67,
+        "evolvesTo": [
+          {
+            "speciesName": "machamp",
+            "speciesId": 68,
+            "evolvesTo": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "speciesName": "bellsprout",
+    "speciesId": 69,
+    "evolvesTo": [
+      {
+        "speciesName": "weepinbell",
+        "speciesId": 70,
+        "evolvesTo": [
+          {
+            "speciesName": "victreebel",
+            "speciesId": 71,
+            "evolvesTo": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "speciesName": "tentacool",
+    "speciesId": 72,
+    "evolvesTo": [
+      {
+        "speciesName": "tentacruel",
+        "speciesId": 73,
+        "evolvesTo": []
+      }
+    ]
+  },
+  {
+    "speciesName": "geodude",
+    "speciesId": 74,
+    "evolvesTo": [
+      {
+        "speciesName": "graveler",
+        "speciesId": 75,
+        "evolvesTo": [
+          {
+            "speciesName": "golem",
+            "speciesId": 76,
+            "evolvesTo": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "speciesName": "ponyta",
+    "speciesId": 77,
+    "evolvesTo": [
+      {
+        "speciesName": "rapidash",
+        "speciesId": 78,
+        "evolvesTo": []
+      }
+    ]
+  },
+  {
+    "speciesName": "slowpoke",
+    "speciesId": 79,
+    "evolvesTo": [
+      {
+        "speciesName": "slowbro",
+        "speciesId": 80,
+        "evolvesTo": []
+      }
+    ]
+  },
+  {
+    "speciesName": "magnemite",
+    "speciesId": 81,
+    "evolvesTo": [
+      {
+        "speciesName": "magneton",
+        "speciesId": 82,
+        "evolvesTo": []
+      }
+    ]
+  },
+  {
+    "speciesName": "farfetchd",
+    "speciesId": 83,
+    "evolvesTo": []
+  },
+  {
+    "speciesName": "doduo",
+    "speciesId": 84,
+    "evolvesTo": [
+      {
+        "speciesName": "dodrio",
+        "speciesId": 85,
+        "evolvesTo": []
+      }
+    ]
+  },
+  {
+    "speciesName": "seel",
+    "speciesId": 86,
+    "evolvesTo": [
+      {
+        "speciesName": "dewgong",
+        "speciesId": 87,
+        "evolvesTo": []
+      }
+    ]
+  },
+  {
+    "speciesName": "grimer",
+    "speciesId": 88,
+    "evolvesTo": [
+      {
+        "speciesName": "muk",
+        "speciesId": 89,
+        "evolvesTo": []
+      }
+    ]
+  },
+  {
+    "speciesName": "shellder",
+    "speciesId": 90,
+    "evolvesTo": [
+      {
+        "speciesName": "cloyster",
+        "speciesId": 91,
+        "evolvesTo": []
+      }
+    ]
+  },
+  {
+    "speciesName": "gastly",
+    "speciesId": 92,
+    "evolvesTo": [
+      {
+        "speciesName": "haunter",
+        "speciesId": 93,
+        "evolvesTo": [
+          {
+            "speciesName": "gengar",
+            "speciesId": 94,
+            "evolvesTo": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "speciesName": "onix",
+    "speciesId": 95,
+    "evolvesTo": []
+  },
+  {
+    "speciesName": "drowzee",
+    "speciesId": 96,
+    "evolvesTo": [
+      {
+        "speciesName": "hypno",
+        "speciesId": 97,
+        "evolvesTo": []
+      }
+    ]
+  },
+  {
+    "speciesName": "krabby",
+    "speciesId": 98,
+    "evolvesTo": [
+      {
+        "speciesName": "kingler",
+        "speciesId": 99,
+        "evolvesTo": []
+      }
+    ]
+  },
+  {
+    "speciesName": "voltorb",
+    "speciesId": 100,
+    "evolvesTo": [
+      {
+        "speciesName": "electrode",
+        "speciesId": 101,
+        "evolvesTo": []
+      }
+    ]
+  },
+  {
+    "speciesName": "exeggcute",
+    "speciesId": 102,
+    "evolvesTo": [
+      {
+        "speciesName": "exeggutor",
+        "speciesId": 103,
+        "evolvesTo": []
+      }
+    ]
+  },
+  {
+    "speciesName": "cubone",
+    "speciesId": 104,
+    "evolvesTo": [
+      {
+        "speciesName": "marowak",
+        "speciesId": 105,
+        "evolvesTo": []
+      }
+    ]
+  },
+  {
+    "speciesName": "lickitung",
+    "speciesId": 108,
+    "evolvesTo": []
+  },
+  {
+    "speciesName": "koffing",
+    "speciesId": 109,
+    "evolvesTo": [
+      {
+        "speciesName": "weezing",
+        "speciesId": 110,
+        "evolvesTo": []
+      }
+    ]
+  },
+  {
+    "speciesName": "rhyhorn",
+    "speciesId": 111,
+    "evolvesTo": [
+      {
+        "speciesName": "rhydon",
+        "speciesId": 112,
+        "evolvesTo": []
+      }
+    ]
+  },
+  {
+    "speciesName": "tangela",
+    "speciesId": 114,
+    "evolvesTo": []
+  },
+  {
+    "speciesName": "kangaskhan",
+    "speciesId": 115,
+    "evolvesTo": []
+  },
+  {
+    "speciesName": "horsea",
+    "speciesId": 116,
+    "evolvesTo": [
+      {
+        "speciesName": "seadra",
+        "speciesId": 117,
+        "evolvesTo": []
+      }
+    ]
+  },
+  {
+    "speciesName": "goldeen",
+    "speciesId": 118,
+    "evolvesTo": [
+      {
+        "speciesName": "seaking",
+        "speciesId": 119,
+        "evolvesTo": []
+      }
+    ]
+  },
+  {
+    "speciesName": "staryu",
+    "speciesId": 120,
+    "evolvesTo": [
+      {
+        "speciesName": "starmie",
+        "speciesId": 121,
+        "evolvesTo": []
+      }
+    ]
+  },
+  {
+    "speciesName": "scyther",
+    "speciesId": 123,
+    "evolvesTo": []
+  },
+  {
+    "speciesName": "pinsir",
+    "speciesId": 127,
+    "evolvesTo": []
+  },
+  {
+    "speciesName": "tauros",
+    "speciesId": 128,
+    "evolvesTo": []
+  },
+  {
+    "speciesName": "magikarp",
+    "speciesId": 129,
+    "evolvesTo": [
+      {
+        "speciesName": "gyarados",
+        "speciesId": 130,
+        "evolvesTo": []
+      }
+    ]
+  },
+  {
+    "speciesName": "lapras",
+    "speciesId": 131,
+    "evolvesTo": []
+  },
+  {
+    "speciesName": "ditto",
+    "speciesId": 132,
+    "evolvesTo": []
+  },
+  {
+    "speciesName": "eevee",
+    "speciesId": 133,
+    "evolvesTo": [
+      {
+        "speciesName": "vaporeon",
+        "speciesId": 134,
+        "evolvesTo": []
+      },
+      {
+        "speciesName": "jolteon",
+        "speciesId": 135,
+        "evolvesTo": []
+      },
+      {
+        "speciesName": "flareon",
+        "speciesId": 136,
+        "evolvesTo": []
+      }
+    ]
+  },
+  {
+    "speciesName": "porygon",
+    "speciesId": 137,
+    "evolvesTo": []
+  },
+  {
+    "speciesName": "omanyte",
+    "speciesId": 138,
+    "evolvesTo": [
+      {
+        "speciesName": "omastar",
+        "speciesId": 139,
+        "evolvesTo": []
+      }
+    ]
+  },
+  {
+    "speciesName": "kabuto",
+    "speciesId": 140,
+    "evolvesTo": [
+      {
+        "speciesName": "kabutops",
+        "speciesId": 141,
+        "evolvesTo": []
+      }
+    ]
+  },
+  {
+    "speciesName": "aerodactyl",
+    "speciesId": 142,
+    "evolvesTo": []
+  },
+  {
+    "speciesName": "articuno",
+    "speciesId": 144,
+    "evolvesTo": []
+  },
+  {
+    "speciesName": "zapdos",
+    "speciesId": 145,
+    "evolvesTo": []
+  },
+  {
+    "speciesName": "moltres",
+    "speciesId": 146,
+    "evolvesTo": []
+  },
+  {
+    "speciesName": "dratini",
+    "speciesId": 147,
+    "evolvesTo": [
+      {
+        "speciesName": "dragonair",
+        "speciesId": 148,
+        "evolvesTo": [
+          {
+            "speciesName": "dragonite",
+            "speciesId": 149,
+            "evolvesTo": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "speciesName": "mewtwo",
+    "speciesId": 150,
+    "evolvesTo": []
+  },
+  {
+    "speciesName": "mew",
+    "speciesId": 151,
+    "evolvesTo": []
+  }
+]
