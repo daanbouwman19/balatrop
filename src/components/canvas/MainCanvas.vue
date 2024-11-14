@@ -54,7 +54,7 @@
 </script>
 
 <template>
-    <div class="h-full">
+    <div class="h-full w-full">
         <canvas class="bg-canvas-background h-full w-full" ref="canvasRef"></canvas>
     </div>
 </template>
