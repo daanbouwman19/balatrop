@@ -1,6 +1,7 @@
 import { Screen } from "./screen";
 import { FrankEntity } from "./entity/impl/FrankEntity";
 import { CardEntity } from "./entity/impl/cardEntity";
+import { EnemyEntity } from "./entity/impl/EnemyEntity";
 
 export class GameActive {
 
@@ -17,14 +18,14 @@ export class GameActive {
         // Game
         this.hand_cards = [];
         this.entities = [];
-        
+
 
         // Rendering
         this.canvas = canvas;
         this.canvas.width = this.canvas.clientWidth;
         this.canvas.height = this.canvas.clientHeight;
         this.screen = new Screen(canvas);
-        
+
         this.screen.clear();
         this.canvas.addEventListener("mousemove", (event) => {
             this.screen.updateMousePosition(event);
@@ -47,6 +48,10 @@ export class GameActive {
         // Debug
         this.STATE = "FILLHAND";
         // this.entities.push(new FrankEntity(5, 5, 10, 10, "#FF0000"));
+        
+        let random_card = this.pokemon_cards[Math.floor(Math.random() * this.pokemon_cards.length)];
+        this.entities.push(new FrankEntity(5, 5, 10, 10, "#FF0000"));
+        this.entities.push(new EnemyEntity(100, 0, 96, 96, random_card));
 
     }
 
@@ -109,7 +114,7 @@ export class GameActive {
         });
     }
     removeEntity(entity) {
-        this.entities = this.entities.filter(e => e !== entity);
+        this.entities = this.entities.this.pokemon_cards[Math.floor(Math.random() * this.pokemon_cards.length)];filter(e => e !== entity);
     }
     drawCard() {
         let card;
