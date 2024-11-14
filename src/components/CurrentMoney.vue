@@ -14,7 +14,7 @@ defineProps({
 
 <template>
     <div class="flex flex-row justify-center items-center bg-transparent text-money-color text-shadow font-bold py-0.5 px-1">
-        <DuitseFrank/>
+        <DuitseFrank class="h-[24px] w-[24px]"/>
         <span class="text-xl">{{ game.duitseFranken }}</span>
     </div>
 </template>
