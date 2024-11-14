@@ -114,7 +114,7 @@ export class GameActive {
         });
     }
     removeEntity(entity) {
-        this.entities = this.entities.this.pokemon_cards[Math.floor(Math.random() * this.pokemon_cards.length)];filter(e => e !== entity);
+        this.entities = this.entities.filter(e => e !== entity);
     }
     
     drawCardFromDeck() {

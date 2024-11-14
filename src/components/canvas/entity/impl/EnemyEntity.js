@@ -34,6 +34,10 @@ export class EnemyEntity extends Entity {
         screen.c().shadowBlur = 20;
 
         screen.c().drawImage(this.image, 0,0);
+
+        //TODO draw health bar
+        
+
         screen.c().restore();
     }
 
