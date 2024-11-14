@@ -10,7 +10,7 @@ export default class Game {
         this.currentHandScore = 0;
         this.currentMulti = 0;
 
-        this.duitseFranken = 0;
+        this.duitseFranken = 10000;
         this.discards = 5;
 
         this.currentRound = 0;

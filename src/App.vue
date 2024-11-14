@@ -32,7 +32,7 @@ window.addEventListener('orientationchange', updateOrientation);
   >
     <ScoreBar :game="game"/>
     <MainCanvas :game="game"/>
-    <CurrentMoney :game="game"/>
+    <CurrentMoney class="fixed absolute top-1 right-1" :game="game"/>
   </div>
   <div v-else>
     <RotateDevice/>
