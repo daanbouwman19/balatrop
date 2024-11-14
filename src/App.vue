@@ -10,6 +10,6 @@ const game = ref(new Game());
 <template>
   <div class="flex flex-row justify-between items-center w-[100vw] h-[100vh] bg-background">
     <ScoreBar :game="game"/>
-      <MainCanvas :game="game"/>
+    <MainCanvas :game="game"/>
   </div>
 </template>
