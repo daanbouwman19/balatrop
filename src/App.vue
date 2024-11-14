@@ -1,17 +1,27 @@
 <script setup>
 import MainCanvas from './components/canvas/MainCanvas.vue';
 import ScoreBar from './components/score-bar/ScoreBar.vue';
+import RotateDevice from './components/RotateDevice.vue'
 import Game from './game.js';
 import { computed, ref } from 'vue';
 
 const game = ref(new Game());
+const width = ref(window.innerWidth);
+const orientation = ref(window.screen.orientation?.type || 'portrait');
+
+const updateWidth = () => {
+  width.value = window.innerWidth;
+};
+const updateOrientation = () => {
+  orientation.value = window.screen.orientation?.type || 'portrait';
+};
+
 const rotateDevice = computed(() => {
-  if (window.screen.orientation.type === 'portrait') {
-    return true
-  }
-  return false
+  return orientation.value === 'portrait' || width.value <= 600;
 });
 
+window.addEventListener('resize', updateWidth);
+window.addEventListener('orientationchange', updateOrientation);
 
 </script>
 <template>
@@ -23,6 +33,6 @@ const rotateDevice = computed(() => {
     <MainCanvas :game="game"/>
   </div>
   <div v-else>
-    <h1>Please rotate device your device 90 degrees</h1>
+    <RotateDevice/>
   </div>
 </template>
