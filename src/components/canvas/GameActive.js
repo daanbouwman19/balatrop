@@ -44,9 +44,9 @@ export class GameActive {
 
 
         // this.startIntro();
-
+        this.STATE = "FILLHAND"
         // Debug
-        this.STATE = "FILLHAND";
+        
         // this.entities.push(new FrankEntity(5, 5, 10, 10, "#FF0000"));
         
         let random_card = this.pokemon_cards[Math.floor(Math.random() * this.pokemon_cards.length)];
@@ -88,7 +88,7 @@ export class GameActive {
             this.t = 0;
             if (this.t % 10 == 0) {
                 if (this.hand_cards.length < HAND_SIZE) {
-                    this.addRandomCard();
+                    this.addDeckCardToMakeEntityJeMoeder();
                 } else {
                     this.STATE = "IDLE";
                 }
@@ -116,7 +116,8 @@ export class GameActive {
     removeEntity(entity) {
         this.entities = this.entities.this.pokemon_cards[Math.floor(Math.random() * this.pokemon_cards.length)];filter(e => e !== entity);
     }
-    drawCard() {
+    
+    drawCardFromDeck() {
         let card;
         do {
             card = this.player_deck[Math.floor(Math.random() * this.player_deck.length)];
@@ -124,47 +125,21 @@ export class GameActive {
 
         this.drawed_this_round.push(card);
         this.hand_cards.push(card)
+        return card
     }
 
 
     refillHand() {
-        while (this.hand_cards.length < HAND_SIZE) {
-            this.drawCard();
-        }
+        this.STATE = "FILLHAND";
     }
 
-    addRandomCard() {
-        // { name: "Frank", value: 1, image: "images/Frank!.jpg" }
-        const card = this.randomCard();
+    addDeckCardToMakeEntityJeMoeder() {
+        const card = this.drawCardFromDeck();
 
         const cardEntity = new CardEntity(this.screen.width/2, -500, card);
         this.addEntity(cardEntity);
 
         this.hand_cards.push(card);
-    }
-
-    randomCard() {
-        const names = [
-            "Frank",
-            "Jesse",
-            "Walter",
-            "Victor",
-            "Tortuga",
-            "Gretchen",
-            "Elliot",
-            "Bogdan",
-            "Ken",
-            "Ted"
-        ]
-
-        const card = {
-            name: names[Math.floor(Math.random() * names.length)],
-            value: Math.floor(Math.random() * 10) + 1,
-            image: "images/frank_trans.png",
-            entity: null
-        }
-
-        return card;
     }
 
     initializePokemonCards() {
