@@ -54,7 +54,7 @@ def create_individual_pokemon_files_with_evolutions(input_file, evolution_file):
             map_evolves_to(tree)
 
         # Create an output directory to store the files
-        output_dir = "./src/assets/pokemon"
+        output_dir = "./public/pokemon"
         os.makedirs(output_dir, exist_ok=True)
 
         # Write individual JSON files for each Pokémon

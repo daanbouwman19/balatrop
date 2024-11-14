@@ -111,7 +111,7 @@ export class GameActive {
 
     initializePokemonCards() {
         const pokemonCards = [];
-        const context = require.context('../../assets/pokemon', false, /\.json$/);
+        const context = require.context('../../../public/pokemon', false, /\.json$/);
 
         context.keys().forEach((key) => {
             const pokemonData = context(key);
