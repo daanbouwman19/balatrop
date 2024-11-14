@@ -6,20 +6,19 @@ import CurrentMoney from './CurrentMoney.vue';
 import { defineProps } from 'vue';
 import Game from '../../../game.js';
 
-const props = defineProps({
+defineProps({
     game: {
         type: Game,
         required: true
     }
 });
-console.log(props)
 
 </script>
 
 <template>
     <div>
         <CurrentRoundScore :game="game"/>
-        <CurrentScore/>
+        <CurrentScore :game="game"/>
         <HandInformation/>
         <CurrentMoney/>
     </div>
