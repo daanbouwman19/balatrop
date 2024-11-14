@@ -35,6 +35,9 @@
         canvas.addEventListener('mousemove', (e) => {
             screen.updateMousePosition(e)
         });
+        canvas.addEventListener('touchmove', (e) => {
+            screen.updateMousePosition(e)
+        });
 
         // constructor(x, y, width, height, color)
         entities.push(new CardEntity(5, 5, 10, 10, "#FF0000"));
