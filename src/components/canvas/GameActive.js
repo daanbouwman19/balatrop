@@ -124,7 +124,6 @@ export class GameActive {
         } while (this.drawed_this_round.includes(card));
 
         this.drawed_this_round.push(card);
-        this.hand_cards.push(card)
         return card
     }
 

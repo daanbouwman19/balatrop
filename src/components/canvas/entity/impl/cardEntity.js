@@ -26,12 +26,15 @@ export class CardEntity extends Entity {
         if (!this.ready) return;
 
 
-        const targetX = this.index * 100 + 500;
+        const handSize = 8;
+        const handSpan = screen.width - 200;
+        const targetX = screen.width/2 - handSpan/2 + handSpan / handSize * this.index + 100;
         const targetY = screen.height - 200 + Math.sin(t * 0.01 + this.index) * 10;
+
 
         this.x = Math.lerp(this.x, targetX, 0.1);
         this.y = Math.lerp(this.y, targetY, 0.1);
-        const width = 200;
+        const width = 150;
         const height = 200;
 
 
@@ -60,7 +63,7 @@ export class CardEntity extends Entity {
         translate();
 
 
-        // if (s > 0) screen.drawRectangle(0, 0, width, height, 'red');
+        screen.drawRectangle(0, 0, width, height, 'red');
         screen.c().drawImage(this.image, 0, 0)
 
         screen.c().fillStyle = 'black';
