@@ -3,6 +3,7 @@ import CurrentScore from './CurrentScore.vue'
 import CurrentRoundScore from './CurrentRoundScore.vue';
 import HandInformation from './HandInformation.vue';
 import CurrentMoney from './CurrentMoney.vue';
+import RoundInfo from './RoundInfo.vue';
 import { defineProps } from 'vue';
 import Game from '../../../game.js';
 
@@ -16,10 +17,9 @@ defineProps({
 </script>
 
 <template>
-    <div>
-        <CurrentRoundScore :game="game"/>
-        <CurrentScore :game="game"/>
-        <HandInformation :game="game"/>
-        <CurrentMoney/>
-    </div>
+    <CurrentRoundScore :game="game"/>
+    <CurrentScore :game="game"/>
+    <HandInformation :game="game"/>
+    <CurrentMoney :game="game"/>
+    <RoundInfo :game="game"/>
 </template>

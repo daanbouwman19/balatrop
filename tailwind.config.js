@@ -7,6 +7,8 @@ module.exports = {
     extend: {},
     colors: {
       "text-color": "#FFFFFF",
+      "money-color": "#FFFF00",
+      "offset-yellow": "#FFFFFF",
       "background": "#000000",
       "ai-console-background": "#FF0000",
       "canvas-background": "#FF0000",

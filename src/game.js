@@ -10,5 +10,9 @@ export default class Game {
         this.duitseFranken = 0;
         this.hands = 5;
         this.discards = 5;
+
+        this.currentRound = 0;
+        this.maxAnte = 0;
+        this.ante = 0;
     }
 }
