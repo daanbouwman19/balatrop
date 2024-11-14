@@ -9,7 +9,7 @@ export class FrankEntity extends Entity {
         this.height = height;
         this.color = color;
 
-        this.imageUri = "./images/Frank!.jpg"
+        this.imageUri = "./images/Frank_icon.jpg"
         this.image = new Image(200, 200);
         this.image.src = this.imageUri;
         
@@ -21,29 +21,54 @@ export class FrankEntity extends Entity {
 
         this.z = 0;
 
+        this.isIntro = false;
     }
 
-        draw(screen, t) {
-            // screen.drawRectangle(this.x, this.y, this.width, this.height, this.color);
+    intro() {
+        this.isIntro = true;
 
+        this.messages = [
+            "Welcome to the game!",
+            "I am Professor Frank.",
+            "I want beer.",
+            "You will get beer for me.",
+            "Or else.",
+            "You will die.",
+            "Byeee"
+        ]
+
+        this.message = this.messages.shift();
+
+        this.x = 0;
+        this.y = 0;
+
+    }
+
+
+    draw(screen, t) {
         if (!this.ready) return;
 
 
-        let x = screen.mouse.x;
-        let y = screen.mouse.y;
+        if (this.isIntro) {
+            screen.c().fillStyle = 'black';
+            screen.c().font = '20px Arial';
+            screen.c().textAlign = 'center';
+            screen.c().fillText(this.message, screen.width/2, screen.height/2);
+
+        }
+
+        let x = this.x + screen.width/2;
+        let y = this.y + screen.height/2-150;
         let width = this.image.width;
         let height = this.image.height;
 
-        const s = Math.sin(t * 0.05)
-
         const translate = () => {
             screen.c().translate(x - this.z * 2, y - this.z * 10);
-            // screen.c().scale(s, 1);
-            screen.c().rotate(t * 0.01);
+            screen.c().scale(1+this.z/50, 1+this.z/50);
+        // screen.c().scale(s, 1);
             screen.c().translate(-width/2, -height/2);
         }
 
-        this.z = Math.abs(s) * 10;
         if (this.z > 0) {
             screen.c().save();
             screen.c().translate(4 * this.z, 10 * this.z);
@@ -60,17 +85,43 @@ export class FrankEntity extends Entity {
         // if (s > 0) screen.drawRectangle(0, 0, width, height, 'red');
         screen.c().drawImage(this.image, 0, 0)
 
-        screen.c().fillStyle = 'white';
         screen.c().font = '20px Arial';
         screen.c().textAlign = 'center';
         screen.c().fillText('Frank!', width/2, -10);
 
 
-            screen.c().restore();
+        screen.c().restore();
 
-        }
+    }
 
     update(t) {
+        this.t = t;
+        if (this.isIntro) {
+            if (this.messages.length == 0) {
+                this.z += 1;
+                this.y -= 10;
+
+                if (t == this.exitAt) {
+                    this.game.STATE = "FILLHAND";
+                    this.destroy();
+                }
+
+            } else {
+                this.z = Math.sin(t*0.1) + 2;
+            }
+        }
+    }
+
+    keydown(event) {
+        if (this.isIntro) {
+            if (this.messages.length > 0) {
+                this.message = this.messages.shift();
+
+                if (this.messages.length == 0) {
+                    this.exitAt = this.t + 60;
+                }
+            }
+        }
     }
 
 }

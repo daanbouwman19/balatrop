@@ -5,6 +5,8 @@ export class CardEntity extends Entity {
 
     constructor(x, y, card) {
         super(x, y);
+        this.index = 0;
+        card.entity = this;
         this.card = card;
 
         this.image = new Image(200, 200);
@@ -24,21 +26,27 @@ export class CardEntity extends Entity {
         if (!this.ready) return;
 
 
-        let x = screen.mouse.x;
-        let y = screen.mouse.y;
-        let width = this.image.width;
-        let height = this.image.height;
+        const targetX = this.index * 100 + 500;
+        const targetY = screen.height - 200 + Math.sin(t * 0.01 + this.index) * 10;
+
+        this.x = Math.lerp(this.x, targetX, 0.1);
+        this.y = Math.lerp(this.y, targetY, 0.1);
+        const width = 200;
+        const height = 200;
+
+
+        const x = this.x;
+        const y = this.y;
 
         const s = Math.sin(t * 0.05)
 
         const translate = () => {
             screen.c().translate(x - this.z * 2, y - this.z * 10);
             // screen.c().scale(s, 1);
-            screen.c().rotate(t * 0.01);
             screen.c().translate(-width/2, -height/2);
         }
 
-        this.z = Math.abs(s) * 10;
+        // this.z = Math.abs(s) * 10;
         if (this.z > 0) {
             screen.c().save();
             screen.c().translate(4 * this.z, 10 * this.z);
@@ -55,7 +63,7 @@ export class CardEntity extends Entity {
         // if (s > 0) screen.drawRectangle(0, 0, width, height, 'red');
         screen.c().drawImage(this.image, 0, 0)
 
-        screen.c().fillStyle = 'white';
+        screen.c().fillStyle = 'black';
         screen.c().font = '20px Arial';
         screen.c().textAlign = 'center';
         screen.c().fillText(this.card.name, width/2, -10);

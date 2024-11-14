@@ -1,5 +1,6 @@
 import { Screen } from "./screen";
 import { FrankEntity } from "./entity/impl/FrankEntity";
+import { CardEntity } from "./entity/impl/cardEntity";
 
 export class GameActive {
 
@@ -34,11 +35,27 @@ export class GameActive {
         this.canvas.addEventListener("click", (event) => {
             this.handleClick(event);
         });
+        window.addEventListener("keydown", (event) => {
+            this.entities.forEach(entity => {
+                if (entity.keydown) entity.keydown(event);
+            });
+        });
 
+
+        // this.startIntro();
 
         // Debug
-        this.entities.push(new FrankEntity(5, 5, 10, 10, "#FF0000"));
+        this.STATE = "FILLHAND";
+        // this.entities.push(new FrankEntity(5, 5, 10, 10, "#FF0000"));
 
+    }
+
+    startIntro() {
+        const frank = new FrankEntity(100, 100, 200, 200, "#FF0000");
+        frank.intro();
+        this.addEntity(frank);
+
+        this.STATE = "INTRO";
     }
 
 
@@ -53,6 +70,26 @@ export class GameActive {
 
     update() {
         this.t += 1;
+
+        if (this.hand_cards.length > 0) {
+            for (let i = 0; i < this.hand_cards.length; i++) {
+                this.hand_cards[i].entity.index = i;
+            }
+        }
+
+        if (this.STATE === "FILLHAND") {
+            const HAND_SIZE = 8;
+
+            this.t = 0;
+            if (this.t % 10 == 0) {
+                if (this.hand_cards.length < HAND_SIZE) {
+                    this.addRandomCard();
+                } else {
+                    this.STATE = "IDLE";
+                }
+            }
+        }
+
         this.entities.forEach(entity => {
             entity.update(this.t);
         });
@@ -61,6 +98,19 @@ export class GameActive {
     handleClick(event) {
     }
 
+
+    addEntity(entity) {
+        entity.setGame(this);
+        this.entities.push(entity);
+    }
+    addEntities(entities) {
+        entities.forEach(entity => {
+            this.addEntity(entity);
+        });
+    }
+    removeEntity(entity) {
+        this.entities = this.entities.filter(e => e !== entity);
+    }
     drawCard() {
         let card;
         do {
@@ -73,7 +123,6 @@ export class GameActive {
 
 
     refillHand() {
-        const HAND_SIZE = 8;
         while (this.hand_cards.length < HAND_SIZE) {
             this.drawCard();
         }
@@ -82,6 +131,10 @@ export class GameActive {
     addRandomCard() {
         // { name: "Frank", value: 1, image: "images/Frank!.jpg" }
         const card = this.randomCard();
+
+        const cardEntity = new CardEntity(this.screen.width/2, -500, card);
+        this.addEntity(cardEntity);
+
         this.hand_cards.push(card);
     }
 
@@ -102,7 +155,7 @@ export class GameActive {
         const card = {
             name: names[Math.floor(Math.random() * names.length)],
             value: Math.floor(Math.random() * 10) + 1,
-            image: "images/Frank!.jpg",
+            image: "images/frank_trans.png",
             entity: null
         }
 
