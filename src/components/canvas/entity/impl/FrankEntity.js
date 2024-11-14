@@ -1,24 +1,29 @@
 
 import Entity from '../entity.js';
 
-export class CardEntity extends Entity {
+export class FrankEntity extends Entity {
 
-    constructor(x, y, card) {
+    constructor(x, y, width, height, color) {
         super(x, y);
-        this.card = card;
+        this.width = width;
+        this.height = height;
+        this.color = color;
 
+        this.imageUri = "./images/Frank!.jpg"
         this.image = new Image(200, 200);
-        this.image.src = this.card.image;
+        this.image.src = this.imageUri;
         
         this.ready = false;
+        
         this.image.addEventListener("load", () => {
             this.ready = true;
         })
 
         this.z = 0;
+
     }
 
-    draw(screen, t) {
+        draw(screen, t) {
             // screen.drawRectangle(this.x, this.y, this.width, this.height, this.color);
 
         if (!this.ready) return;
@@ -58,7 +63,7 @@ export class CardEntity extends Entity {
         screen.c().fillStyle = 'white';
         screen.c().font = '20px Arial';
         screen.c().textAlign = 'center';
-        screen.c().fillText(this.card.name, width/2, -10);
+        screen.c().fillText('Frank!', width/2, -10);
 
 
             screen.c().restore();

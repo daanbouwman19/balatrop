@@ -2,8 +2,11 @@
     import { ref, onMounted, defineProps } from 'vue';
     import { Screen } from './screen.js';
     import Game from '../../game.js';
+    import { FrankEntity } from './entity/impl/FrankEntity.js';
     import { CardEntity } from './entity/impl/cardEntity.js';
-    
+    import { GameActive } from './GameActive.js';
+   
+
     const props = defineProps({
         game: {
             type: Game,
@@ -15,55 +18,48 @@
     const canvasRef = ref(null);
     var screen = null;
 
-    const entities = [];
-    var backgroundColor = null;
-
+    var gameA = null;
 
     // GAME INITIALIZATION
 
     onMounted(() => {
+
         const canvas = canvasRef.value;
 
-        canvas.width = canvas.clientWidth;
-        canvas.height = canvas.clientHeight;
+        gameA = new GameActive(canvas);
 
-        const ctx = canvas.getContext('2d');
-        ctx.fillStyle = 'red';
-        ctx.fillRect(10, 10, 150, 100);
+        // canvas.width = canvas.clientWidth;
+        // canvas.height = canvas.clientHeight;
 
-        screen = new Screen(canvas);
-        screen.clear();
-        canvas.addEventListener('mousemove', (e) => {
-            screen.updateMousePosition(e)
-        });
-        window.addEventListener('resize', () => {
-            let width = canvas.clientWidth;
-            let height = canvas.clientHeight;
-            screen.resize(width, height);
-        });
+        // const ctx = canvas.getContext('2d');
+        // ctx.fillStyle = 'red';
+        // ctx.fillRect(10, 10, 150, 100);
+
+        // screen = new Screen(canvas);
+        // screen.clear();
+        // canvas.addEventListener('mousemove', (e) => {
+        //     screen.updateMousePosition(e)
+        // });
+        // window.addEventListener('resize', () => {
+        //     let width = canvas.clientWidth;
+        //     let height = canvas.clientHeight;
+        //     screen.resize(width, height);
+        // });
 
         // constructor(x, y, width, height, color)
-        entities.push(new CardEntity(5, 5, 10, 10, "#FF0000"));
+        // entities.push(new FrankEntity(5, 5, 10, 10, "#FF0000"));
 
-        backgroundColor = getComputedStyle(canvasRef.value).backgroundColor.toString();
+        // props.game.STATE = "PLAYING";
+        // props.game.refillHand();
         loop();
     });
 
     // GAME LOOP
     
-    let t = 0;
     const loop = () => {
-        t++;
-        if (screen != null) {       
-            screen.background(backgroundColor);
-
-            entities.forEach(entity => {
-                entity.update(t);
-            });
-
-            entities.forEach(entity => {
-                entity.draw(screen, t);
-            });
+        if (gameA) {
+            gameA.update();
+            gameA.draw();
         }
 
         requestAnimationFrame(loop);
