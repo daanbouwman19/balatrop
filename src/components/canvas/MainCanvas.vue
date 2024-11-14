@@ -16,6 +16,7 @@
     var screen = null;
 
     const entities = [];
+    var backgroundColor = null;
 
 
     // GAME INITIALIZATION
@@ -44,6 +45,7 @@
         // constructor(x, y, width, height, color)
         entities.push(new CardEntity(5, 5, 10, 10, "#FF0000"));
 
+        backgroundColor = getComputedStyle(canvasRef.value).backgroundColor.toString();
         loop();
     });
 
@@ -52,8 +54,8 @@
     let t = 0;
     const loop = () => {
         t++;
-        if (screen != null) {
-            screen.background("#1a1a1a");
+        if (screen != null) {       
+            screen.background(backgroundColor);
 
             entities.forEach(entity => {
                 entity.update(t);
@@ -72,6 +74,6 @@
 
 <template>
     <div class="h-full w-full">
-        <canvas class="bg-canvas-background h-full w-full" ref="canvasRef"></canvas>
+        <canvas class="bg-background h-full w-full" ref="canvasRef"></canvas>
     </div>
 </template>
