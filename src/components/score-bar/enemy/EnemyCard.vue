@@ -5,7 +5,7 @@ import DuitseFrank from '../../icons/DuitseFrank.vue'
 </script>
 
 <template>
-    <div class="flex flex-row gap-2 p-1 justify-center items-center bg-score-board-background-dark">
+    <div class="flex flex-row gap-2 p-1 w-[100%] justify-center items-center bg-score-board-background-dark">
         <div class="flex flex-col">
             <span class="text-sm text-center">Do at least:</span>
             <div class="flex flex-row justify-center">
