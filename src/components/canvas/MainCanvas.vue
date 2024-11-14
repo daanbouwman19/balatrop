@@ -27,14 +27,12 @@
 
         const screen = new Screen(canvas);
         screen.clear();
-        screen.background("#000000")
 
     // constructor(x, y, width, height, color) {
         entities.push(new CardEntity(5, 5, 10, 10, "#FF0000"));
 
         loop();
     });
-
 
     // GAME LOOP
     
@@ -57,6 +55,6 @@
 
 <template>
     <div>
-        <canvas ref="canvasRef"></canvas>
+        <canvas class="bg-canvas-background" ref="canvasRef"></canvas>
     </div>
 </template>

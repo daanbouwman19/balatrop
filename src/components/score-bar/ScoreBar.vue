@@ -12,5 +12,7 @@
 </script>
 
 <template>
-    <div></div>
+    <div class="bg-score-board-background">
+    
+    </div>
 </template>
