@@ -13,6 +13,6 @@
 
 <template>
     <div class="bg-score-board-background">
-    
+        
     </div>
 </template>
