@@ -14,7 +14,7 @@ defineProps({
 </script>
 
 <template>
-    <div class="mx-10 my-6 w-auto h-full py-4 text-text-color overflow-visible">
+    <div class="mx-2 my-6 w-auto h-full py-2 text-text-color overflow-visible">
         <div class="h-full w-52 bg-score-board-background flex flex-col flex-1 justify-center shadow-inner" > 
             <EnemyComponent :game="game"/>
             <CurrentRound :game="game"/>
