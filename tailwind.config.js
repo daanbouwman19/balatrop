@@ -12,6 +12,8 @@ module.exports = {
       "background": "#000000",
       "ai-console-background": "#FF0000",
       "canvas-background": "#FF0000",
+      "score-board-enemy-header-background": "#000000",
+      "score-board-enemy-card-background": "#FFFF00",
       "score-board-background": "#FFFF00",
       "score-board-background-dark": "#FFFFFFF",
       "score-board-enemy-background": "#000000",
