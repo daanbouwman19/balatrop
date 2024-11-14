@@ -6,20 +6,17 @@ import DuitseFrank from '../../icons/DuitseFrank.vue'
 
 <template>
     <div class="flex flex-col justify-center items-center bg-score-board-background-dark">
-        <span class="text-sm">Do at least:</span>
-        <div>
+        <span class="text-sm text-center">Do at least:</span>
+        <div class="flex flex-row justify-center">
             <DamageIcon/>
-            <span class="text-xl text-score-board-current-multi-background">Damage</span>
+            <span class="text-lg text-center text-score-board-current-multi-background">Damage</span>
         </div>
-        <div class="flex flex-row">
-            <span class="text-sm">Reward: </span>
-            <div>
-                <DuitseFrank 
-                    class="w-[8px] h-[8px]"
-                    :key="index" 
-                    v-for="index in [1, 2, 3, 4]"
-                />
-            </div>
+        <div class="flex flex-row justify-center items-center h-[20px]">
+            <DuitseFrank 
+                class="w-[16px] h-[16px]"
+                :key="index" 
+                v-for="index in [1, 2, 3, 4]"
+            />
         </div>
     </div>
 </template>

@@ -17,6 +17,6 @@ const enemyName = "BIG Blind";
 <template>
     <div class="flex flex-col justify-center items-center">
         <EnemyHeader class="w-[90%] p-1" :enemyName="enemyName"/>
-        <EnemyCard class="w-[90%] p-1"/>
+        <EnemyCard class="w-[90%]"/>
     </div>
 </template>
