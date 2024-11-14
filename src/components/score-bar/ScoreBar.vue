@@ -14,8 +14,8 @@ console.log(props.game);
 </script>
 
 <template>
-    <div class="mx-10 my-6 w-[300px] h-full py-5">
-        <div class="h-full w-[300px] bg-score-board-background" > 
+    <div class="mx-10 my-6 w-auto h-full py-5">
+        <div class="h-full w-52 bg-score-board-background" > 
             <EnemyCard/>
             <CurrentRound :game="game"/>
         </div>
