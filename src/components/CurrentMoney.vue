@@ -1,7 +1,7 @@
 <script setup>
 import { defineProps } from 'vue';
-import Game from '../../../game.js';
-import DuitseFrank from '../../icons/DuitseFrank.vue'
+import Game from '../game';
+import DuitseFrank from '../components/icons/DuitseFrank.vue'
 
 defineProps({
     game: {
