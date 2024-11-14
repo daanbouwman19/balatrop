@@ -1,18 +1,23 @@
 <script setup>
-    import { defineProps } from 'vue';
-    import Game from '../../game.js';
+import EnemyComponent from './enemy/EnemyComponent.vue';
+import CurrentRound from './current-round/CurrentRound.vue'
+import { defineProps } from 'vue';
+import Game from '../../game.js';
 
-    const props = defineProps({
-        game: {
-            type: Game,
-            required: true
-        }
-    });
-    console.log(props.game);
+defineProps({
+    game: {
+        type: Game,
+        required: true
+    }
+});
+
 </script>
 
 <template>
-    <div class="bg-score-board-background">
-    
+    <div class="mx-10 my-6 w-auto h-full py-4 text-text-color overflow-visible">
+        <div class="h-full w-52 bg-score-board-background flex flex-col flex-1 justify-center shadow-inner" > 
+            <EnemyComponent :game="game"/>
+            <CurrentRound :game="game"/>
+        </div>
     </div>
 </template>
