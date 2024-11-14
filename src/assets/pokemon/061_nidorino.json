@@ -1,0 +1,26 @@
+{
+    "name": "nidorino",
+    "order": 61,
+    "types": [
+        {
+            "slot": 1,
+            "type": {
+                "name": "poison",
+                "url": "https://pokeapi.co/api/v2/type/4/"
+            }
+        }
+    ],
+    "cries": {
+        "latest": "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/latest/33.ogg",
+        "legacy": "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/legacy/33.ogg"
+    },
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/33.png",
+    "evolvedFrom": {
+        "name": "nidoran-m",
+        "file": "060_nidoran-m.json"
+    },
+    "evolvesTo": {
+        "name": "nidoking",
+        "file": "062_nidoking.json"
+    }
+}

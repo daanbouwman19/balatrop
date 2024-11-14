@@ -1,0 +1,30 @@
+{
+    "name": "geodude",
+    "order": 115,
+    "types": [
+        {
+            "slot": 1,
+            "type": {
+                "name": "rock",
+                "url": "https://pokeapi.co/api/v2/type/6/"
+            }
+        },
+        {
+            "slot": 2,
+            "type": {
+                "name": "ground",
+                "url": "https://pokeapi.co/api/v2/type/5/"
+            }
+        }
+    ],
+    "cries": {
+        "latest": "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/latest/74.ogg",
+        "legacy": "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/legacy/74.ogg"
+    },
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/74.png",
+    "evolvedFrom": null,
+    "evolvesTo": {
+        "name": "graveler",
+        "file": "117_graveler.json"
+    }
+}

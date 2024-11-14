@@ -1,0 +1,23 @@
+{
+    "name": "sandslash",
+    "order": 55,
+    "types": [
+        {
+            "slot": 1,
+            "type": {
+                "name": "ground",
+                "url": "https://pokeapi.co/api/v2/type/5/"
+            }
+        }
+    ],
+    "cries": {
+        "latest": "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/latest/28.ogg",
+        "legacy": "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/legacy/28.ogg"
+    },
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/28.png",
+    "evolvedFrom": {
+        "name": "sandshrew",
+        "file": "053_sandshrew.json"
+    },
+    "evolvesTo": null
+}

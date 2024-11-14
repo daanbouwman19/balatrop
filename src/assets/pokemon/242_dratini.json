@@ -1,0 +1,23 @@
+{
+    "name": "dratini",
+    "order": 242,
+    "types": [
+        {
+            "slot": 1,
+            "type": {
+                "name": "dragon",
+                "url": "https://pokeapi.co/api/v2/type/16/"
+            }
+        }
+    ],
+    "cries": {
+        "latest": "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/latest/147.ogg",
+        "legacy": "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/legacy/147.ogg"
+    },
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/147.png",
+    "evolvedFrom": null,
+    "evolvesTo": {
+        "name": "dragonair",
+        "file": "243_dragonair.json"
+    }
+}

@@ -14,29 +14,47 @@ def create_individual_pokemon_files_with_evolutions(input_file, evolution_file):
         # Create a lookup dictionary for Pokémon data
         pokemon_lookup = {pokemon['name']: pokemon for pokemon in pokemon_data}
 
-        # Add Evolves field using the evolution trees
+        # Add evolvesTo and evolvedFrom fields using the evolution trees
         for tree in evolution_trees:
-            def map_evolves(evolution):
-                if evolution["speciesName"] in pokemon_lookup:
-                    return {
-                        "name": evolution["speciesName"],
-                        "file": f"{pokemon_lookup[evolution['speciesName']]['order']:03d}_{evolution['speciesName']}.json"
-                    }
-                return None
+            def map_evolves_to(evolution, parent_name=None):
+                species_name = evolution["speciesName"]
 
-            def traverse_tree(node):
-                if node["speciesName"] not in pokemon_lookup:
-                    return
-                pokemon = pokemon_lookup[node["speciesName"]]
-                pokemon["Evolves"] = [
-                    map_evolves(evolve) for evolve in node["evolvesTo"]
-                    if map_evolves(evolve)
+                # Skip species not in the filtered data
+                if species_name not in pokemon_lookup:
+                    return None
+
+                # Add the evolvedFrom field for the current Pokémon
+                pokemon = pokemon_lookup[species_name]
+                if parent_name:
+                    pokemon["evolvedFrom"] = {
+                        "name": parent_name,
+                        "file": f"{pokemon_lookup[parent_name]['order']:03d}_{parent_name}.json"
+                    }
+                else:
+                    pokemon["evolvedFrom"] = None
+
+                # Determine the next evolution (evolvesTo)
+                next_evolves = [
+                    {
+                        "name": child["speciesName"],
+                        "file": f"{pokemon_lookup[child['speciesName']]['order']:03d}_{child['speciesName']}.json"
+                    }
+                    for child in evolution["evolvesTo"]
+                    if child["speciesName"] in pokemon_lookup
                 ]
 
-            traverse_tree(tree)
+                # Add evolvesTo field (only a single object or None)
+                pokemon["evolvesTo"] = next_evolves[0] if next_evolves else None
+
+                # Recursively process child evolutions
+                for child in evolution["evolvesTo"]:
+                    map_evolves_to(child, species_name)
+
+            # Traverse the tree starting from the root
+            map_evolves_to(tree)
 
         # Create an output directory to store the files
-        output_dir = "pokemons"
+        output_dir = "./src/assets/pokemon"
         os.makedirs(output_dir, exist_ok=True)
 
         # Write individual JSON files for each Pokémon

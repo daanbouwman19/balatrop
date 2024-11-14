@@ -9,6 +9,8 @@ export class GameActive {
         this.t = 0;
 
 
+        this.pokemon_cards = this.initializePokemonCards()
+
         // Game
         this.hand_cards = [];
         this.entities = [];
@@ -95,6 +97,10 @@ export class GameActive {
         }
 
         return card;
+    }
+
+    initializePokemonCards() {
+        return []
     }
 
 }
