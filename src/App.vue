@@ -2,6 +2,7 @@
 import MainCanvas from './components/canvas/MainCanvas.vue';
 import ScoreBar from './components/score-bar/ScoreBar.vue';
 import RotateDevice from './components/RotateDevice.vue'
+import CurrentMoney from './components/CurrentMoney.vue';
 import Game from './game.js';
 import { computed, ref } from 'vue';
 
@@ -31,6 +32,7 @@ window.addEventListener('orientationchange', updateOrientation);
   >
     <ScoreBar :game="game"/>
     <MainCanvas :game="game"/>
+    <CurrentMoney :game="game"/>
   </div>
   <div v-else>
     <RotateDevice/>
