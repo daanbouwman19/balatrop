@@ -73,7 +73,6 @@ export class CardEntity extends Entity {
 
     resize(screen) {
         const size = Math.min(screen.height/10, 96);
-        console.log(size);
 
         this.width = size;
         this.height = size;
