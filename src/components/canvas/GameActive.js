@@ -82,7 +82,7 @@ export class GameActive {
         var height = this.screen.height/4;
         var x = this.screen.width/2 - width/2;
         var y = this.screen.height/2 -height/2;
-        this.enemy = new EnemyEntity(x, y, width, height, this.pokemon_cards[Math.floor(Math.random() * this.pokemon_cards.length)]);
+        this.enemy = new EnemyEntity(x, y, width, height, this.pokemon_cards[Math.floor(Math.random() * this.pokemon_cards.length)], this.enemies_defeated);
         
         this.addEntity(this.enemy);
 
