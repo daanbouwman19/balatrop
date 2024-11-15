@@ -38,33 +38,36 @@ export class FrankEntity extends Entity {
         ]
 
         this.message = this.messages.shift();
+        this.dispMessage = "";
 
         this.x = 0;
         this.y = 0;
-
     }
 
 
     draw(screen, t) {
         if (!this.ready) return;
 
+        let size = Math.min(screen.height/4, 200) * 2;
 
         if (this.isIntro) {
             screen.c().fillStyle = 'black';
             screen.c().font = '20px Arial';
             screen.c().textAlign = 'center';
-            screen.c().fillText(this.message, screen.width/2, screen.height/2);
 
+            screen.c().fillText(this.dispMessage, screen.width/2, screen.height/2 + size * 0.7);
         }
 
         let x = this.x + screen.width/2;
-        let y = this.y + screen.height/2-150;
+        let y = this.y + screen.height/2;
         let width = this.image.width;
         let height = this.image.height;
+
 
         const translate = () => {
             screen.c().translate(x - this.z * 2, y - this.z * 10);
             screen.c().scale(1+this.z/50, 1+this.z/50);
+            screen.c().scale(size/200, size/200);
         // screen.c().scale(s, 1);
             screen.c().translate(-width/2, -height/2);
         }
@@ -82,7 +85,6 @@ export class FrankEntity extends Entity {
         translate();
 
 
-        // if (s > 0) screen.drawRectangle(0, 0, width, height, 'red');
         screen.c().drawImage(this.image, 0, 0)
 
         screen.c().font = '20px Arial';
@@ -102,20 +104,33 @@ export class FrankEntity extends Entity {
                 this.y -= 10;
 
                 if (t == this.exitAt) {
-                    this.game.STATE = "FILLHAND";
+                    this.game.enterState("FILLHAND");
                     this.destroy();
                 }
 
             } else {
                 this.z = Math.sin(t*0.1) + 2;
             }
+
+            if (this.message.length > this.dispMessage.length) {
+                this.dispMessage += this.message[this.dispMessage.length];
+            }
         }
     }
 
+    handleClick(event) {
+        this.go();
+    }
+
     keydown(event) {
+        this.go();
+    }
+
+    go() {
         if (this.isIntro) {
-            if (this.messages.length > 0) {
+            if (this.messages.length > 0 && this.dispMessage.length == this.message.length) {
                 this.message = this.messages.shift();
+                this.dispMessage = "";
 
                 if (this.messages.length == 0) {
                     this.exitAt = this.t + 60;

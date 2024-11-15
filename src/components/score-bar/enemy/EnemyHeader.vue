@@ -1,17 +1,26 @@
 <script setup>
-import { defineProps } from 'vue';
+import { defineProps, computed } from 'vue';
+import { GameActive } from '@/components/canvas/GameActive';
 
-defineProps({
-    enemyName: {
-        type: String,
-        required: true,
+const props = defineProps({
+    game: {
+        type: GameActive,
+        required: true
     }
 });
+
+console.log(props.game)
+const enemyName = computed(() => {
+    if (props.game.STATE === "INTRO") {
+        return "Frank"
+    }
+    return `${props.game.enemy.pokemon.name}`
+})
 
 </script>
 
 <template>
     <div class="bg-score-board-enemy-header-background rounded">
-        <span class="text-lg flex justify-center">{{ enemyName }}</span>
+        <span class="text-lg flex justify-center text-center">A wild {{ enemyName }} has appeard</span>
     </div>
 </template>

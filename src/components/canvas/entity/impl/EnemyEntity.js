@@ -46,6 +46,7 @@ export class EnemyEntity extends Entity {
 
         screen.c().save();  
 
+        screen.c().imageSmoothingEnabled = false;
         screen.c().translate(this.x, this.y);
         screen.c().scale(3,3);
         screen.c().shadowColor = "black";
@@ -54,7 +55,8 @@ export class EnemyEntity extends Entity {
         screen.c().drawImage(this.image, 0, 0);
 
         this.typeImages.forEach((image, index) => {
-            screen.c().drawImage(image, this.width - 10, 20 + (index * image.height))
+            screen.c().drawImage(image, this.width/3 - 10, 20 + (index * image.height))
+            console.log(this.width)
         })
 
         const hpPercent = this.hp / this.maxHp;

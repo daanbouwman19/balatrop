@@ -20,7 +20,7 @@ export class GameActive {
         this.selectedCardsCounter = null;
 
         // Initialize entities before adding any entities
-        this.entities = []; // Move this line up
+        this.entities = [];
 
         this.pokemon_cards = this.initializePokemonCards();
         this.player_deck = this.initializeDeck();
@@ -43,6 +43,9 @@ export class GameActive {
         this.totalCardsMultiplier = 1;
         this.totalCardsDamage = 1;
 
+        this.score = 0;
+        this.fightReward = 5;
+
         this.screen.clear();
         this.canvas.addEventListener("mousemove", (event) => {
             this.screen.updateMousePosition(event);
@@ -53,21 +56,17 @@ export class GameActive {
         this.canvas.addEventListener("click", (event) => {
             this.handleClick(event);
         });
+        this.canvas.addEventListener("touchstart", (event) => {
+            this.handleClick(event);
+        });
         window.addEventListener("keydown", (event) => {
             this.entities.forEach(entity => {
                 if (entity.keydown) entity.keydown(event);
             });
         });
 
-        // Start the game
-        this.enterState("FILLHAND");
-
-        // Initialize the enemy
-        let random_card = this.pokemon_cards[Math.floor(Math.random() * this.pokemon_cards.length)];
-
-        this.enemy = new EnemyEntity(200, 0, 96, 96, random_card);
-        this.addEntity(this.enemy);
-        this.submitsRemaining = 3; // Initialize submitsRemaining
+        // Start the intro sequence
+        this.startIntro();
     }
 
     startIntro() {
@@ -75,23 +74,49 @@ export class GameActive {
         frank.intro();
         this.addEntity(frank);
 
-        enterState("INTRO");
+        this.enterState("INTRO");
+    }
+
+    spawnEnemy() {
+        var width = this.screen.width / 4;
+        var height = this.screen.height / 4;
+        var x = this.screen.width / 2 - width / 2;
+        var y = this.screen.height / 2 - height / 2;
+
+        let random_card = this.pokemon_cards[Math.floor(Math.random() * this.pokemon_cards.length)];
+        this.enemy = new EnemyEntity(x, y, width, height, random_card);
+
+        this.addEntity(this.enemy);
+
+        this.fightReward = this.enemy.pokemon.value;
+        this.submitsRemaining = 3; // Reset submitsRemaining for new enemy
+
+        // Ensure SubmitsRemainingEntity is updated
+        if (!this.submitsRemainingEntity) {
+            this.submitsRemainingEntity = new SubmitsRemainingEntity(this);
+            this.addEntity(this.submitsRemainingEntity);
+        }
     }
 
     enterState(state) {
+        if (this.STATE === "INTRO" && state === "FILLHAND") {
+            this.spawnEnemy();
+            window.dispatchEvent(new Event('resize'));
+        }
+
         this.STATE = state;
         this.anim = 0;
-    
+
         if (state === "FILLHAND") {
             this.drawed_this_round = [];
             this.t = 0;
         }
-    
+
         if (state === "SELECT_CARDS") {
             if (this.submitsRemaining > 0) {
                 // Remove any existing submit buttons to prevent duplicates
                 this.entities = this.entities.filter(entity => !(entity instanceof ButtonEntity));
-    
+
                 const button = new ButtonEntity(
                     this.screen.width / 2 - 100,
                     this.screen.height - 80,
@@ -114,7 +139,7 @@ export class GameActive {
                     }
                 );
                 this.addEntity(button);
-    
+
                 // Add the SelectedCardsCounterEntity
                 this.selectedCardsCounter = new SelectedCardsCounterEntity(this);
                 this.addEntity(this.selectedCardsCounter);
@@ -140,41 +165,28 @@ export class GameActive {
             this.attack_history = [];
         }
 
-
         if (state === "POST_ROUND") {
+            // Reset game variables
+            this.totalCardsMultiplier = 1;
+            this.totalCardsDamage = 1;
+
             if (this.enemy.deathCheck()) {
                 console.log(`Enemy has died!`);
                 this.removeEntity(this.enemy);
 
-                // Reset game variables
-                this.totalCardsMultiplier = 1;
-                this.totalCardsDamage = 1;
+                // Update the score
+                this.score += this.fightReward;
 
-                // Create a new enemy
-                this.enemy = new EnemyEntity(
-                    200,
-                    0,
-                    96,
-                    96,
-                    this.pokemon_cards[
-                        Math.floor(Math.random() * this.pokemon_cards.length)
-                    ]
-                );
-                this.addEntity(this.enemy);
+                // Spawn a new enemy
+                this.spawnEnemy();
 
-                this.submitsRemaining = 3; // Reset submitsRemaining for new enemy
-
-                // Ensure SubmitsRemainingEntity is updated
-                if (!this.submitsRemainingEntity) {
-                    this.submitsRemainingEntity = new SubmitsRemainingEntity(this);
-                    this.addEntity(this.submitsRemainingEntity);
-                }
+                // Set new fight reward
+                this.fightReward = this.enemy.pokemon.value;
             }
 
             if (this.submitsRemaining > 0) {
                 this.enterState("FILLHAND");
             } else {
-                // No more submits remaining; handle game over or enemy attack
                 console.log("No more submits remaining. Game Over!");
                 this.enterState("GAME_OVER");
             }
@@ -202,13 +214,11 @@ export class GameActive {
                 () => {
                     this.removeEntity(restartButton);
                     this.removeEntity(gameOverEntity);
-                    // Restart the game
                     this.restartGame();
                 }
             );
             this.addEntity(restartButton);
         }
-
     }
 
     restartGame() {
@@ -223,18 +233,15 @@ export class GameActive {
         this.totalCardsMultiplier = 1;
         this.totalCardsDamage = 1;
         this.submitsRemaining = 3;
-    
-        // Create a new enemy
-        const random_card = this.pokemon_cards[Math.floor(Math.random() * this.pokemon_cards.length)];
-        this.enemy = new EnemyEntity(200, 0, 96, 96, random_card);
-        this.addEntity(this.enemy);
-    
+        this.score = 0;
+        this.fightReward = 5;
+
         // Re-add the SubmitsRemainingEntity
         this.submitsRemainingEntity = new SubmitsRemainingEntity(this);
         this.addEntity(this.submitsRemainingEntity);
-    
-        // Start the game by entering the initial state
-        this.enterState("FILLHAND");
+
+        // Start the intro sequence again
+        this.startIntro();
     }
     
 
@@ -389,6 +396,7 @@ export class GameActive {
         });
     }
     removeEntity(entity) {
+        this.entities = this.entities.filter(e => e !== entity);
         this.entities = this.entities.filter(e => e !== entity);
     }
     
