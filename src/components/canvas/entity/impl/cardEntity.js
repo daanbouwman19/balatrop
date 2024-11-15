@@ -35,7 +35,6 @@ export class CardEntity extends Entity {
             image.src = `images/${type.type.name}.png`
             this.typeImages.push(image)
         })
-        console.log(this.typeImages.length)
 
         this.hovered = false;
         this.z = 0;

@@ -21,6 +21,14 @@ export class EnemyEntity extends Entity {
 
         this.pokemon = pokemon
 
+        this.typeImages = []
+
+        pokemon.types.forEach((type) => {
+            const image = new Image(48, 16)
+            image.src = `images/${type.type.name}.png`
+            this.typeImages.push(image)
+        })
+
         this.hp = pokemon.value * 10;
         this.maxHp = this.hp;
         this.damageTaken = 0;
@@ -44,6 +52,10 @@ export class EnemyEntity extends Entity {
         screen.c().shadowBlur = 20;
 
         screen.c().drawImage(this.image, 0, 0);
+
+        this.typeImages.forEach((image, index) => {
+            screen.c().drawImage(image, this.width - 10, 20 + (index * image.height))
+        })
 
         const hpPercent = this.hp / this.maxHp;
         const damagePercent = this.damageTaken / this.maxHp;
