@@ -170,23 +170,22 @@ export class CardEntity extends Entity {
             screen.c().translate(-this.width/2, -this.height/2);
         }
 
-        // this.z = Math.abs(s) * 10;
-        if (this.z > 0) {
-            screen.c().save();
-            screen.c().translate(4 * this.z, 10 * this.z);
-            translate();
+        // // this.z = Math.abs(s) * 10;
+        // if (this.z > 0) {
+        //     screen.c().save();
+        //     screen.c().translate(4 * this.z, 10 * this.z);
+        //     translate();
 
-            screen.drawRectangle(0, 0, this.width, this.height, 'rgba(0, 0, 0, 0.5)');
+        //     screen.drawRectangle(0, 0, this.width, this.height, 'rgba(0, 0, 0, 0.5)');
 
-            screen.c().restore();
-        }
+        //     screen.c().restore();
+        // }
         screen.c().save();
         translate();
 
         const halfWidth = this.width / 2 - 24
         const halfHeight = this.height / 2 - 16
 
-        screen.c().drawImage(this.background, 0, 0);
         screen.drawRectangle(halfWidth, halfHeight, 96, 96, "#FFFFFFC8", 30)
         screen.c().drawImage(this.image, halfWidth, halfHeight)
 
