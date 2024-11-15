@@ -52,8 +52,8 @@ export class GameActive {
         });
 
 
-        // this.startIntro();
-        this.STATE = "FILLHAND"
+        this.startIntro();
+        // this.STATE = "FILLHAND"
         // Debug
         
         // this.entities.push(new FrankEntity(5, 5, 10, 10, "#FF0000"));
@@ -70,11 +70,19 @@ export class GameActive {
         this.addEntity(frank);
 
         this.enterState("INTRO");
+    }
 
+    spawnEnemy() {
         this.enemy = new EnemyEntity(200, 0, 96, 96, this.pokemon_cards[Math.floor(Math.random() * this.pokemon_cards.length)]);
+        this.addEntity(this.enemy);
     }
 
     enterState(state) {
+        console.log(this.STATE);
+        if (this.STATE === "INTRO" && state === "FILLHAND") {
+            this.spawnEnemy();
+        }
+
         this.STATE = state;
         this.anim = 0;
 

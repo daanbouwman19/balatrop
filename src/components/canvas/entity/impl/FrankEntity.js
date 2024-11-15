@@ -104,7 +104,7 @@ export class FrankEntity extends Entity {
                 this.y -= 10;
 
                 if (t == this.exitAt) {
-                    this.game.STATE = "FILLHAND";
+                    this.game.enterState("FILLHAND");
                     this.destroy();
                 }
 
