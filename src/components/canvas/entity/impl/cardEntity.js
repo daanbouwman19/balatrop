@@ -1,6 +1,7 @@
 
 import { HighlightSpanKind } from 'typescript';
 import Entity from '../entity.js';
+import * as Particle from './Particle.js';
 
 export class CardEntity extends Entity {
 
@@ -87,6 +88,11 @@ export class CardEntity extends Entity {
             this.y += Math.sin(angle) * 50 * (1 - lt/20);
 
             this.rotation = angle + Math.PI/2;
+
+            if (lt == 20) {
+                const part = Particle.blood(targetX, targetY);
+                this.game.addEntity(part);
+            }
 
             if (lt > 50) {
                 // End of attack logic

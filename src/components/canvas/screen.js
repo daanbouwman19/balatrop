@@ -52,6 +52,13 @@ export class Screen {
         }
     }
 
+    drawCircle(x, y, radius, color) {
+        this.context.fillStyle = color;
+        this.context.beginPath();
+        this.context.arc(x, y, radius, 0, Math.PI * 2);
+        this.context.fill();
+    }
+
     drawImage(x, y, image) {
         this.context.drawImage(image, x, y);
     }
