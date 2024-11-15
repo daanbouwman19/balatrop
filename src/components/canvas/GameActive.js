@@ -22,7 +22,6 @@ export class GameActive {
         this.hand_cards = [];
         this.entities = [];
 
-
         // Rendering
         this.canvas = canvas;
         this.canvas.width = this.canvas.clientWidth;
@@ -30,8 +29,7 @@ export class GameActive {
         this.screen = new Screen(canvas);
 
         // Visual damage rendering
-        this.totalCardMultiplier = 1;
-        this.totalCardDamage = 1;
+        this.totalCardsMultiplier = 1;
 
         this.screen.clear();
         this.canvas.addEventListener("mousemove", (event) => {
@@ -191,7 +189,7 @@ export class GameActive {
                     })
 
                     if (multiplier) {
-                        this.totalCardMultiplier += multiplier
+                        this.totalCardsMultiplier += multiplier
 
                         this.addEntity(
                             new MultiplierEntity(
@@ -226,7 +224,7 @@ export class GameActive {
                 // TODO: Iets met een multiplier depending on welke selectie van kaarten je hebt
                 if (this.attack_queue.length > 0) {
                     const attacker = this.attack_queue[0];
-                    attacker.attack(this.enemy, this.attack_history);
+                    attacker.attack(this.enemy, this.attack_history, this.totalCardsMultiplier);
                     this.attack_queue = this.attack_queue.slice(1);
 
                     this.hand_cards = this.hand_cards.filter(card => card !== attacker.card);
