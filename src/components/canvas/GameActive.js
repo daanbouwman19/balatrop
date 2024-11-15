@@ -27,6 +27,10 @@ export class GameActive {
         this.canvas.height = this.canvas.clientHeight;
         this.screen = new Screen(canvas);
 
+        // Visual damage rendering
+        this.totalCardMultiplier = 1;
+        this.totalCardDamage = 1;
+
         this.screen.clear();
         this.canvas.addEventListener("mousemove", (event) => {
             this.screen.updateMousePosition(event);
@@ -76,9 +80,14 @@ export class GameActive {
         if (state === "SELECT_CARDS") {
             const button = new ButtonEntity(this.screen.width/2 - 100, this.screen.height - 80, 200, 50, "Submit", "#22AA22", () => {
                 this.removeEntity(button);
-                this.enterState("ATTACK");
+                this.enterState("ADD_DAMAGE");
             });
             this.addEntity(button);
+        }
+
+        if (state === "ADD_DAMAGE") {
+            this.attack_queue = this.entities.filter(entity => entity instanceof CardEntity && entity.selected);
+            this.cardTypes = {};
         }
 
         if (state === "ATTACK") {
@@ -138,6 +147,7 @@ export class GameActive {
 
     update() {
         this.t += 1;
+        this.anim += 1;
 
         if (this.hand_cards.length > 0) {
             for (let i = 0; i < this.hand_cards.length; i++) {
@@ -162,9 +172,21 @@ export class GameActive {
             // pass
         }
 
+        if (this.STATE === "ADD_DAMAGE") {
+            if (this.anim % 10 == 0) {
+                if (this.anim % 20 == 0) {
+                    const currentCardEntity = this.attack_queue.shift().card;
+
+                } else if (this.attack_queue.length > 0) {
+                    const currentCardEntity = this.attack_queue[0].card;
+                    console.log(currentCardEntity)
+                } else {
+                    this.enterState("ATTACK");
+                }
+            }
+        }
+
         if (this.STATE === "ATTACK") {
-            //
-            this.anim += 1;
             if (this.anim % 10 == 0) {
 
                 // TODO: Iets met een multiplier depending on welke selectie van kaarten je hebt
