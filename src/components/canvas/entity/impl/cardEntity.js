@@ -103,15 +103,17 @@ export class CardEntity extends Entity {
         let baseDamage = this.card.value
         let markiplier = this.calculateTypeMultiplier(target.pokemon.types)
         let damage = baseDamage * markiplier
-
+        console.log("base:" + baseDamage)
+        console.log("mark:" + markiplier)
+        console.log("real:" + damage)
         attackHistory.push({
             card: {
                 name: this.card.name,
                 type: this.card.types  /// Element type or something
             },
-            damage: baseDamage
+            damage: damage
         });
-        target.damage(baseDamage);
+        target.damage(damage);
 
 
         this.selected = false;
