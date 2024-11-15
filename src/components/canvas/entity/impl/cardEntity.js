@@ -210,7 +210,7 @@ export class CardEntity extends Entity {
             screen.c().translate(4 * this.z, 10 * this.z);
             translate();
 
-            screen.drawRectangle(0, 0, this.width, this.height, 'rgba(0, 0, 0, 0.5)', 30);
+            screen.drawRectangle(0, 0, this.width, this.height, 'rgba(0, 0, 0, 0.5)', 15);
 
             screen.c().restore();
         }
@@ -220,7 +220,7 @@ export class CardEntity extends Entity {
         const halfWidth = this.width / 2 - 24
         const halfHeight = this.height / 2 - 16
 
-        screen.drawRectangle(0, 0, this.width, this.height, "#FFFFFFC8", 30)
+        screen.drawRectangle(0, 0, this.width, this.height, "#FFFFFFC8", 15)
         screen.c().drawImage(this.image, 0, 0)
 
         this.typeImages.forEach((image, index) => {

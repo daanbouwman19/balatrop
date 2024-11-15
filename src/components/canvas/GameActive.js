@@ -32,6 +32,7 @@ export class GameActive {
         // Now it's safe to add entities
         this.submitsRemainingEntity = new SubmitsRemainingEntity(this);
         this.addEntity(this.submitsRemainingEntity);
+        this.enemies_defeated = 0;
 
         // Rendering
         this.canvas = canvas;
@@ -78,14 +79,12 @@ export class GameActive {
     }
 
     spawnEnemy() {
-        var width = this.screen.width / 4;
-        var height = this.screen.height / 4;
-        var x = this.screen.width / 2 - width / 2;
-        var y = this.screen.height / 2 - height / 2;
-
-        let random_card = this.pokemon_cards[Math.floor(Math.random() * this.pokemon_cards.length)];
-        this.enemy = new EnemyEntity(x, y, width, height, random_card);
-
+        var width = this.screen.width/4;
+        var height = this.screen.height/4;
+        var x = this.screen.width/2 - width/2;
+        var y = this.screen.height/2 -height/2;
+        this.enemy = new EnemyEntity(x, y, width, height, this.pokemon_cards[Math.floor(Math.random() * this.pokemon_cards.length)], this.enemies_defeated);
+        
         this.addEntity(this.enemy);
 
         this.fightReward = this.enemy.pokemon.value;
@@ -173,6 +172,7 @@ export class GameActive {
             if (this.enemy.deathCheck()) {
                 console.log(`Enemy has died!`);
                 this.removeEntity(this.enemy);
+                this.enemies_defeated += 1;
 
                 // Update the score
                 this.score += this.fightReward;
