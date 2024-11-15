@@ -194,6 +194,15 @@ export class CardEntity extends Entity {
             screen.c().drawImage(image, halfWidth + index * image.width, halfHeight)
         })
 
+        //draw the pokemon name
+        screen.c().fillStyle = "#FFCB00"
+        screen.c().font = "20px pokemon";
+        screen.c().strokeStyle = "#335FAB";
+        screen.c().lineWidth = 6;   
+
+        screen.c().strokeText(this.card.name, halfWidth + 48 - this.card.name.length , 69);
+        screen.c().fillText(this.card.name, halfWidth + 48 - this.card.name.length , 69);
+        
         screen.c().restore();
     }
 
