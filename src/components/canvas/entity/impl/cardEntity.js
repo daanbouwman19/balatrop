@@ -194,11 +194,6 @@ export class CardEntity extends Entity {
             screen.c().drawImage(image, halfWidth + index * image.width, halfHeight)
         })
 
-        screen.c().fillStyle = 'black';
-        screen.c().font = '20px Arial';
-        screen.c().textAlign = 'center';
-        screen.c().fillText(this.card.name, this.width/2, -10);
-
         screen.c().restore();
     }
 
