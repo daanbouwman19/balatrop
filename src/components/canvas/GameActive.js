@@ -51,7 +51,6 @@ export class GameActive {
         // this.entities.push(new FrankEntity(5, 5, 10, 10, "#FF0000"));
         
         let random_card = this.pokemon_cards[Math.floor(Math.random() * this.pokemon_cards.length)];
-        this.entities.push(new FrankEntity(5, 5, 10, 10, "#FF0000"));
 
         this.enemy = new EnemyEntity(200, 0, 96, 96, random_card);
         this.addEntity(this.enemy);
