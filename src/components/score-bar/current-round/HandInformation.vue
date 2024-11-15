@@ -1,16 +1,15 @@
 <script setup>
-import SmallComponent from './SmallComponent.vue';
 import { defineProps } from 'vue';
 import { GameActive } from '@/components/canvas/GameActive';
 
-defineProps({
+const props = defineProps({
     game: {
         type: GameActive,
         required: true
     }
 });
 
-const cardsLeft = game.player_deck.length - game.drawed_this_round 
+const cardsLeft = props.game.player_deck.length - props.game.drawed_this_round 
 
 </script>
 

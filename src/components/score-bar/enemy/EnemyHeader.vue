@@ -1,5 +1,5 @@
 <script setup>
-import { defineProps } from 'vue';
+import { defineProps, computed } from 'vue';
 import { GameActive } from '@/components/canvas/GameActive';
 
 const props = defineProps({
@@ -10,12 +10,17 @@ const props = defineProps({
 });
 
 console.log(props.game)
-const enemyName = `A wild ${props.game.enemy.pokemon.name} has appeard`
+const enemyName = computed(() => {
+    if (props.game.STATE === "INTRO") {
+        return "Frank"
+    }
+    return `${props.game.enemy.pokemon.name}`
+})
 
 </script>
 
 <template>
     <div class="bg-score-board-enemy-header-background rounded">
-        <span class="text-lg flex justify-center text-center">{{ enemyName }}</span>
+        <span class="text-lg flex justify-center text-center">A wild {{ enemyName }} has appeard</span>
     </div>
 </template>
