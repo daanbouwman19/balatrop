@@ -57,6 +57,7 @@ export class GameActive {
 
         this.startIntro();
         // this.STATE = "FILLHAND"
+        // this.enterState("FILLHAND");
         // Debug
         
         // this.entities.push(new FrankEntity(5, 5, 10, 10, "#FF0000"));
