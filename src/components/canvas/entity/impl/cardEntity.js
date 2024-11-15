@@ -41,16 +41,17 @@ export class CardEntity extends Entity {
 
         this.lt = 0;
 
-        const handSize = 8;
+        const handSize = 8
         this.animation = (screen, t, lt) => {
             // Idle animation & Selected animation
             const handSpan = screen.width - 200;
-            
-            const targetX = screen.width/2 - handSpan/2 + handSpan / handSize * this.index + 100;
+
+            const targetX = screen.width / 2 - handSpan / 2 + (handSpan / handSize) * this.index + 100;
             const targetY = screen.height - 200 + Math.sin(t * 0.01 + this.index) * 10;
 
             this.x = Math.lerp(this.x, targetX, 0.1);
             this.y = Math.lerp(this.y, targetY, 0.1);
+
 
 
             if (!this.selected) {
@@ -68,7 +69,22 @@ export class CardEntity extends Entity {
 
     handleClick() {
         if (this.hovered) {
-            this.selected = !this.selected;
+            if (!this.selected) {
+                // Check if less than 5 cards are selected
+                const selectedCards = this.game.entities.filter(
+                    entity => entity instanceof CardEntity && entity.selected
+                );
+                if (selectedCards.length < 5) {
+                    this.selected = true;
+                } else {
+                    // Provide feedback that the limit has been reached
+                    console.log("You can only select up to 5 Pokémon at the same time!");
+                    // Optionally, add visual feedback or play a sound
+                }
+            } else {
+                // Allow deselection
+                this.selected = false;
+            }
         }
     }
 
