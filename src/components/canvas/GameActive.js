@@ -77,7 +77,12 @@ export class GameActive {
     }
 
     spawnEnemy() {
-        this.enemy = new EnemyEntity(200, 0, 96, 96, this.pokemon_cards[Math.floor(Math.random() * this.pokemon_cards.length)]);
+        var width = this.screen.width/4;
+        var height = this.screen.height/4;
+        var x = this.screen.width/2 - width/2;
+        var y = this.screen.height/2 -height/2;
+        this.enemy = new EnemyEntity(x, y, width, height, this.pokemon_cards[Math.floor(Math.random() * this.pokemon_cards.length)]);
+        
         this.addEntity(this.enemy);
 
         this.fightReward = this.enemy.pokemon.value;
@@ -124,8 +129,7 @@ export class GameActive {
                 console.log(`Enemy has died!`);
                 this.removeEntity(this.enemy);
 
-                this.enemy = new EnemyEntity(200, 0, 96, 96, this.pokemon_cards[Math.floor(Math.random() * this.pokemon_cards.length)]);
-                this.addEntity(this.enemy);
+                this.spawnEnemy()
 
                 this.score += this.fightReward;
                 this.fightReward = this.enemy.pokemon.value;
