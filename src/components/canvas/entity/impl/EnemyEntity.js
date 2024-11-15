@@ -45,7 +45,6 @@ export class EnemyEntity extends Entity {
 
         screen.c().drawImage(this.image, 0, 0);
 
-        //TODO draw health bar
         const hpPercent = this.hp / this.maxHp;
         const damagePercent = this.damageTaken / this.maxHp;
         screen.c().fillStyle = "green";
@@ -53,6 +52,7 @@ export class EnemyEntity extends Entity {
         screen.c().fillStyle = "red";
         screen.c().fillRect(96 * hpPercent, 10, 96 * (1 - hpPercent), 5);
         screen.c().fillStyle = "white";
+        screen.c().shadowBlur = 0;
         screen.c().fillRect(96 * hpPercent, 10, (damagePercent * 96), 5);
 
         screen.c().restore();
