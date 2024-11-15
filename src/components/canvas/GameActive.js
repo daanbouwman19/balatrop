@@ -3,6 +3,8 @@ import { FrankEntity } from "./entity/impl/FrankEntity";
 import { CardEntity } from "./entity/impl/cardEntity";
 import { EnemyEntity } from "./entity/impl/EnemyEntity";
 import { ButtonEntity } from "./entity/impl/ButtonEntity";
+import { MultiplierEntity } from "./entity/impl/MultiplierEntity";
+import { DamageEntity } from "./entity/impl/DamageEntity";
 
 export class GameActive {
 
@@ -177,9 +179,42 @@ export class GameActive {
                 if (this.anim % 20 == 0) {
                     const currentCardEntity = this.attack_queue.shift().card;
 
+                    var multiplier = 0;
+
+                    currentCardEntity.types.forEach((type) => {
+                        if (this.cardTypes[type.type.name]) {
+                            multiplier += 1.5;
+                            this.cardTypes[type.type.name] += 1;
+                        } else {
+                            this.cardTypes[type.type.name] = 1;
+                        }
+                    })
+
+                    if (multiplier) {
+                        this.totalCardMultiplier += multiplier
+
+                        this.addEntity(
+                            new MultiplierEntity(
+                                currentCardEntity.entity.x, 
+                                currentCardEntity.entity.y,
+                                multiplier
+                            )
+                        )
+                    }
+
                 } else if (this.attack_queue.length > 0) {
                     const currentCardEntity = this.attack_queue[0].card;
                     console.log(currentCardEntity)
+                    var damage = currentCardEntity.value;
+
+                    this.addEntity(
+                        new DamageEntity(
+                            currentCardEntity.entity.x - currentCardEntity.entity.width, 
+                            currentCardEntity.entity.y,
+                            multiplier
+                        )
+                    )
+                    
                 } else {
                     this.enterState("ATTACK");
                 }
