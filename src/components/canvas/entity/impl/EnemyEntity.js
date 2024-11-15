@@ -56,7 +56,7 @@ export class EnemyEntity extends Entity {
         screen.c().drawImage(this.image, 0, 0);
 
         this.typeImages.forEach((image, index) => {
-            screen.c().drawImage(image, this.width/3 - 10, 20 + (index * image.height))
+            screen.c().drawImage(image, 75, 20 + (index * image.height))
         })
 
         const hpPercent = this.hp / this.maxHp;
