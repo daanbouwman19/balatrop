@@ -1,5 +1,3 @@
-
-import { HighlightSpanKind } from 'typescript';
 import Entity from '../entity.js';
 import * as Particle from './Particle.js';
 import typeRelationsMap from "../../../../../public/typeRelationsMap.json"
