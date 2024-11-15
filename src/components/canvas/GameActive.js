@@ -202,7 +202,7 @@ export class GameActive {
 
                 } else if (this.attack_queue.length > 0) {
                     const currentCardEntity = this.attack_queue[0].card;
-                    var damage = currentCardEntity.value * currentCardEntity.entity.calculateTypeMultiplier(this.enemy.pokemon.types);
+                    var damage = currentCardEntity.value * currentCardEntity.entity.calculateTypeMultiplier();
 
                     this.addEntity(
                         new DamageEntity(
@@ -224,7 +224,7 @@ export class GameActive {
                 // TODO: Iets met een multiplier depending on welke selectie van kaarten je hebt
                 if (this.attack_queue.length > 0) {
                     const attacker = this.attack_queue[0];
-                    attacker.attack(this.enemy, this.attack_history, this.totalCardsMultiplier);
+                    attacker.attack(this.enemy, this.totalCardsMultiplier, this.attack_history);
                     this.attack_queue = this.attack_queue.slice(1);
 
                     this.hand_cards = this.hand_cards.filter(card => card !== attacker.card);
