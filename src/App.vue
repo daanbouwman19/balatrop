@@ -1,12 +1,11 @@
 <script setup>
-import MainCanvas from './components/canvas/MainCanvas.vue';
 import ScoreBar from './components/score-bar/ScoreBar.vue';
 import RotateDevice from './components/RotateDevice.vue'
 import CurrentMoney from './components/CurrentMoney.vue';
-import Game from './game.js';
-import { computed, ref } from 'vue';
+import { GameActive } from './components/canvas/GameActive'
+import { computed, ref, onMounted } from 'vue';
 
-const game = ref(new Game());
+
 const width = ref(window.innerWidth);
 const orientation = ref(window.screen.orientation?.type || 'portrait');
 
@@ -24,15 +23,46 @@ const rotateDevice = computed(() => {
 window.addEventListener('resize', updateWidth);
 window.addEventListener('orientationchange', updateOrientation);
 
+const canvas = ref(null);
+
+const game = ref(null);
+
+// GAME INITIALIZATION
+
+onMounted(() => {
+  if (!canvas.value) {
+    canvas.value = document.querySelector("canvas")
+  }
+
+  game.value = new GameActive(canvas.value);
+
+  loop();
+});
+
+// GAME LOOP
+
+const loop = () => {
+    if (game.value) {
+        game.value.update();
+        game.value.draw();
+    }
+
+    requestAnimationFrame(loop);
+}
+
 </script>
 <template>
   <div 
     class="flex flex-row justify-between items-center w-[100vw] h-[100vh]"
     v-if="!rotateDevice"
   >
-    <ScoreBar :game="game"/>
-    <MainCanvas :game="game"/>
-    <CurrentMoney class="fixed top-1 right-1" :game="game"/>
+    <!-- <ScoreBar :game="game"/> -->
+    <div class="h-full w-full border-solid border-[6vh] border-score-board-background">
+        <div class="h-full bg-score-board-background">
+            <canvas class="bg-[url('../../public/images/pixel_background.jpg')] bg-cover h-full w-full border-solid border-[20px] rounded-lg" ref="canvas"></canvas>
+        </div>
+    </div>
+    <!-- <CurrentMoney class="fixed top-1 right-1" :game="game"/> -->
   </div>
   <div v-else>
     <RotateDevice/>

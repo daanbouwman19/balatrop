@@ -30,6 +30,7 @@ export class GameActive {
 
         // Visual damage rendering
         this.totalCardsMultiplier = 1;
+        this.totalCardsDamage = 1;
 
         this.screen.clear();
         this.canvas.addEventListener("mousemove", (event) => {
@@ -203,6 +204,7 @@ export class GameActive {
                 } else if (this.attack_queue.length > 0) {
                     const currentCardEntity = this.attack_queue[0].card;
                     var damage = currentCardEntity.value * currentCardEntity.entity.calculateTypeMultiplier(this.enemy.pokemon.types);
+                    this.totalCardsDamage += damage
 
                     this.addEntity(
                         new DamageEntity(
