@@ -73,7 +73,7 @@ export class CardEntity extends Entity {
 
         // Iterate over the card's types
         this.card.types.forEach((cardTypeObj) => {
-            const cardTypeName = cardTypeObj.type.name; // Get the name of the type (e.g., "water")
+            const cardTypeName = cardTypeObj.name; // Get the name of the type (e.g., "water")
 
             // Ensure the card type exists in the type relations map
             if (!typeRelationsMap[cardTypeName]) {
@@ -85,35 +85,32 @@ export class CardEntity extends Entity {
             const damageRelations = typeRelationsMap[cardTypeName];
 
             // Check each target type against this card type's damage relations
-            targetTypes.forEach((type) => {
-                if (damageRelations.doubleDamageTo.includes(type.type.name)) {
+            targetTypes.forEach((targetTypeName) => {
+                if (damageRelations.doubleDamageTo.includes(targetTypeName)) {
                     multiplier *= 2; // Double damage
-                } else if (damageRelations.halfDamageTo.includes(type.type.name)) {
+                } else if (damageRelations.halfDamageTo.includes(targetTypeName)) {
                     multiplier *= 0.5; // Half damage
-                } else if (damageRelations.noDamageTo.includes(type.type.name)) {
+                } else if (damageRelations.noDamageTo.includes(targetTypeName)) {
                     multiplier *= 0; // No damage
                 }
             });
         });
-        console.log(multiplier)
+
         return multiplier;
     }
 
-    attack(target, attackHistory) {
+    attack(target, attackMultiplier, attackHistory) {
         let baseDamage = this.card.value
-        let markiplier = this.calculateTypeMultiplier(target.pokemon.types)
-        let damage = baseDamage * markiplier
-        console.log("base:" + baseDamage)
-        console.log("mark:" + markiplier)
-        console.log("real:" + damage)
+        let markiplier = this.calculateTypeMultiplier(target.types)
+
         attackHistory.push({
             card: {
                 name: this.card.name,
-                type: this.card.types  /// Element type or something
+                type: "none"  /// Element type or something
             },
-            damage: damage
+            damage: baseDamage
         });
-        target.damage(damage);
+        target.damage(baseDamage);
 
 
         this.selected = false;
