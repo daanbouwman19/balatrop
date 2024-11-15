@@ -1,4 +1,5 @@
 import Entity from "../entity";
+import { CorpseEntity } from "./CorpseEntity";
 
 export class EnemyEntity extends Entity {
 
@@ -41,7 +42,7 @@ export class EnemyEntity extends Entity {
         screen.c().shadowColor = "black";
         screen.c().shadowBlur = 20;
 
-        screen.c().drawImage(this.image, 0,0);
+        screen.c().drawImage(this.image, 0, 0);
 
         //TODO draw health bar
         const hpPercent = this.hp / this.maxHp;
@@ -64,8 +65,14 @@ export class EnemyEntity extends Entity {
 
     deathCheck() {
         // Only do this at the end of a round; punching the dead is tolerated
+        const dead = this.hp <= 0;
 
-        return this.hp <= 0;
+        if (dead) {
+            const corpse = new CorpseEntity(this);
+            this.game.addEntity(corpse);
+        }
+
+        return dead;
     }
 
 }

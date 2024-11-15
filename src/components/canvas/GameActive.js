@@ -108,9 +108,33 @@ export class GameActive {
         this.screen.clear();
         this.screen.background("#dddddd");
 
+        const drawOrder = {
+            other: [],
+            enemy: [],
+            top: []
+        }
         this.entities.forEach(entity => {
+            if (entity instanceof EnemyEntity) {
+                drawOrder.enemy.push(entity);
+            }
+            else if (entity instanceof CardEntity) {
+                drawOrder.other.push(entity);
+            }
+            else {
+                drawOrder.top.push(entity);
+            }
+        });
+
+        drawOrder.other.forEach(entity => {
             entity.draw(this.screen, this.t);
         });
+        drawOrder.enemy.forEach(entity => {
+            entity.draw(this.screen, this.t);
+        });
+        drawOrder.top.forEach(entity => {
+            entity.draw(this.screen, this.t);
+        });
+
     }
 
     update() {
