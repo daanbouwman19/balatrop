@@ -114,7 +114,7 @@ export class GameActive {
 
     draw() {
         this.screen.clear();
-        this.screen.background("#dddddd");
+        // this.screen.background("#dddddd");
 
         const drawOrder = {
             other: [],

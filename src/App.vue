@@ -27,7 +27,7 @@ window.addEventListener('orientationchange', updateOrientation);
 </script>
 <template>
   <div 
-    class="flex flex-row justify-between items-center w-[100vw] h-[100vh] bg-background"
+    class="flex flex-row justify-between items-center w-[100vw] h-[100vh]"
     v-if="!rotateDevice"
   >
     <ScoreBar :game="game"/>

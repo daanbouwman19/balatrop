@@ -4,7 +4,11 @@ module.exports = {
     './src/**/*.{vue,js,ts,jsx,tsx}'
   ],
   theme: {
-    extend: {},
+    extend: {
+      // backgroundImage: {
+      //   'pixel-background': "url('/images/pixel_background.jpg')",
+      // }
+    },
     colors: {
       "transparent": "#00000000",
       "text-color": "#FFFFFF",

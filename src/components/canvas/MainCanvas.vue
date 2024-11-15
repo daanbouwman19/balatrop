@@ -45,7 +45,10 @@
 </script>
 
 <template>
-    <div class="h-full w-full">
-        <canvas class="bg-background h-full w-full" ref="canvasRef"></canvas>
+    <div class="h-full w-full border-solid border-[6vh] border-score-board-background">
+        <div class="h-full bg-score-board-background">
+            <canvas class="bg-[url('../../public/images/pixel_background.jpg')] bg-cover h-full w-full border-solid border-[20px] rounded-lg" ref="canvasRef"></canvas>
+
+        </div>
     </div>
 </template>

@@ -19,7 +19,7 @@ const enemyName = "BIG Blind";
 </script>
 
 <template>
-    <div class="mx-2 my-6 w-auto h-full py-2 text-text-color overflow-visible spacing">
+    <div class="h-full text-text-color overflow-visible">
         <div class="h-full w-52 bg-score-board-background flex flex-col flex-1 justify-center shadow-inner gap" > 
             <EnemyHeader class="mx-auto w-[90%] p-1" :enemyName="enemyName"/>
             <EnemyStats class="w-[90%]"/>
@@ -32,10 +32,6 @@ const enemyName = "BIG Blind";
 
 <style scoped>
 @media (min-height: 600px) {
-    .spacing {
-        margin: 0 0 0 2.5rem;
-        padding: 1rem 0 1rem 0;
-    }
 
     .gap {
         gap: 1rem
