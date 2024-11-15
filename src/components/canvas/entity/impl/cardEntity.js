@@ -226,6 +226,12 @@ export class CardEntity extends Entity {
         screen.c().fillText(this.card.name, this.width/2, 0);
         
         screen.c().restore();
+
+
+        // Hitbox for debugging
+        // const mouse = this.game.screen.mouse;
+        // screen.drawRectangle(this.x - this.width / 2, this.y - this.height / 2, this.width, this.height, '#ff0000');
+        // screen.drawRectangle(mouse.x, mouse.y, 20, 20, '#00ff00');
     }
 
     update(t) {

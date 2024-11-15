@@ -23,8 +23,8 @@ export class Screen {
 
     updateMousePosition(event) {
         const rect = this.canvas.getBoundingClientRect();
-        this.mouse.x = event.clientX - rect.left;
-        this.mouse.y = event.clientY - rect.top;
+        this.mouse.x = event.clientX - rect.left * 1.5;
+        this.mouse.y = event.clientY - rect.top * 1.5;
     }
 
     clear() {
