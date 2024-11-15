@@ -9,7 +9,8 @@ const props = defineProps({
     }
 });
 
-const enemyName = `A wild ${props.game.enemy.pokemon.name} appears`
+console.log(props.game)
+const enemyName = `A wild ${props.game.enemy.pokemon.name} has appeard`
 
 </script>
 
