@@ -46,6 +46,7 @@ export class EnemyEntity extends Entity {
 
         screen.c().save();  
 
+        screen.c().imageSmoothingEnabled = false;
         screen.c().translate(this.x, this.y);
         screen.c().scale(3,3);
         screen.c().shadowColor = "black";
