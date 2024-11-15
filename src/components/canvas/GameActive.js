@@ -202,7 +202,7 @@ export class GameActive {
 
                 } else if (this.attack_queue.length > 0) {
                     const currentCardEntity = this.attack_queue[0].card;
-                    var damage = currentCardEntity.value * currentCardEntity.entity.calculateTypeMultiplier();
+                    var damage = currentCardEntity.value * currentCardEntity.entity.calculateTypeMultiplier(this.enemy.pokemon.types);
 
                     this.addEntity(
                         new DamageEntity(
