@@ -1,11 +1,11 @@
 <script setup>
 import SmallComponent from './SmallComponent.vue';
 import { defineProps } from 'vue';
-import Game from '../../../game.js';
+import { GameActive } from '@/components/canvas/GameActive';
 
 defineProps({
     game: {
-        type: Game,
+        type: GameActive,
         required: true
     }
 });

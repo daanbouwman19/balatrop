@@ -1,16 +1,16 @@
 <script setup>
 import { computed, defineProps } from 'vue';
-import Game from '../../../game.js';
+import { GameActive } from '@/components/canvas/GameActive';
 
 const props = defineProps({
     game: {
-        type: Game,
+        type: GameActive,
         required: true
     }
 });
 
 const currentHandScore = computed(() => {
-    return props.game.currentMulti * props.game.currentScore
+    return props.game.totalCardsMultiplier * props.game.totalCardsDamage
 });
 
 </script>
@@ -20,11 +20,11 @@ const currentHandScore = computed(() => {
         <span class="p-1">{{ currentHandScore }}</span>
         <div class="flex flex-row content-center items-center">
             <div>
-                <span class="text-white">{{ game.currentScore }}</span>
+                <span class="text-white">{{ game.totalCardsDamage }}</span>
             </div>
             <span class="text-score-board-current-multi-background px-4">X</span>
             <div>
-                <span class="text-white">{{ game.currentMulti }}</span>
+                <span class="text-white">{{ game.totalCardsMultiplier }}</span>
             </div>
         </div>
     </div>

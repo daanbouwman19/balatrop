@@ -2,29 +2,29 @@
 import EnemyStats from './enemy/EnemyStats.vue';
 import EnemyHeader from './enemy/EnemyHeader.vue';
 import CurrentScore from './current-round/CurrentScore.vue';
-import CurrentRoundScore from './current-round/CurrentRoundScore.vue';
 import HandInformation from './current-round/HandInformation.vue';
 import { defineProps } from 'vue';
-import Game from '../../game.js';
+import { GameActive } from '../canvas/GameActive';
 
-defineProps({
+const props = defineProps({
+    isMounted: {
+        type: Boolean,
+        required: true,
+    },
     game: {
-        type: Game,
+        type: GameActive,
         required: true
     }
 });
 
-const enemyName = "BIG Blind";
-
 </script>
 
 <template>
-    <div class="h-full text-text-color overflow-visible">
+    <div v-if="isMounted" class="h-full text-text-color overflow-visible">
         <div class="h-full w-52 bg-score-board-background flex flex-col flex-1 justify-center shadow-inner gap" > 
-            <EnemyHeader class="mx-auto w-[90%] p-1" :enemyName="enemyName"/>
+            <EnemyHeader class="mx-auto w-[90%] p-1" :game="game"/>
             <EnemyStats class="w-[90%]"/>
-            <CurrentRoundScore :game="game"/>
-            <CurrentScore :game="game"/>
+            <CurrentScore  :game="game"/>
             <HandInformation :game="game"/>
         </div>
     </div>

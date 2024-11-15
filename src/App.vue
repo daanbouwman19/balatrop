@@ -24,12 +24,14 @@ window.addEventListener('resize', updateWidth);
 window.addEventListener('orientationchange', updateOrientation);
 
 const canvas = ref(null);
+const isMounted = ref(false)
 
 const game = ref(null);
 
 // GAME INITIALIZATION
 
 onMounted(() => {
+  console.log(canvas.value)
   if (!canvas.value) {
     canvas.value = document.querySelector("canvas")
   }
@@ -37,6 +39,8 @@ onMounted(() => {
   game.value = new GameActive(canvas.value);
 
   loop();
+
+  isMounted.value = true
 });
 
 // GAME LOOP
@@ -56,13 +60,13 @@ const loop = () => {
     class="flex flex-row justify-between items-center w-[100vw] h-[100vh]"
     v-if="!rotateDevice"
   >
-    <!-- <ScoreBar :game="game"/> -->
+    <ScoreBar :isMounted="isMounted" :game="game"/>
     <div class="h-full w-full border-solid border-[6vh] border-score-board-background">
         <div class="h-full bg-score-board-background">
             <canvas class="bg-[url('../../public/images/pixel_background.jpg')] bg-cover h-full w-full border-solid border-[20px] rounded-lg" ref="canvas"></canvas>
         </div>
     </div>
-    <!-- <CurrentMoney class="fixed top-1 right-1" :game="game"/> -->
+    <CurrentMoney class="fixed top-1 right-1" v-if="isMounted" :game="game"/>
   </div>
   <div v-else>
     <RotateDevice/>

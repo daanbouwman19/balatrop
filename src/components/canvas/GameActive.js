@@ -32,6 +32,8 @@ export class GameActive {
         this.totalCardsMultiplier = 1;
         this.totalCardsDamage = 1;
 
+        this.score = 0;
+
         this.screen.clear();
         this.canvas.addEventListener("mousemove", (event) => {
             this.screen.updateMousePosition(event);
@@ -110,6 +112,9 @@ export class GameActive {
 
 
         if (state === "POST_ROUND") {
+            this.totalCardsMultiplier = 1;
+            this.totalCardsDamage = 1;
+
             if (this.enemy.deathCheck()) {
                 console.log(`Enemy has died!`);
                 this.removeEntity(this.enemy);
