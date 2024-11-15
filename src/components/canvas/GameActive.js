@@ -242,6 +242,7 @@ export class GameActive {
                 image: pokemonData.sprite,
                 evolvedFrom: pokemonData.evolvedFrom,
                 evolvesTo: pokemonData.evolvesTo,
+                types: pokemonData.types,
                 entity: null
             };
             pokemonCards.push(card);
