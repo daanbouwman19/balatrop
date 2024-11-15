@@ -73,7 +73,7 @@ export class CardEntity extends Entity {
 
         // Iterate over the card's types
         this.card.types.forEach((cardTypeObj) => {
-            const cardTypeName = cardTypeObj.name; // Get the name of the type (e.g., "water")
+            const cardTypeName = cardTypeObj.type.name; // Get the name of the type (e.g., "water")
 
             // Ensure the card type exists in the type relations map
             if (!typeRelationsMap[cardTypeName]) {
@@ -85,28 +85,29 @@ export class CardEntity extends Entity {
             const damageRelations = typeRelationsMap[cardTypeName];
 
             // Check each target type against this card type's damage relations
-            targetTypes.forEach((targetTypeName) => {
-                if (damageRelations.doubleDamageTo.includes(targetTypeName)) {
+            targetTypes.forEach((type) => {
+                if (damageRelations.doubleDamageTo.includes(type.type.name)) {
                     multiplier *= 2; // Double damage
-                } else if (damageRelations.halfDamageTo.includes(targetTypeName)) {
+                } else if (damageRelations.halfDamageTo.includes(type.type.name)) {
                     multiplier *= 0.5; // Half damage
-                } else if (damageRelations.noDamageTo.includes(targetTypeName)) {
+                } else if (damageRelations.noDamageTo.includes(type.type.name)) {
                     multiplier *= 0; // No damage
                 }
             });
         });
-
+        console.log(multiplier)
         return multiplier;
     }
 
     attack(target, attackHistory) {
         let baseDamage = this.card.value
-        let markiplier = this.calculateTypeMultiplier(target.types)
+        let markiplier = this.calculateTypeMultiplier(target.pokemon.types)
+        let damage = baseDamage * markiplier
 
         attackHistory.push({
             card: {
                 name: this.card.name,
-                type: "none"  /// Element type or something
+                type: this.card.types  /// Element type or something
             },
             damage: baseDamage
         });

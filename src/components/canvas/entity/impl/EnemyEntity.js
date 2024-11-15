@@ -19,6 +19,7 @@ export class EnemyEntity extends Entity {
             this.ready = true;
         })
 
+        this.pokemon = pokemon
 
         this.hp = pokemon.value * 10;
         this.maxHp = this.hp;
