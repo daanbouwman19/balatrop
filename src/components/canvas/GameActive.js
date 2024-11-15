@@ -249,9 +249,6 @@ export class GameActive {
         this.entities.forEach(entity => {
             if (entity.handleClick) entity.handleClick(event);
         });
-        this.entities.forEach(entity => {
-            if (entity.handleClick) entity.handleClick(event);
-        });
     }
 
 

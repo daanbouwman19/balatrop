@@ -44,9 +44,12 @@ export class CardEntity extends Entity {
         const handSize = 8;
         this.animation = (screen, t, lt) => {
             // Idle animation & Selected animation
-            const handSpan = screen.width - 200;
+            const handSpan = screen.width - this.width;
+
+            // Map (0, handSize * this.width) (this.width/2, handSpan)
+
             
-            const targetX = screen.width/2 - handSpan/2 + handSpan / handSize * this.index + 100;
+            const targetX = Math.lerp(this.width, handSpan, this.index / (handSize - 1));
             const targetY = screen.height - 200 + Math.sin(t * 0.01 + this.index) * 10;
 
             this.x = Math.lerp(this.x, targetX, 0.1);
@@ -69,13 +72,19 @@ export class CardEntity extends Entity {
 
 
     resize(screen) {
-        const size = Math.min(screen.height/8, 200) * 2;
+        const size = Math.min(screen.height/10, 96);
         console.log(size);
+
         this.width = size;
-        this.height = size * 1.3;
+        this.height = size;
 
         this.image.width = this.width;
         this.image.height = this.height;
+
+        this.typeImages.forEach((image) => {
+            image.width = size / 5;
+            image.height = size / 15;
+        });
     }
 
 
@@ -183,37 +192,38 @@ export class CardEntity extends Entity {
             screen.c().translate(-this.width/2, -this.height/2);
         }
 
-        // // this.z = Math.abs(s) * 10;
-        // if (this.z > 0) {
-        //     screen.c().save();
-        //     screen.c().translate(4 * this.z, 10 * this.z);
-        //     translate();
+        // this.z = Math.abs(s) * 10;
+        if (this.z > 0) {
+            screen.c().save();
+            screen.c().translate(4 * this.z, 10 * this.z);
+            translate();
 
-        //     screen.drawRectangle(0, 0, this.width, this.height, 'rgba(0, 0, 0, 0.5)');
+            screen.drawRectangle(0, 0, this.width, this.height, 'rgba(0, 0, 0, 0.5)', 30);
 
-        //     screen.c().restore();
-        // }
+            screen.c().restore();
+        }
         screen.c().save();
         translate();
 
         const halfWidth = this.width / 2 - 24
         const halfHeight = this.height / 2 - 16
 
-        screen.drawRectangle(halfWidth, halfHeight, 96, 96, "#FFFFFFC8", 30)
-        screen.c().drawImage(this.image, halfWidth, halfHeight)
+        screen.drawRectangle(0, 0, this.width, this.height, "#FFFFFFC8", 30)
+        screen.c().drawImage(this.image, 0, 0)
 
         this.typeImages.forEach((image, index) => {
-            screen.c().drawImage(image, halfWidth + index * image.width, halfHeight)
+            screen.c().drawImage(image, halfWidth, this.height + index * image.height * 3.5);
         })
 
         //draw the pokemon name
         screen.c().fillStyle = "#FFCB00"
         screen.c().font = "20px pokemon";
         screen.c().strokeStyle = "#335FAB";
+        screen.c().textAlign = "center";
         screen.c().lineWidth = 6;   
 
-        screen.c().strokeText(this.card.name, halfWidth + 48 - this.card.name.length , 69);
-        screen.c().fillText(this.card.name, halfWidth + 48 - this.card.name.length , 69);
+        screen.c().strokeText(this.card.name, this.width/2, 0);
+        screen.c().fillText(this.card.name, this.width/2, 0);
         
         screen.c().restore();
     }
@@ -228,6 +238,7 @@ export class CardEntity extends Entity {
                 this.z = Math.lerp(this.z, 2, 0.4);
             } else {
                 this.z = Math.lerp(this.z, 0, 0.4);
+                if (this.z < 0.08) this.z = 0;
             }
         }
 
