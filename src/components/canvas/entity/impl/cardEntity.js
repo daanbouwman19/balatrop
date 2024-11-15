@@ -15,6 +15,7 @@ export class CardEntity extends Entity {
 
         this.image = new Image(200, 200);
         this.image.src = this.card.image;
+
         
         this.ready = false;
         this.image.addEventListener("load", () => {
@@ -23,6 +24,11 @@ export class CardEntity extends Entity {
 
         this.width = 150;
         this.height = 200;
+
+        this.background = new Image(this.width, this.height);
+        this.background.src = "images/back.png"
+        this.background.z = -1
+
 
         this.hovered = false;
         this.z = 0;
@@ -171,9 +177,12 @@ export class CardEntity extends Entity {
         screen.c().save();
         translate();
 
+        const halfWidth = this.width / 2 - 24
+        const halfHeight = this.height / 2 - 16
 
-        screen.drawRectangle(0, 0, this.width, this.height, 'red');
-        screen.c().drawImage(this.image, 0, 0)
+        screen.c().drawImage(this.background, 0, 0);
+        screen.drawRectangle(halfWidth, halfHeight, 96, 96, "#FFFFFFC8", 30)
+        screen.c().drawImage(this.image, halfWidth, halfHeight)
 
         screen.c().fillStyle = 'black';
         screen.c().font = '20px Arial';

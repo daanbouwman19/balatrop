@@ -18,7 +18,7 @@ export class MultiplierEntity extends Entity {
 
     update(t) {
         this.delta += 1;
-        this.y -= 2.5 * this.movement;
+        this.y -= 2 * this.movement;
 
         if (this.delta == 20) {
             this.destroy()
