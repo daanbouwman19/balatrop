@@ -4,7 +4,8 @@ import { CorpseEntity } from "./CorpseEntity";
 export class EnemyEntity extends Entity {
 
     constructor(x, y, width, height, pokemon, difficulty) {
-        super(x, y);    
+        super(x, y);
+        this.resizeHelpMe = width / 96;
         this.width = width;
         this.height = height;
 
@@ -48,7 +49,7 @@ export class EnemyEntity extends Entity {
 
         screen.c().imageSmoothingEnabled = false;
         screen.c().translate(this.x, this.y);
-        screen.c().scale(3,3);
+        screen.c().scale(this.resizeHelpMe, this.resizeHelpMe);
         screen.c().shadowColor = "black";
         screen.c().shadowBlur = 20;
 

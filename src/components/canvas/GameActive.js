@@ -93,7 +93,6 @@ export class GameActive {
         if (this.STATE === "INTRO" && state === "FILLHAND") {
             this.spawnEnemy();
             window.dispatchEvent(new Event('resize'));
-
         }
 
         this.STATE = state;
