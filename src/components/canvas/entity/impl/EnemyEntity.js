@@ -17,6 +17,12 @@ export class EnemyEntity extends Entity {
         this.image.addEventListener("load", () => {
             this.ready = true;
         })
+
+
+        this.hp = pokemon.value * 10;
+        this.maxHp = this.hp;
+        this.damageTaken = 0;
+        this.damageTakenDisplayDelay = 0;
     }
 
     draw(screen, t) {
@@ -25,6 +31,8 @@ export class EnemyEntity extends Entity {
         const targetY = Math.sin(t * 0.01) * 10;
         
         this.y = Math.lerp(this.y, targetY, 0.1);
+        if (this.damageTakenDisplayDelay > 0) this.damageTakenDisplayDelay--;
+        else this.damageTaken = Math.lerp(this.damageTaken, 0, 0.1);
 
         screen.c().save();  
 
@@ -36,9 +44,28 @@ export class EnemyEntity extends Entity {
         screen.c().drawImage(this.image, 0,0);
 
         //TODO draw health bar
-        
+        const hpPercent = this.hp / this.maxHp;
+        const damagePercent = this.damageTaken / this.maxHp;
+        screen.c().fillStyle = "green";
+        screen.c().fillRect(0, 10, 96 * hpPercent, 5);
+        screen.c().fillStyle = "red";
+        screen.c().fillRect(96 * hpPercent, 10, 96 * (1 - hpPercent), 5);
+        screen.c().fillStyle = "white";
+        screen.c().fillRect(96 * hpPercent, 10, (damagePercent * 96), 5);
 
         screen.c().restore();
+    }
+
+    damage(amount) {
+        this.hp -= amount;
+        this.damageTaken += amount;
+        this.damageTakenDisplayDelay = 5;
+    }
+
+    deathCheck() {
+        // Only do this at the end of a round; punching the dead is tolerated
+
+        return this.hp <= 0;
     }
 
 }

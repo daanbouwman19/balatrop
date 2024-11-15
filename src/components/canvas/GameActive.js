@@ -2,6 +2,7 @@ import { Screen } from "./screen";
 import { FrankEntity } from "./entity/impl/FrankEntity";
 import { CardEntity } from "./entity/impl/cardEntity";
 import { EnemyEntity } from "./entity/impl/EnemyEntity";
+import { ButtonEntity } from "./entity/impl/ButtonEntity";
 
 export class GameActive {
 
@@ -9,7 +10,7 @@ export class GameActive {
         // States
         this.STATE = "START";
         this.t = 0;
-
+        this.anim = 0;
 
         this.pokemon_cards = this.initializePokemonCards()
         this.player_deck = this.initializeDeck()
@@ -44,14 +45,16 @@ export class GameActive {
 
 
         // this.startIntro();
-        this.STATE = "FILLHAND"
+        this.enterState("FILLHAND");
         // Debug
         
         // this.entities.push(new FrankEntity(5, 5, 10, 10, "#FF0000"));
         
         let random_card = this.pokemon_cards[Math.floor(Math.random() * this.pokemon_cards.length)];
         this.entities.push(new FrankEntity(5, 5, 10, 10, "#FF0000"));
-        this.entities.push(new EnemyEntity(200, 0, 96, 96, random_card));
+
+        this.enemy = new EnemyEntity(200, 0, 96, 96, random_card);
+        this.addEntity(this.enemy);
 
     }
 
@@ -60,7 +63,44 @@ export class GameActive {
         frank.intro();
         this.addEntity(frank);
 
-        this.STATE = "INTRO";
+        enterState("INTRO");
+    }
+
+    enterState(state) {
+        this.STATE = state;
+        this.anim = 0;
+
+        if (state === "FILLHAND") {
+            this.drawed_this_round = [];
+        }
+
+        if (state === "SELECT_CARDS") {
+            const button = new ButtonEntity(this.screen.width/2 - 100, this.screen.height - 80, 200, 50, "Submit", "#22AA22", () => {
+                this.removeEntity(button);
+                this.enterState("ATTACK");
+            });
+            this.addEntity(button);
+        }
+
+        if (state === "ATTACK") {
+            this.attack_queue = this.entities.filter(entity => entity instanceof CardEntity && entity.selected);
+            this.attack_history = [];
+        }
+
+
+        if (state === "POST_ROUND") {
+            if (this.enemy.deathCheck()) {
+                console.log(`Enemy has died!`);
+                this.removeEntity(this.enemy);
+
+                this.enemy = new EnemyEntity(200, 0, 96, 96, this.pokemon_cards[Math.floor(Math.random() * this.pokemon_cards.length)]);
+                this.addEntity(this.enemy);
+
+            }
+
+            this.enterState("FILLHAND");
+        }
+
     }
 
 
@@ -90,7 +130,29 @@ export class GameActive {
                 if (this.hand_cards.length < HAND_SIZE) {
                     this.addDeckCardToMakeEntityJeMoeder();
                 } else {
-                    this.STATE = "IDLE";
+                    this.enterState("SELECT_CARDS");
+                }
+            }
+        }
+
+        if (this.STATE === "SELECT_CARDS") {
+            // pass
+        }
+
+        if (this.STATE === "ATTACK") {
+            //
+            this.anim += 1;
+            if (this.anim % 10 == 0) {
+
+                if (this.attack_queue.length > 0) {
+                    const attacker = this.attack_queue[0];
+                    attacker.attack(this.enemy, this.attack_history);
+                    this.attack_queue = this.attack_queue.slice(1);
+
+                    this.hand_cards = this.hand_cards.filter(card => card !== attacker.card);
+                } else {
+                    // End of round
+                    this.enterState("POST_ROUND");
                 }
             }
         }
@@ -101,6 +163,9 @@ export class GameActive {
     }
 
     handleClick(event) {
+        this.entities.forEach(entity => {
+            if (entity.handleClick) entity.handleClick(event);
+        });
     }
 
 
@@ -129,7 +194,7 @@ export class GameActive {
 
 
     refillHand() {
-        this.STATE = "FILLHAND";
+        this.enterState("FILLHAND");
     }
 
     addDeckCardToMakeEntityJeMoeder() {
