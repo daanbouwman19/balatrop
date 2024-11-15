@@ -33,6 +33,7 @@ export class GameActive {
         this.totalCardsDamage = 1;
 
         this.score = 0;
+        this.fightReward = 5;
 
         this.screen.clear();
         this.canvas.addEventListener("mousemove", (event) => {
@@ -124,6 +125,7 @@ export class GameActive {
 
             }
 
+            this.score += this.fightReward;
             this.enterState("FILLHAND");
         }
 
