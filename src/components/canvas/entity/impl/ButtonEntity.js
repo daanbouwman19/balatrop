@@ -17,6 +17,7 @@ export class ButtonEntity extends Entity {
 
     handleClick() {
         if (this.hovered && !this.disabled) {
+            this.disabled = true; // Disable the button after click
             this.onClick();
         }
     }

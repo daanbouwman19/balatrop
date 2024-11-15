@@ -89,6 +89,9 @@ export class GameActive {
     
         if (state === "SELECT_CARDS") {
             if (this.submitsRemaining > 0) {
+                // Remove any existing submit buttons to prevent duplicates
+                this.entities = this.entities.filter(entity => !(entity instanceof ButtonEntity));
+    
                 const button = new ButtonEntity(
                     this.screen.width / 2 - 100,
                     this.screen.height - 80,
@@ -97,6 +100,7 @@ export class GameActive {
                     "Submit",
                     "#22AA22",
                     () => {
+                        console.log("Submit button clicked");
                         this.removeEntity(button);
                         this.submitsRemaining -= 1;
                         this.enterState("ADD_DAMAGE");
@@ -142,6 +146,11 @@ export class GameActive {
                 console.log(`Enemy has died!`);
                 this.removeEntity(this.enemy);
 
+                // Reset game variables
+                this.totalCardsMultiplier = 1;
+                this.totalCardsDamage = 1;
+
+                // Create a new enemy
                 this.enemy = new EnemyEntity(
                     200,
                     0,
@@ -154,6 +163,12 @@ export class GameActive {
                 this.addEntity(this.enemy);
 
                 this.submitsRemaining = 3; // Reset submitsRemaining for new enemy
+
+                // Ensure SubmitsRemainingEntity is updated
+                if (!this.submitsRemainingEntity) {
+                    this.submitsRemainingEntity = new SubmitsRemainingEntity(this);
+                    this.addEntity(this.submitsRemainingEntity);
+                }
             }
 
             if (this.submitsRemaining > 0) {
@@ -168,6 +183,9 @@ export class GameActive {
         if (state === "GAME_OVER") {
             // Clear existing entities
             this.entities = [];
+
+            // Remove reference to SubmitsRemainingEntity
+            this.submitsRemainingEntity = null;
 
             // Add GameOverEntity
             const gameOverEntity = new GameOverEntity(this.screen.width / 2, this.screen.height / 2);
