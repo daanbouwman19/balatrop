@@ -21,6 +21,7 @@ export class GameActive {
         // Game
         this.hand_cards = [];
         this.entities = [];
+        this.enemies_defeated = 0;
 
         // Rendering
         this.canvas = canvas;
@@ -128,8 +129,9 @@ export class GameActive {
             if (this.enemy.deathCheck()) {
                 console.log(`Enemy has died!`);
                 this.removeEntity(this.enemy);
+                this.enemies_defeated += 1;
 
-                this.spawnEnemy()
+                this.spawnEnemy();
 
                 this.score += this.fightReward;
                 this.fightReward = this.enemy.pokemon.value;
