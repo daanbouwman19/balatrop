@@ -78,6 +78,8 @@ export class GameActive {
     spawnEnemy() {
         this.enemy = new EnemyEntity(200, 0, 96, 96, this.pokemon_cards[Math.floor(Math.random() * this.pokemon_cards.length)]);
         this.addEntity(this.enemy);
+
+        this.fightReward = this.enemy.pokemon.value;
     }
 
     enterState(state) {
@@ -123,9 +125,10 @@ export class GameActive {
                 this.enemy = new EnemyEntity(200, 0, 96, 96, this.pokemon_cards[Math.floor(Math.random() * this.pokemon_cards.length)]);
                 this.addEntity(this.enemy);
 
+                this.score += this.fightReward;
+                this.fightReward = this.enemy.pokemon.value;
             }
 
-            this.score += this.fightReward;
             this.enterState("FILLHAND");
         }
 
