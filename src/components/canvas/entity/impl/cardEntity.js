@@ -64,7 +64,20 @@ export class CardEntity extends Entity {
             }
         }
         
+        this.width = 0;
     }
+
+
+    resize(screen) {
+        const size = Math.min(screen.height/8, 200) * 2;
+        console.log(size);
+        this.width = size;
+        this.height = size * 1.3;
+
+        this.image.width = this.width;
+        this.image.height = this.height;
+    }
+
 
     handleClick() {
         if (this.hovered) {
@@ -107,7 +120,7 @@ export class CardEntity extends Entity {
         });
         return multiplier;
     }
-
+    
     attack(target, attackMultiplier, attackHistory) {
         let baseDamage = this.card.value
         let markiplier = this.calculateTypeMultiplier(target.pokemon.types)
@@ -155,6 +168,8 @@ export class CardEntity extends Entity {
             // screen.drawRectangle(this.x, this.y, this.width, this.height, this.color);
 
         if (!this.ready) return;
+
+        if (this.width == 0) this.resize(screen);
 
 
         this.lt++;

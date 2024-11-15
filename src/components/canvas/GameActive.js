@@ -42,6 +42,9 @@ export class GameActive {
         this.canvas.addEventListener("click", (event) => {
             this.handleClick(event);
         });
+        this.canvas.addEventListener("touchstart", (event) => {
+            this.handleClick(event);
+        });
         window.addEventListener("keydown", (event) => {
             this.entities.forEach(entity => {
                 if (entity.keydown) entity.keydown(event);
@@ -50,15 +53,14 @@ export class GameActive {
 
 
         // this.startIntro();
-        this.enterState("FILLHAND");
+        this.STATE = "FILLHAND"
         // Debug
         
         // this.entities.push(new FrankEntity(5, 5, 10, 10, "#FF0000"));
         
-        let random_card = this.pokemon_cards[Math.floor(Math.random() * this.pokemon_cards.length)];
-
-        this.enemy = new EnemyEntity(200, 0, 96, 96, random_card);
-        this.addEntity(this.enemy);
+        // let random_card = this.pokemon_cards[Math.floor(Math.random() * this.pokemon_cards.length)];
+        // this.entities.push(new FrankEntity(5, 5, 10, 10, "#FF0000"));
+        // this.entities.push(new EnemyEntity(200, 0, 96, 96, random_card));
 
     }
 
@@ -67,7 +69,9 @@ export class GameActive {
         frank.intro();
         this.addEntity(frank);
 
-        enterState("INTRO");
+        this.enterState("INTRO");
+
+        this.enemy = new EnemyEntity(200, 0, 96, 96, this.pokemon_cards[Math.floor(Math.random() * this.pokemon_cards.length)]);
     }
 
     enterState(state) {
@@ -245,6 +249,9 @@ export class GameActive {
         this.entities.forEach(entity => {
             if (entity.handleClick) entity.handleClick(event);
         });
+        this.entities.forEach(entity => {
+            if (entity.handleClick) entity.handleClick(event);
+        });
     }
 
 
@@ -258,6 +265,7 @@ export class GameActive {
         });
     }
     removeEntity(entity) {
+        this.entities = this.entities.filter(e => e !== entity);
         this.entities = this.entities.filter(e => e !== entity);
     }
     
