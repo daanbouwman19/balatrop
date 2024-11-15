@@ -196,7 +196,7 @@ export class GameActive {
                         this.addEntity(
                             new MultiplierEntity(
                                 currentCardEntity.entity.x, 
-                                currentCardEntity.entity.y,
+                                currentCardEntity.entity.y - currentCardEntity.entity.height / 2,
                                 multiplier
                             )
                         )
@@ -204,14 +204,13 @@ export class GameActive {
 
                 } else if (this.attack_queue.length > 0) {
                     const currentCardEntity = this.attack_queue[0].card;
-                    console.log(currentCardEntity)
-                    var damage = currentCardEntity.value;
+                    var damage = currentCardEntity.value * currentCardEntity.entity.calculateTypeMultiplier();
 
                     this.addEntity(
                         new DamageEntity(
-                            currentCardEntity.entity.x - currentCardEntity.entity.width, 
-                            currentCardEntity.entity.y,
-                            multiplier
+                            currentCardEntity.entity.x - currentCardEntity.entity.width / 2, 
+                            currentCardEntity.entity.y - currentCardEntity.entity.height / 2,
+                            damage
                         )
                     )
                     

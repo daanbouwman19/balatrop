@@ -108,9 +108,9 @@ export class CardEntity extends Entity {
                 name: this.card.name,
                 type: "none"  /// Element type or something
             },
-            damage: damage
+            damage: baseDamage
         });
-        target.damage(damage);
+        target.damage(baseDamage);
 
 
         this.selected = false;

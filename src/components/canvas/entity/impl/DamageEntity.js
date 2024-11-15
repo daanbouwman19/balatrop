@@ -5,7 +5,7 @@ export class DamageEntity extends Entity {
         super(x, y)
         this.textColor = "#FF0000"
         this.delta = 0;
-        this.movementMultiplier = 1;
+        this.movement = 2;
         this.damage = damage;
     }
 
@@ -18,10 +18,9 @@ export class DamageEntity extends Entity {
 
     update(t) {
         this.delta += 1;
-        this.y -= 2 * this.multiplier;
-        this.x -= 1 * this.multiplier
+        this.y -= 2.5 * this.movement;
 
-        if (this.delta == 10) {
+        if (this.delta == 20) {
             this.destroy()
         }
     }
