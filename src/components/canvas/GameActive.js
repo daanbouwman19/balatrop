@@ -167,6 +167,7 @@ export class GameActive {
             this.anim += 1;
             if (this.anim % 10 == 0) {
 
+                // TODO: Iets met een multiplier depending on welke selectie van kaarten je hebt
                 if (this.attack_queue.length > 0) {
                     const attacker = this.attack_queue[0];
                     attacker.attack(this.enemy, this.attack_history);

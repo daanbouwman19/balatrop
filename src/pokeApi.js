@@ -121,3 +121,58 @@ export const mapEvolutionTrees = async (filteredPokemonData) => {
     }
 };
 
+export const getTypeRelations = async () => {
+    try {
+        // Fetch the list of Pokémon types
+        const typeListResponse = await P.getTypesList();
+        const types = typeListResponse.results;
+
+        const typeRelationsPromises = types.map(async (type) => {
+            // Fetch detailed data for each type
+            const typeDetails = await P.getTypeByName(type.name);
+
+            // Extract relevant information from damage_relations
+            const damageRelations = typeDetails.damage_relations;
+
+            return {
+                name: type.name,
+                damageRelations: {
+                    doubleDamageFrom: damageRelations.double_damage_from.map((relation) => relation.name),
+                    doubleDamageTo: damageRelations.double_damage_to.map((relation) => relation.name),
+                    halfDamageFrom: damageRelations.half_damage_from.map((relation) => relation.name),
+                    halfDamageTo: damageRelations.half_damage_to.map((relation) => relation.name),
+                    noDamageFrom: damageRelations.no_damage_from.map((relation) => relation.name),
+                    noDamageTo: damageRelations.no_damage_to.map((relation) => relation.name),
+                }
+            };
+        });
+
+        const typeRelations = await Promise.all(typeRelationsPromises);
+
+        // Create a mapping object for better organization
+        const typeRelationsMap = typeRelations.reduce((map, typeRelation) => {
+            map[typeRelation.name] = typeRelation.damageRelations;
+            return map;
+        }, {});
+
+        console.log("Type Relations Map:", typeRelationsMap);
+
+        // Save the mapping as a JSON file via Blob
+        const fileName = "typeRelationsMap.json";
+        const jsonData = JSON.stringify(typeRelationsMap, null, 2);
+
+        const blob = new Blob([jsonData], { type: "application/json" });
+        const link = document.createElement("a");
+        link.href = URL.createObjectURL(blob);
+        link.download = fileName;
+        link.click();
+
+        console.log(`Type relations map saved to ${fileName}`);
+
+        return typeRelationsMap;
+    } catch (error) {
+        console.error("Error fetching type relations:", error);
+        throw error;
+    }
+};
+

@@ -2,6 +2,7 @@
 import { HighlightSpanKind } from 'typescript';
 import Entity from '../entity.js';
 import * as Particle from './Particle.js';
+import typeRelationsMap from "../../../../../public/typeRelationsMap.json"
 
 export class CardEntity extends Entity {
 
@@ -61,8 +62,46 @@ export class CardEntity extends Entity {
         }
     }
 
+    calculateTypeMultiplier(targetTypes) {
+        if (!this.card.types || !targetTypes || !Array.isArray(this.card.types) || !Array.isArray(targetTypes)) {
+            console.error("Invalid types provided.");
+            return 1; // Default multiplier
+        }
+
+        // Initialize the multiplier to 1
+        let multiplier = 1;
+
+        // Iterate over the card's types
+        this.card.types.forEach((cardTypeObj) => {
+            const cardTypeName = cardTypeObj.name; // Get the name of the type (e.g., "water")
+
+            // Ensure the card type exists in the type relations map
+            if (!typeRelationsMap[cardTypeName]) {
+                console.warn(`Type "${cardTypeName}" not found in typeRelationsMap.`);
+                return;
+            }
+
+            // Get the damage relations for this card type
+            const damageRelations = typeRelationsMap[cardTypeName];
+
+            // Check each target type against this card type's damage relations
+            targetTypes.forEach((targetTypeName) => {
+                if (damageRelations.doubleDamageTo.includes(targetTypeName)) {
+                    multiplier *= 2; // Double damage
+                } else if (damageRelations.halfDamageTo.includes(targetTypeName)) {
+                    multiplier *= 0.5; // Half damage
+                } else if (damageRelations.noDamageTo.includes(targetTypeName)) {
+                    multiplier *= 0; // No damage
+                }
+            });
+        });
+
+        return multiplier;
+    }
+
     attack(target, attackHistory) {
-        let damage = 2;
+        let baseDamage = this.card.value
+        let markiplier = this.calculateTypeMultiplier(target.types)
 
         attackHistory.push({
             card: {
