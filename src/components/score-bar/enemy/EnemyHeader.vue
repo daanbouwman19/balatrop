@@ -9,7 +9,6 @@ const props = defineProps({
   },
 });
 
-console.log(props.game);
 const enemyName = computed(() => {
   if (props.game.STATE === "INTRO") {
     return "Frank";

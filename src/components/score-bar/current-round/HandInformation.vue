@@ -1,5 +1,6 @@
 <script setup>
 import { GameActive } from "@/components/canvas/GameActive";
+import { computed } from "vue";
 
 const props = defineProps({
   game: {
@@ -8,9 +9,9 @@ const props = defineProps({
   },
 });
 
-console.log(props.game);
-const cardsLeft =
-  props.game.player_deck.length - props.game.drawed_this_round.length;
+const cardsLeft = computed(
+  () => props.game.player_deck.length - props.game.drawed_this_round.length
+);
 </script>
 
 <template>

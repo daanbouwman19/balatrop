@@ -21,7 +21,9 @@ export default tseslint.config(
     },
     rules: {
       // Add custom rules here
-      'vue/multi-word-component-names': 'off', 
+      'vue/multi-word-component-names': ['error', {
+        'ignores': ['App']
+      }], 
     },
   },
 );

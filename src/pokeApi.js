@@ -16,7 +16,6 @@ const genOne = {
 export const generationOne = async () => {
     try {
         const response = await P.getPokemonsList(genOne);
-        console.log("Fetched Pokémon List:", response);
         return response; // Return the list of Pokémon
     } catch (error) {
         console.error("Error fetching Pokémon list:", error);
@@ -43,8 +42,6 @@ export const getAllPokemonData = async () => {
 
         const filteredPokemonData = await Promise.all(pokemonDataPromises);
 
-        console.log("Filtered Pokémon Details:", filteredPokemonData);
-
         // Save the filtered Pokémon data into a JSON file via Blob
         const fileName = "filteredGenerationOnePokemon.json";
         const jsonData = JSON.stringify(filteredPokemonData, null, 2);
@@ -55,8 +52,6 @@ export const getAllPokemonData = async () => {
         link.href = URL.createObjectURL(blob);
         link.download = fileName;
         link.click();
-
-        console.log("Filtered Pokémon data saved as a JSON file in the browser");
 
         return filteredPokemonData; // Return the filtered data if needed elsewhere
     } catch (error) {
@@ -98,12 +93,8 @@ export const mapEvolutionTrees = async (filteredPokemonData) => {
             return mapEvolution(chain.chain);
         });
 
-        // Filter out empty evolution trees
         const cleanedEvolutions = mappedEvolutions.filter(Boolean);
 
-        console.log("Mapped Evolution Trees:", cleanedEvolutions);
-
-        // Save the evolution tree as a Blob
         const fileName = "mappedEvolutionTrees.json";
         const jsonData = JSON.stringify(cleanedEvolutions, null, 2);
 
@@ -113,7 +104,6 @@ export const mapEvolutionTrees = async (filteredPokemonData) => {
         link.download = fileName;
         link.click();
 
-        console.log(`Evolution trees saved to ${fileName}`);
         return cleanedEvolutions;
     } catch (error) {
         console.error("Error mapping evolution trees:", error);
@@ -155,9 +145,6 @@ export const getTypeRelations = async () => {
             return map;
         }, {});
 
-        console.log("Type Relations Map:", typeRelationsMap);
-
-        // Save the mapping as a JSON file via Blob
         const fileName = "typeRelationsMap.json";
         const jsonData = JSON.stringify(typeRelationsMap, null, 2);
 
@@ -166,8 +153,6 @@ export const getTypeRelations = async () => {
         link.href = URL.createObjectURL(blob);
         link.download = fileName;
         link.click();
-
-        console.log(`Type relations map saved to ${fileName}`);
 
         return typeRelationsMap;
     } catch (error) {

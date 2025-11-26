@@ -13,7 +13,7 @@ export default {
         "score-board-enemy-header-background": "#000000",
         "score-board-enemy-card-background": "#FFFF00",
         "score-board-background": "#DB092C",
-        "score-board-background-dark": "#FFFFFFF",
+        "score-board-background-dark": "transparent",
         "score-board-enemy-background": "#000000",
         "score-board-current-score-background": "#000000",
         "score-board-current-multi-background": "#000000",
