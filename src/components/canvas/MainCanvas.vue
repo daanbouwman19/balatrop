@@ -1,25 +1,19 @@
-<script setup>
+<script setup lang="ts">
 import { ref, onMounted } from "vue";
-import Game from "../../game.js";
-import { GameActive } from "./GameActive.js";
+import { GameActive } from "./GameActive";
 
-defineProps({
-  game: {
-    type: Game,
-    required: true,
-  },
-});
+const canvasRef = ref<HTMLCanvasElement | null>(null);
 
-const canvasRef = ref(null);
-
-let gameA = null;
+let gameA: GameActive | null = null;
 
 // GAME INITIALIZATION
 
 onMounted(() => {
   const canvas = canvasRef.value;
 
-  gameA = new GameActive(canvas);
+  if (canvas) {
+    gameA = new GameActive(canvas);
+  }
 
   loop();
 });

@@ -10,8 +10,35 @@ import { SubmitsRemainingEntity } from "./entity/impl/SubmitsRemainingEntity";
 import { SelectedCardsCounterEntity } from "./entity/impl/SelectedCardsCounterEntity";
 
 export class GameActive {
+    STATE: string;
+    t: number;
+    anim: number;
+    selectedCardsCounter: SelectedCardsCounterEntity | null;
+    entities: any[];
+    pokemon_cards: any[];
+    player_deck: any[];
+    drawed_this_round: any[];
+    hand_cards: any[];
+    submitsRemainingEntity: SubmitsRemainingEntity | null;
+    enemies_defeated: number;
+    canvas: HTMLCanvasElement;
+    screen: Screen;
+    totalCardsMultiplier: number;
+    totalCardsDamage: number;
+    score: number;
+    fightReward: number;
+    enemy: EnemyEntity;
+    submitsRemaining: number;
+    attack_queue: any[];
+    cardTypes: any;
+    attack_history: any[];
 
-    constructor(canvas) {
+    constructor(canvas: HTMLCanvasElement) {
+        this.pokemon_cards = this.initializePokemonCards();
+        this.enemy = new EnemyEntity(0, 0, 0, 0, this.pokemon_cards[0], 0);
+        this.submitsRemaining = 0;
+        this.attack_queue = [];
+        this.attack_history = [];
         // States
         this.STATE = "START";
         this.t = 0;
@@ -22,7 +49,6 @@ export class GameActive {
         // Initialize entities before adding any entities
         this.entities = [];
 
-        this.pokemon_cards = this.initializePokemonCards();
         this.player_deck = this.initializeDeck();
         this.drawed_this_round = [];
 
@@ -48,19 +74,19 @@ export class GameActive {
         this.fightReward = 5;
 
         this.screen.clear();
-        this.canvas.addEventListener("mousemove", (event) => {
+        this.canvas.addEventListener("mousemove", (event: MouseEvent) => {
             this.screen.updateMousePosition(event);
         });
         window.addEventListener("resize", () => {
             this.screen.resize(this.canvas.clientWidth, this.canvas.clientHeight);
         });
-        this.canvas.addEventListener("click", (event) => {
+        this.canvas.addEventListener("click", (event: MouseEvent) => {
             this.handleClick(event);
         });
-        this.canvas.addEventListener("touchstart", (event) => {
+        this.canvas.addEventListener("touchstart", (event: TouchEvent) => {
             this.handleClick(event);
         });
-        window.addEventListener("keydown", (event) => {
+        window.addEventListener("keydown", (event: KeyboardEvent) => {
             this.entities.forEach(entity => {
                 if (entity.keydown) entity.keydown(event);
             });
@@ -70,7 +96,7 @@ export class GameActive {
         this.startIntro();
     }
 
-    startIntro() {
+    startIntro(): void {
         const frank = new FrankEntity(100, 100, 200, 200, "#FF0000");
         frank.intro();
         this.addEntity(frank);
@@ -78,7 +104,7 @@ export class GameActive {
         this.enterState("INTRO");
     }
 
-    spawnEnemy() {
+    spawnEnemy(): void {
         var width = this.screen.width/4;
         var height = this.screen.height/4;
         var x = this.screen.width/2 - width/2;
@@ -97,7 +123,7 @@ export class GameActive {
         }
     }
 
-    enterState(state) {
+    enterState(state: string): void {
         if (this.STATE === "INTRO" && state === "FILLHAND") {
             this.spawnEnemy();
             window.dispatchEvent(new Event('resize'));
@@ -130,7 +156,7 @@ export class GameActive {
                     },
                     () => {
                         const selectedCards = this.entities.filter(
-                            entity => entity instanceof CardEntity && entity.selected
+                            (entity): entity is CardEntity => entity instanceof CardEntity && entity.selected
                         );
                         return selectedCards.length === 0;
                     }
@@ -205,7 +231,7 @@ export class GameActive {
         }
     }
 
-    restartGame() {
+    restartGame(): void {
         this.STATE = "START";
         this.t = 0;
         this.anim = 0;
@@ -227,11 +253,11 @@ export class GameActive {
     
 
 
-    draw() {
+    draw(): void {
         this.screen.clear();
         // this.screen.background("#dddddd");
 
-        const drawOrder = {
+        const drawOrder: { [key: string]: any[] } = {
             other: [],
             enemy: [],
             top: []
@@ -260,7 +286,7 @@ export class GameActive {
 
     }
 
-    update() {
+    update(): void {
         this.t += 1;
         this.anim += 1;
     
@@ -299,7 +325,7 @@ export class GameActive {
 
                     var multiplier = 0;
 
-                    currentCardEntity.types.forEach((type) => {
+                    currentCardEntity.types.forEach((type: any) => {
                         if (this.cardTypes[type.type.name]) {
                             multiplier += 1.5;
                             this.cardTypes[type.type.name] += 1;
@@ -360,28 +386,27 @@ export class GameActive {
         });
     }
 
-    handleClick(event) {
+    handleClick(event: MouseEvent | TouchEvent): void {
         this.entities.forEach(entity => {
             if (entity.handleClick) entity.handleClick(event);
         });
     }
 
 
-    addEntity(entity) {
+    addEntity(entity: any): void {
         entity.setGame(this);
         this.entities.push(entity);
     }
-    addEntities(entities) {
+    addEntities(entities: any[]): void {
         entities.forEach(entity => {
             this.addEntity(entity);
         });
     }
-    removeEntity(entity) {
-        this.entities = this.entities.filter(e => e !== entity);
+    removeEntity(entity: any): void {
         this.entities = this.entities.filter(e => e !== entity);
     }
     
-    drawCardFromDeck() {
+    drawCardFromDeck(): any {
         let card;
         do {
             card = this.player_deck[Math.floor(Math.random() * this.player_deck.length)];
@@ -392,11 +417,11 @@ export class GameActive {
     }
 
 
-    refillHand() {
+    refillHand(): void {
         this.enterState("FILLHAND");
     }
 
-    addDeckCardToMakeEntityJeMoeder() {
+    addDeckCardToMakeEntityJeMoeder(): void {
         const card = this.drawCardFromDeck();
 
         const cardEntity = new CardEntity(this.screen.width / 2, -500, card); 
@@ -407,9 +432,9 @@ export class GameActive {
     }
         
 
-    initializePokemonCards() {
-        const pokemonCards = [];
-        const modules = import.meta.glob('@/pokemon/*.json', { eager: true });
+    initializePokemonCards(): any[] {
+        const pokemonCards: any[] = [];
+        const modules: Record<string, any> = import.meta.glob('@/pokemon/*.json', { eager: true });
         for (const path in modules) {
             const pokemonData = modules[path].default || modules[path];
             const card = {
@@ -426,8 +451,8 @@ export class GameActive {
         return pokemonCards;
     }
 
-    initializeDeck() {
-        const deck = [];
+    initializeDeck(): any[] {
+        const deck: any[] = [];
         this.pokemon_cards.forEach(card => {
             if (card.evolvedFrom === null && deck.length < 40) {
                 deck.push(card);

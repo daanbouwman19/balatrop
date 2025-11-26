@@ -1,11 +1,11 @@
 // This file can help getting the pokeapi jsons needed.
-const Pokedex = require("pokeapi-js-wrapper");
+import Pokedex from "pokeapi-js-wrapper";
 
-const customOptions = {
+const customOptions: any = {
     cache: false,
     cacheImages: false
 };
-const P = new Pokedex.Pokedex(customOptions);
+const P: any = new (Pokedex as any)(customOptions);
 
 const genOne = {
     offset: 0,
@@ -13,7 +13,7 @@ const genOne = {
 };
 
 // Function to fetch the Pokémon list for Generation One
-export const generationOne = async () => {
+export const generationOne = async (): Promise<any> => {
     try {
         const response = await P.getPokemonsList(genOne);
         return response; // Return the list of Pokémon
@@ -24,14 +24,14 @@ export const generationOne = async () => {
 };
 
 // Function to fetch detailed data for each Pokémon and filter specific fields
-export const getAllPokemonData = async () => {
+export const getAllPokemonData = async (): Promise<any> => {
     try {
         // Get the list of Pokémon from generationOne
         const { results } = await generationOne();
 
         // Fetch detailed data for each Pokémon using its name
-        const pokemonDataPromises = results.map(({ name }) =>
-            P.getPokemonByName(name).then((data) => ({
+        const pokemonDataPromises = results.map(({ name }: { name: string }) =>
+            P.getPokemonByName(name).then((data: any) => ({
                 name: data.name,
                 order: data.order,
                 types: data.types,
@@ -60,11 +60,11 @@ export const getAllPokemonData = async () => {
     }
 };
 
-export const mapEvolutionTrees = async (filteredPokemonData) => {
+export const mapEvolutionTrees = async (filteredPokemonData: any[]): Promise<any> => {
     try {
         const filteredNames = filteredPokemonData.map((pokemon) => pokemon.name);
 
-        const evolutionChainPromises = [];
+        const evolutionChainPromises: Promise<any>[] = [];
         for (let id = 1; id <= 79; id++) {
             evolutionChainPromises.push(P.getEvolutionChainById(id));
         }
@@ -72,7 +72,7 @@ export const mapEvolutionTrees = async (filteredPokemonData) => {
         const evolutionChains = await Promise.all(evolutionChainPromises);
 
         const mappedEvolutions = evolutionChains.map((chain) => {
-            const mapEvolution = (evolutionNode) => {
+            const mapEvolution = (evolutionNode: any): any => {
                 const speciesUrl = evolutionNode.species.url;
                 const speciesId = parseInt(speciesUrl.split("/").slice(-2, -1)[0]);
                 const speciesName = evolutionNode.species.name;
@@ -111,13 +111,13 @@ export const mapEvolutionTrees = async (filteredPokemonData) => {
     }
 };
 
-export const getTypeRelations = async () => {
+export const getTypeRelations = async (): Promise<any> => {
     try {
         // Fetch the list of Pokémon types
         const typeListResponse = await P.getTypesList();
         const types = typeListResponse.results;
 
-        const typeRelationsPromises = types.map(async (type) => {
+        const typeRelationsPromises = types.map(async (type: any) => {
             // Fetch detailed data for each type
             const typeDetails = await P.getTypeByName(type.name);
 
@@ -127,12 +127,12 @@ export const getTypeRelations = async () => {
             return {
                 name: type.name,
                 damageRelations: {
-                    doubleDamageFrom: damageRelations.double_damage_from.map((relation) => relation.name),
-                    doubleDamageTo: damageRelations.double_damage_to.map((relation) => relation.name),
-                    halfDamageFrom: damageRelations.half_damage_from.map((relation) => relation.name),
-                    halfDamageTo: damageRelations.half_damage_to.map((relation) => relation.name),
-                    noDamageFrom: damageRelations.no_damage_from.map((relation) => relation.name),
-                    noDamageTo: damageRelations.no_damage_to.map((relation) => relation.name),
+                    doubleDamageFrom: damageRelations.double_damage_from.map((relation: any) => relation.name),
+                    doubleDamageTo: damageRelations.double_damage_to.map((relation: any) => relation.name),
+                    halfDamageFrom: damageRelations.half_damage_from.map((relation: any) => relation.name),
+                    halfDamageTo: damageRelations.half_damage_to.map((relation: any) => relation.name),
+                    noDamageFrom: damageRelations.no_damage_from.map((relation: any) => relation.name),
+                    noDamageTo: damageRelations.no_damage_to.map((relation: any) => relation.name),
                 }
             };
         });
@@ -140,7 +140,7 @@ export const getTypeRelations = async () => {
         const typeRelations = await Promise.all(typeRelationsPromises);
 
         // Create a mapping object for better organization
-        const typeRelationsMap = typeRelations.reduce((map, typeRelation) => {
+        const typeRelationsMap = typeRelations.reduce((map: any, typeRelation: any) => {
             map[typeRelation.name] = typeRelation.damageRelations;
             return map;
         }, {});

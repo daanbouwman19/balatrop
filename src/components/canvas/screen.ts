@@ -1,8 +1,14 @@
 export class Screen {
+    canvas: HTMLCanvasElement;
+    context: CanvasRenderingContext2D;
+    width: number;
+    height: number;
+    c: () => CanvasRenderingContext2D;
+    mouse: { x: number; y: number; };
 
-    constructor(canvas) {
+    constructor(canvas: HTMLCanvasElement) {
         this.canvas = canvas;
-        this.context = canvas.getContext('2d');
+        this.context = canvas.getContext('2d')!;
         this.context.imageSmoothingEnabled = false;
 
         this.width = canvas.width;
@@ -16,27 +22,27 @@ export class Screen {
         };
     }
 
-    resize(width, height) {
+    resize(width: number, height: number): void {
         this.width = this.canvas.width = width;
         this.height = this.canvas.height = height;
     }
 
-    updateMousePosition(event) {
+    updateMousePosition(event: MouseEvent): void {
         const rect = this.canvas.getBoundingClientRect();
         this.mouse.x = event.clientX - rect.left - 20;
         this.mouse.y = event.clientY - rect.top - 20;
     }
 
-    clear() {
+    clear(): void {
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
     }
 
-    background(color) {
+    background(color: string): void {
         this.context.fillStyle = color;
         this.context.fillRect(0, 0, this.width, this.height);
     }
 
-    drawRectangle(x, y, width, height, color, radius = 0) {
+    drawRectangle(x: number, y: number, width: number, height: number, color: string, radius: number = 0): void {
         this.context.fillStyle = color;
         if (radius > 0) {
             this.context.beginPath();
@@ -52,14 +58,14 @@ export class Screen {
         }
     }
 
-    drawCircle(x, y, radius, color) {
+    drawCircle(x: number, y: number, radius: number, color: string): void {
         this.context.fillStyle = color;
         this.context.beginPath();
         this.context.arc(x, y, radius, 0, Math.PI * 2);
         this.context.fill();
     }
 
-    drawImage(x, y, image) {
+    drawImage(x: number, y: number, image: HTMLImageElement): void {
         this.context.drawImage(image, x, y);
     }
 

@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { GameActive } from "@/components/canvas/GameActive";
 import { computed } from "vue";
 
