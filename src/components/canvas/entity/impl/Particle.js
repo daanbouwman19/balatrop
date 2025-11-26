@@ -1,4 +1,4 @@
-
+import { lerp } from "@/utils/math.js";
 import Entity from '../entity.js';
 
 export function blood(x, y) {
@@ -20,7 +20,7 @@ export function blood(x, y) {
         particle.y += particle.dy;
         
         if (particle.life < 10) {
-            particle.s = Math.lerp(particle.s, 0, 0.1);
+            particle.s = lerp(particle.s, 0, 0.1);
         }
 
         particle.life -= 1;

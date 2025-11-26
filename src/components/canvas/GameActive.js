@@ -124,30 +124,24 @@ export class GameActive {
                     "Submit",
                     "#22AA22",
                     () => {
-                        console.log("Submit button clicked");
                         this.removeEntity(button);
                         this.submitsRemaining -= 1;
                         this.enterState("ADD_DAMAGE");
                     },
-                    // isDisabled function
                     () => {
                         const selectedCards = this.entities.filter(
                             entity => entity instanceof CardEntity && entity.selected
                         );
-                        return selectedCards.length === 0; // Disable if no cards selected
+                        return selectedCards.length === 0;
                     }
                 );
                 this.addEntity(button);
 
-                // Add the SelectedCardsCounterEntity
                 this.selectedCardsCounter = new SelectedCardsCounterEntity(this);
                 this.addEntity(this.selectedCardsCounter);
             } else {
-                console.log("No submits remaining for this enemy.");
-                // Optionally, you can transition to the next state or provide feedback
             }
         } else {
-            // Remove the counter entity when leaving SELECT_CARDS state
             if (this.selectedCardsCounter) {
                 this.removeEntity(this.selectedCardsCounter);
                 this.selectedCardsCounter = null;
@@ -170,40 +164,30 @@ export class GameActive {
             this.totalCardsDamage = 1;
 
             if (this.enemy.deathCheck()) {
-                console.log(`Enemy has died!`);
                 this.removeEntity(this.enemy);
                 this.enemies_defeated += 1;
 
-                // Update the score
                 this.score += this.fightReward;
 
-                // Spawn a new enemy
                 this.spawnEnemy();
 
-                // Set new fight reward
                 this.fightReward = this.enemy.pokemon.value;
             }
 
             if (this.submitsRemaining > 0) {
                 this.enterState("FILLHAND");
             } else {
-                console.log("No more submits remaining. Game Over!");
                 this.enterState("GAME_OVER");
             }
         }
 
         if (state === "GAME_OVER") {
-            // Clear existing entities
             this.entities = [];
-
-            // Remove reference to SubmitsRemainingEntity
             this.submitsRemainingEntity = null;
 
-            // Add GameOverEntity
             const gameOverEntity = new GameOverEntity(this.screen.width / 2, this.screen.height / 2);
             this.addEntity(gameOverEntity);
 
-            // Optionally, add a Restart button
             const restartButton = new ButtonEntity(
                 this.screen.width / 2 - 100,
                 this.screen.height / 2 + 100,
@@ -222,7 +206,6 @@ export class GameActive {
     }
 
     restartGame() {
-        // Reset game variables
         this.STATE = "START";
         this.t = 0;
         this.anim = 0;
@@ -236,11 +219,9 @@ export class GameActive {
         this.score = 0;
         this.fightReward = 5;
 
-        // Re-add the SubmitsRemainingEntity
         this.submitsRemainingEntity = new SubmitsRemainingEntity(this);
         this.addEntity(this.submitsRemainingEntity);
 
-        // Start the intro sequence again
         this.startIntro();
     }
     
@@ -428,10 +409,9 @@ export class GameActive {
 
     initializePokemonCards() {
         const pokemonCards = [];
-        const context = require.context('../../../public/pokemon', false, /\.json$/);
-
-        context.keys().forEach((key) => {
-            const pokemonData = context(key);
+        const modules = import.meta.glob('@/pokemon/*.json', { eager: true });
+        for (const path in modules) {
+            const pokemonData = modules[path].default || modules[path];
             const card = {
                 name: pokemonData.name,
                 value: pokemonData.order % 5+1,   
@@ -442,7 +422,7 @@ export class GameActive {
                 entity: null
             };
             pokemonCards.push(card);
-        });
+        }
         return pokemonCards;
     }
 
@@ -453,7 +433,6 @@ export class GameActive {
                 deck.push(card);
             }
         });
-        console.log(deck)
         return deck;
     }
 

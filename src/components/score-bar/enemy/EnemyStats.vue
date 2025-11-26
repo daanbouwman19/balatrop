@@ -15,16 +15,16 @@ const generateArray = (count) => {
 </script>
 
 <template>
-    <div class="flex flex-row gap-2 p-1 w-[100%] justify-center items-center bg-score-board-background-dark">
-        <div class="flex flex-col">
-            <span class="text-xl text-center">Reward:</span>
-            <div class="flex flex-row justify-center items-center h-[20px]">
-                <DuitseFrank 
-                    class="w-[24px] h-[24px] mx-0.5"
-                    :key="index" 
-                    v-for="index in generateArray(game.fightReward)"
-                />
-            </div>
-        </div>
+  <div class="flex flex-row gap-2 p-1 w-[100%] justify-center items-center bg-score-board-background-dark">
+    <div class="flex flex-col">
+      <span class="text-xl text-center">Reward:</span>
+      <div class="flex flex-row justify-center items-center h-[20px]">
+        <DuitseFrank 
+          v-for="index in generateArray(game.fightReward)"
+          :key="index" 
+          class="w-[24px] h-[24px] mx-0.5"
+        />
+      </div>
     </div>
+  </div>
 </template>

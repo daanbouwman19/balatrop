@@ -1,54 +1,50 @@
 <script setup>
-    import { ref, onMounted, defineProps } from 'vue';
-    import { Screen } from './screen.js';
-    import Game from '../../game.js';
-    import { FrankEntity } from './entity/impl/FrankEntity.js';
-    import { CardEntity } from './entity/impl/cardEntity.js';
-    import { GameActive } from './GameActive.js';
-   
+import { ref, onMounted } from "vue";
+import Game from "../../game.js";
+import { GameActive } from "./GameActive.js";
 
-    const props = defineProps({
-        game: {
-            type: Game,
-            required: true
-        }
-    });
+defineProps({
+  game: {
+    type: Game,
+    required: true,
+  },
+});
 
-    const canvasRef = ref(null);
-    var screen = null;
+const canvasRef = ref(null);
 
-    var gameA = null;
+let gameA = null;
 
-    // GAME INITIALIZATION
+// GAME INITIALIZATION
 
-    onMounted(() => {
+onMounted(() => {
+  const canvas = canvasRef.value;
 
-        const canvas = canvasRef.value;
+  gameA = new GameActive(canvas);
 
-        gameA = new GameActive(canvas);
+  loop();
+});
 
-        loop();
-    });
+// GAME LOOP
 
-    // GAME LOOP
-    
-    const loop = () => {
-        if (gameA) {
-            gameA.update();
-            gameA.draw();
-        }
+const loop = () => {
+  if (gameA) {
+    gameA.update();
+    gameA.draw();
+  }
 
-        requestAnimationFrame(loop);
-    }
-
-
+  requestAnimationFrame(loop);
+};
 </script>
 
 <template>
-    <div class="h-full w-full border-solid border-[3vh] border-score-board-background">
-        <div class="h-full bg-score-board-background">
-            <canvas class="bg-[url('../../public/images/pixel_background.jpg')] bg-cover h-full w-full border-solid border-[10px] rounded-lg" ref="canvasRef"></canvas>
-
-        </div>
+  <div
+    class="h-full w-full border-solid border-[3vh] border-score-board-background"
+  >
+    <div class="h-full bg-score-board-background">
+      <canvas
+        ref="canvasRef"
+        class="bg-[url('../../public/images/pixel_background.jpg')] bg-cover h-full w-full border-solid border-[10px] rounded-lg"
+      />
     </div>
+  </div>
 </template>

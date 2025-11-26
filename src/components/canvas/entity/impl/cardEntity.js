@@ -1,6 +1,7 @@
-import Entity from '../entity.js';
+import { lerp } from "@/utils/math.js";
+import Entity from "../entity.js";
 import * as Particle from './Particle.js';
-import typeRelationsMap from "../../../../../public/typeRelationsMap.json"
+import typeRelationsMap from "@/typeRelationsMap.json"
 
 export class CardEntity extends Entity {
 
@@ -23,14 +24,14 @@ export class CardEntity extends Entity {
         this.height = 200;
 
         this.background = new Image(this.width, this.height);
-        this.background.src = "images/back.png"
+        this.background.src = "/images/back.png"
         this.background.z = -1
 
         this.typeImages = []
 
         card.types.forEach((type) => {
             const image = new Image(48, 16)
-            image.src = `images/${type.type.name}.png`
+            image.src = `/images/${type.type.name}.png`
             this.typeImages.push(image)
         })
 
@@ -49,8 +50,8 @@ export class CardEntity extends Entity {
             const targetX = screen.width / 2 - handSpan / 2 + (handSpan / handSize) * this.index + 100;
             const targetY = screen.height - 200 + Math.sin(t * 0.01 + this.index) * 10;
 
-            this.x = Math.lerp(this.x, targetX, 0.1);
-            this.y = Math.lerp(this.y, targetY, 0.1);
+            this.x = lerp(this.x, targetX, 0.1);
+            this.y = lerp(this.y, targetY, 0.1);
 
 
 
@@ -60,8 +61,8 @@ export class CardEntity extends Entity {
             }
             if (this.selected) {
                 if (this.rotation < 4) this.rotation = 4;
-                this.y = Math.lerp(this.y, screen.height - 400, 0.1);
-                this.rotation = Math.lerp(this.rotation, 6.5, 0.1);
+                this.y = lerp(this.y, screen.height - 400, 0.1);
+                this.rotation = lerp(this.rotation, 6.5, 0.1);
             }
         }
         
@@ -88,19 +89,15 @@ export class CardEntity extends Entity {
     handleClick() {
         if (this.hovered) {
             if (!this.selected) {
-                // Check if less than 5 cards are selected
                 const selectedCards = this.game.entities.filter(
                     entity => entity instanceof CardEntity && entity.selected
                 );
                 if (selectedCards.length < 5) {
                     this.selected = true;
                 } else {
-                    // Provide feedback that the limit has been reached
                     console.log("You can only select up to 5 Pokémon at the same time!");
-                    // Optionally, add visual feedback or play a sound
                 }
             } else {
-                // Allow deselection
                 this.selected = false;
             }
         }
@@ -253,9 +250,9 @@ export class CardEntity extends Entity {
 
             this.hovered = (mouse.x > this.x - this.width/2 && mouse.x < this.x + this.width/2 && mouse.y > this.y - this.height/2 && mouse.y < this.y + this.height/2);
             if (this.hovered) {
-                this.z = Math.lerp(this.z, 2, 0.4);
+                this.z = lerp(this.z, 2, 0.4);
             } else {
-                this.z = Math.lerp(this.z, 0, 0.4);
+                this.z = lerp(this.z, 0, 0.4);
                 if (this.z < 0.08) this.z = 0;
             }
         }

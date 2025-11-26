@@ -1,4 +1,5 @@
-import Entity from "../entity";
+import { lerp } from "@/utils/math.js";
+import Entity from "../entity.js";
 import { CorpseEntity } from "./CorpseEntity";
 
 export class EnemyEntity extends Entity {
@@ -15,7 +16,6 @@ export class EnemyEntity extends Entity {
 
         this.ready = false;
 
-        console.log(this.imageUri);
         this.image.addEventListener("load", () => {
             this.ready = true;
         })
@@ -41,9 +41,9 @@ export class EnemyEntity extends Entity {
 
         const targetY = Math.sin(t * 0.01) * 10;
         
-        this.y = Math.lerp(this.y, targetY, 0.1);
+        this.y = lerp(this.y, targetY, 0.1);
         if (this.damageTakenDisplayDelay > 0) this.damageTakenDisplayDelay--;
-        else this.damageTaken = Math.lerp(this.damageTaken, 0, 0.1);
+        else this.damageTaken = lerp(this.damageTaken, 0, 0.1);
 
         screen.c().save();  
 
