@@ -1,22 +1,23 @@
 <script setup>
-import { computed, defineProps } from 'vue';
-import { GameActive } from '@/components/canvas/GameActive';
+import { computed } from "vue";
+import { GameActive } from "@/components/canvas/GameActive";
 
 const props = defineProps({
-    game: {
-        type: GameActive,
-        required: true
-    }
+  game: {
+    type: GameActive,
+    required: true,
+  },
 });
 
 const currentHandScore = computed(() => {
-    return props.game.totalCardsMultiplier * props.game.totalCardsDamage
+  return props.game.totalCardsMultiplier * props.game.totalCardsDamage;
 });
-
 </script>
 
 <template>
-  <div class="bg-score-board-background-dark flex flex-col content-center items-center text-xl">
+  <div
+    class="bg-score-board-background-dark flex flex-col content-center items-center text-xl"
+  >
     <span class="p-1">{{ currentHandScore }}</span>
     <div class="flex flex-row content-center items-center">
       <div>
