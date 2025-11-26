@@ -1,6 +1,6 @@
 import Entity from '../entity.js';
 import * as Particle from './Particle.js';
-import typeRelationsMap from "../../../../../public/typeRelationsMap.json"
+import typeRelationsMap from "@/typeRelationsMap.json"
 
 export class CardEntity extends Entity {
 
@@ -23,14 +23,14 @@ export class CardEntity extends Entity {
         this.height = 200;
 
         this.background = new Image(this.width, this.height);
-        this.background.src = "images/back.png"
+        this.background.src = "/images/back.png"
         this.background.z = -1
 
         this.typeImages = []
 
         card.types.forEach((type) => {
             const image = new Image(48, 16)
-            image.src = `images/${type.type.name}.png`
+            image.src = `/images/${type.type.name}.png`
             this.typeImages.push(image)
         })
 

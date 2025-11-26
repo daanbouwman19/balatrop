@@ -428,10 +428,9 @@ export class GameActive {
 
     initializePokemonCards() {
         const pokemonCards = [];
-        const context = require.context('../../../public/pokemon', false, /\.json$/);
-
-        context.keys().forEach((key) => {
-            const pokemonData = context(key);
+        const modules = import.meta.glob('@/pokemon/*.json', { eager: true });
+        for (const path in modules) {
+            const pokemonData = modules[path].default || modules[path];
             const card = {
                 name: pokemonData.name,
                 value: pokemonData.order % 5+1,   
@@ -442,7 +441,7 @@ export class GameActive {
                 entity: null
             };
             pokemonCards.push(card);
-        });
+        }
         return pokemonCards;
     }
 
