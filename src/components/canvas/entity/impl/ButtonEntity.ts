@@ -1,8 +1,17 @@
-import Entity from '../entity.js';
+import Entity from '../entity';
+import { Screen } from '../../screen';
 
 export class ButtonEntity extends Entity {
+    width: number;
+    height: number;
+    text: string;
+    color: string;
+    onClick: () => void;
+    hovered: boolean;
+    disabled: boolean;
+    isDisabled: () => boolean;
 
-    constructor(x, y, width, height, text, color, onClick, isDisabled = () => false) {
+    constructor(x: number, y: number, width: number, height: number, text: string, color: string, onClick: () => void, isDisabled: () => boolean = () => false) {
         super(x, y);
         this.width = width;
         this.height = height;
@@ -22,12 +31,12 @@ export class ButtonEntity extends Entity {
         }
     }
 
-    draw(screen, t) {
+    draw(screen: Screen) {
         // Update disabled state
         this.disabled = this.isDisabled();
 
         // Change appearance if disabled
-        let buttonColor = this.disabled ? "#888888" : this.color;
+        const buttonColor = this.disabled ? "#888888" : this.color;
 
         screen.drawRectangle(this.x, this.y, this.width, this.height, buttonColor, 10);
 
@@ -42,7 +51,7 @@ export class ButtonEntity extends Entity {
         screen.c().fillText(this.text, this.x + this.width / 2, this.y + this.height / 2 + 5);
     }
 
-    update(t) {
+    update() {
         // Update disabled state
         this.disabled = this.isDisabled();
 

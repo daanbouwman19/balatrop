@@ -1,9 +1,23 @@
 
-import Entity from '../entity.js';
+import Entity from '../entity';
+import { Screen } from '../../screen';
 
 export class FrankEntity extends Entity {
+    width: number;
+    height: number;
+    color: string;
+    imageUri: string;
+    image: HTMLImageElement;
+    ready: boolean;
+    z: number;
+    isIntro: boolean;
+    messages: string[];
+    message: string | undefined;
+    dispMessage: string;
+    t: number;
+    exitAt: number;
 
-    constructor(x, y, width, height, color) {
+    constructor(x: number, y: number, width: number, height: number, color: string) {
         super(x, y);
         this.width = width;
         this.height = height;
@@ -22,6 +36,11 @@ export class FrankEntity extends Entity {
         this.z = 0;
 
         this.isIntro = false;
+        this.messages = [];
+        this.message = '';
+        this.dispMessage = '';
+        this.t = 0;
+        this.exitAt = 0;
     }
 
     intro() {
@@ -45,10 +64,10 @@ export class FrankEntity extends Entity {
     }
 
 
-    draw(screen, t) {
+    draw(screen: Screen) {
         if (!this.ready) return;
 
-        let size = Math.min(screen.height/4, 200) * 2;
+        const size = Math.min(screen.height/4, 200) * 2;
 
         if (this.isIntro) {
             screen.c().fillStyle = 'black';
@@ -58,10 +77,10 @@ export class FrankEntity extends Entity {
             screen.c().fillText(this.dispMessage, screen.width/2, screen.height/2 + size * 0.7);
         }
 
-        let x = this.x + screen.width/2;
-        let y = this.y + screen.height/2;
-        let width = this.image.width;
-        let height = this.image.height;
+        const x = this.x + screen.width/2;
+        const y = this.y + screen.height/2;
+        const width = this.image.width;
+        const height = this.image.height;
 
 
         const translate = () => {
@@ -77,7 +96,7 @@ export class FrankEntity extends Entity {
             screen.c().translate(4 * this.z, 10 * this.z);
             translate();
 
-            screen.drawRectangle(0, 0, width, height, 'rgba(0, 0, 0, 0.5)');
+            screen.drawRectangle(0, 0, width, height, 'rgba(0, 0, 0, 0.5)', 0);
 
             screen.c().restore();
         }
@@ -96,7 +115,7 @@ export class FrankEntity extends Entity {
 
     }
 
-    update(t) {
+    update(t: number) {
         this.t = t;
         if (this.isIntro) {
             if (this.messages.length == 0) {
@@ -112,23 +131,23 @@ export class FrankEntity extends Entity {
                 this.z = Math.sin(t*0.1) + 2;
             }
 
-            if (this.message.length > this.dispMessage.length) {
+            if (this.message && this.message.length > this.dispMessage.length) {
                 this.dispMessage += this.message[this.dispMessage.length];
             }
         }
     }
 
-    handleClick(event) {
+    handleClick() {
         this.go();
     }
 
-    keydown(event) {
+    keydown() {
         this.go();
     }
 
     go() {
         if (this.isIntro) {
-            if (this.messages.length > 0 && this.dispMessage.length == this.message.length) {
+            if (this.messages.length > 0 && this.message && this.dispMessage.length == this.message.length) {
                 this.message = this.messages.shift();
                 this.dispMessage = "";
 

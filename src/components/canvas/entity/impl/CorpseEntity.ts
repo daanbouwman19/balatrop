@@ -1,9 +1,17 @@
 
 import Entity from '../entity.js';
+import { Screen } from '../../screen.js';
 
 export class CorpseEntity extends Entity {
+    entity: Entity;
+    dx: number;
+    dy: number;
+    life: number;
+    rotation: number;
+    dRotation: number;
+    scale: number;
 
-    constructor(entity) {
+    constructor(entity: Entity) {
         super(entity.x, entity.y);
         this.entity = entity;
         entity.destroy();
@@ -21,7 +29,7 @@ export class CorpseEntity extends Entity {
         this.entity.y = 0;
     }
 
-    update(t) {
+    update() {
         this.dy += 0.1;
 
         this.x += this.dx;
@@ -39,7 +47,7 @@ export class CorpseEntity extends Entity {
         }
     }
 
-    draw(screen, t) {
+    draw(screen: Screen, t: number) {
         screen.c().save();
         screen.c().translate(this.x, this.y);
         screen.c().rotate(this.rotation);
@@ -49,4 +57,3 @@ export class CorpseEntity extends Entity {
     }
 
 }
-

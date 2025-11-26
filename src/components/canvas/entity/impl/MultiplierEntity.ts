@@ -1,7 +1,13 @@
-import Entity from '../entity.js';
+import Entity from '../entity';
+import { Screen } from '../../screen';
 
 export class MultiplierEntity extends Entity {
-    constructor(x, y, multiplier) {
+    textColor: string;
+    delta: number;
+    movement: number;
+    multiplier: number;
+
+    constructor(x: number, y: number, multiplier: number) {
         super(x, y);
         this.textColor = "#0000FF"
         this.delta = 0;
@@ -9,14 +15,14 @@ export class MultiplierEntity extends Entity {
         this.multiplier = multiplier;
     }
 
-    draw(screen, t) {
+    draw(screen: Screen) {
         screen.c().fillStyle = this.textColor;
         screen.c().font = '32px Arial';
         screen.c().textAlign = 'center';
-        screen.c().fillText(this.multiplier, this.x, this.y);
+        screen.c().fillText(`x${this.multiplier}`, this.x, this.y);
     }
 
-    update(t) {
+    update() {
         this.delta += 1;
         this.y -= 2 * this.movement;
 
@@ -26,6 +32,8 @@ export class MultiplierEntity extends Entity {
     }
 
     destroy() {
+      if (this.game) {
         this.game.removeEntity(this);
+      }
     }
 }

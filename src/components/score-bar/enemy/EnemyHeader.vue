@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { computed } from "vue";
 import { GameActive } from "@/components/canvas/GameActive";
 
@@ -19,8 +19,6 @@ const enemyName = computed(() => {
 
 <template>
   <div class="bg-score-board-enemy-header-background rounded">
-    <span class="text-lg flex justify-center text-center"
-      >A wild {{ enemyName }} has appeard</span
-    >
+    <span class="text-lg flex justify-center text-center">A wild {{ enemyName }} has appeard</span>
   </div>
 </template>

@@ -1,6 +1,7 @@
 import { Screen } from "./screen";
+import Entity from "./entity/entity";
 import { FrankEntity } from "./entity/impl/FrankEntity";
-import { CardEntity } from "./entity/impl/cardEntity";
+import { CardEntity, PokemonCard } from "./entity/impl/cardEntity";
 import { EnemyEntity } from "./entity/impl/EnemyEntity";
 import { ButtonEntity } from "./entity/impl/ButtonEntity";
 import { MultiplierEntity } from "./entity/impl/MultiplierEntity";
@@ -9,9 +10,44 @@ import { GameOverEntity } from "./entity/impl/GameOverEntity";
 import { SubmitsRemainingEntity } from "./entity/impl/SubmitsRemainingEntity";
 import { SelectedCardsCounterEntity } from "./entity/impl/SelectedCardsCounterEntity";
 
-export class GameActive {
+interface AttackLog {
+    card: {
+        name: string;
+        type: { type: { name: string } }[];
+    };
+    damage: number;
+}
 
-    constructor(canvas) {
+export class GameActive {
+    STATE: string;
+    t: number;
+    anim: number;
+    selectedCardsCounter: SelectedCardsCounterEntity | null;
+    entities: Entity[];
+    pokemon_cards: PokemonCard[];
+    player_deck: PokemonCard[];
+    drawed_this_round: PokemonCard[];
+    hand_cards: PokemonCard[];
+    submitsRemainingEntity: SubmitsRemainingEntity | null;
+    enemies_defeated: number;
+    canvas: HTMLCanvasElement;
+    screen: Screen;
+    totalCardsMultiplier: number;
+    totalCardsDamage: number;
+    score: number;
+    fightReward: number;
+    enemy: EnemyEntity;
+    submitsRemaining: number;
+    attack_queue: CardEntity[];
+    cardTypes: { [key: string]: number };
+    attack_history: AttackLog[];
+
+    constructor(canvas: HTMLCanvasElement) {
+        this.pokemon_cards = this.initializePokemonCards();
+        this.enemy = new EnemyEntity(0, 0, 0, 0, this.pokemon_cards[0], 0);
+        this.submitsRemaining = 0;
+        this.attack_queue = [];
+        this.attack_history = [];
         // States
         this.STATE = "START";
         this.t = 0;
@@ -22,7 +58,6 @@ export class GameActive {
         // Initialize entities before adding any entities
         this.entities = [];
 
-        this.pokemon_cards = this.initializePokemonCards();
         this.player_deck = this.initializeDeck();
         this.drawed_this_round = [];
 
@@ -48,21 +83,23 @@ export class GameActive {
         this.fightReward = 5;
 
         this.screen.clear();
-        this.canvas.addEventListener("mousemove", (event) => {
+        this.canvas.addEventListener("mousemove", (event: MouseEvent) => {
             this.screen.updateMousePosition(event);
         });
         window.addEventListener("resize", () => {
             this.screen.resize(this.canvas.clientWidth, this.canvas.clientHeight);
         });
-        this.canvas.addEventListener("click", (event) => {
+        this.canvas.addEventListener("click", (event: MouseEvent) => {
             this.handleClick(event);
         });
-        this.canvas.addEventListener("touchstart", (event) => {
+        this.canvas.addEventListener("touchstart", (event: TouchEvent) => {
             this.handleClick(event);
         });
-        window.addEventListener("keydown", (event) => {
+        window.addEventListener("keydown", (event: KeyboardEvent) => {
             this.entities.forEach(entity => {
-                if (entity.keydown) entity.keydown(event);
+                if ('keydown' in entity && typeof (entity as any).keydown === 'function') {
+                    (entity as any).keydown(event);
+                }
             });
         });
 
@@ -70,7 +107,7 @@ export class GameActive {
         this.startIntro();
     }
 
-    startIntro() {
+    startIntro(): void {
         const frank = new FrankEntity(100, 100, 200, 200, "#FF0000");
         frank.intro();
         this.addEntity(frank);
@@ -78,11 +115,11 @@ export class GameActive {
         this.enterState("INTRO");
     }
 
-    spawnEnemy() {
-        var width = this.screen.width/4;
-        var height = this.screen.height/4;
-        var x = this.screen.width/2 - width/2;
-        var y = this.screen.height/2 -height/2;
+    spawnEnemy(): void {
+        const width = this.screen.width/4;
+        const height = this.screen.height/4;
+        const x = this.screen.width/2 - width/2;
+        const y = this.screen.height/2 -height/2;
         this.enemy = new EnemyEntity(x, y, width, height, this.pokemon_cards[Math.floor(Math.random() * this.pokemon_cards.length)], this.enemies_defeated);
         
         this.addEntity(this.enemy);
@@ -97,7 +134,7 @@ export class GameActive {
         }
     }
 
-    enterState(state) {
+    enterState(state: string): void {
         if (this.STATE === "INTRO" && state === "FILLHAND") {
             this.spawnEnemy();
             window.dispatchEvent(new Event('resize'));
@@ -130,7 +167,7 @@ export class GameActive {
                     },
                     () => {
                         const selectedCards = this.entities.filter(
-                            entity => entity instanceof CardEntity && entity.selected
+                            (entity): entity is CardEntity => entity instanceof CardEntity && entity.selected
                         );
                         return selectedCards.length === 0;
                     }
@@ -139,7 +176,6 @@ export class GameActive {
 
                 this.selectedCardsCounter = new SelectedCardsCounterEntity(this);
                 this.addEntity(this.selectedCardsCounter);
-            } else {
             }
         } else {
             if (this.selectedCardsCounter) {
@@ -149,12 +185,12 @@ export class GameActive {
         }
 
         if (state === "ADD_DAMAGE") {
-            this.attack_queue = this.entities.filter(entity => entity instanceof CardEntity && entity.selected);
+            this.attack_queue = this.entities.filter((entity): entity is CardEntity => entity instanceof CardEntity && entity.selected);
             this.cardTypes = {};
         }
 
         if (state === "ATTACK") {
-            this.attack_queue = this.entities.filter(entity => entity instanceof CardEntity && entity.selected);
+            this.attack_queue = this.entities.filter((entity): entity is CardEntity => entity instanceof CardEntity && entity.selected);
             this.attack_history = [];
         }
 
@@ -205,7 +241,7 @@ export class GameActive {
         }
     }
 
-    restartGame() {
+    restartGame(): void {
         this.STATE = "START";
         this.t = 0;
         this.anim = 0;
@@ -225,13 +261,11 @@ export class GameActive {
         this.startIntro();
     }
     
-
-
-    draw() {
+    draw(): void {
         this.screen.clear();
         // this.screen.background("#dddddd");
 
-        const drawOrder = {
+        const drawOrder: { [key: string]: Entity[] } = {
             other: [],
             enemy: [],
             top: []
@@ -260,7 +294,7 @@ export class GameActive {
 
     }
 
-    update() {
+    update(): void {
         this.t += 1;
         this.anim += 1;
     
@@ -295,11 +329,12 @@ export class GameActive {
         if (this.STATE === "ADD_DAMAGE") {
             if (this.anim % 10 == 0) {
                 if (this.anim % 20 == 0) {
-                    const currentCardEntity = this.attack_queue.shift().card;
+                    const currentCard = this.attack_queue.shift()?.card;
+                    if (!currentCard || !currentCard.entity) return;
 
-                    var multiplier = 0;
+                    let multiplier = 0;
 
-                    currentCardEntity.types.forEach((type) => {
+                    currentCard.types.forEach((type: { type: { name: string } }) => {
                         if (this.cardTypes[type.type.name]) {
                             multiplier += 1.5;
                             this.cardTypes[type.type.name] += 1;
@@ -313,22 +348,23 @@ export class GameActive {
 
                         this.addEntity(
                             new MultiplierEntity(
-                                currentCardEntity.entity.x, 
-                                currentCardEntity.entity.y - currentCardEntity.entity.height / 2,
+                                currentCard.entity.x,
+                                currentCard.entity.y - currentCard.entity.height / 2,
                                 multiplier
                             )
                         )
                     }
 
                 } else if (this.attack_queue.length > 0) {
-                    const currentCardEntity = this.attack_queue[0].card;
-                    var damage = currentCardEntity.value * currentCardEntity.entity.calculateTypeMultiplier(this.enemy.pokemon.types);
+                    const currentCard = this.attack_queue[0].card;
+                    if (!currentCard.entity) return;
+                    const damage = currentCard.value * this.attack_queue[0].calculateTypeMultiplier(this.enemy.pokemon.types);
                     this.totalCardsDamage += damage
 
                     this.addEntity(
                         new DamageEntity(
-                            currentCardEntity.entity.x - currentCardEntity.entity.width / 2, 
-                            currentCardEntity.entity.y - currentCardEntity.entity.height / 2,
+                            currentCard.entity.x - currentCard.entity.width / 2,
+                            currentCard.entity.y - currentCard.entity.height / 2,
                             damage
                         )
                     )
@@ -360,29 +396,30 @@ export class GameActive {
         });
     }
 
-    handleClick(event) {
+    handleClick(event: MouseEvent | TouchEvent): void {
         this.entities.forEach(entity => {
-            if (entity.handleClick) entity.handleClick(event);
+            if (this.isClickable(entity)) {
+                entity.handleClick(event);
+            }
         });
     }
 
 
-    addEntity(entity) {
+    addEntity(entity: Entity): void {
         entity.setGame(this);
         this.entities.push(entity);
     }
-    addEntities(entities) {
+    addEntities(entities: Entity[]): void {
         entities.forEach(entity => {
             this.addEntity(entity);
         });
     }
-    removeEntity(entity) {
-        this.entities = this.entities.filter(e => e !== entity);
+    removeEntity(entity: Entity): void {
         this.entities = this.entities.filter(e => e !== entity);
     }
     
-    drawCardFromDeck() {
-        let card;
+    drawCardFromDeck(): PokemonCard {
+        let card: PokemonCard;
         do {
             card = this.player_deck[Math.floor(Math.random() * this.player_deck.length)];
         } while (this.drawed_this_round.includes(card));
@@ -392,11 +429,11 @@ export class GameActive {
     }
 
 
-    refillHand() {
+    refillHand(): void {
         this.enterState("FILLHAND");
     }
 
-    addDeckCardToMakeEntityJeMoeder() {
+    addDeckCardToMakeEntityJeMoeder(): void {
         const card = this.drawCardFromDeck();
 
         const cardEntity = new CardEntity(this.screen.width / 2, -500, card); 
@@ -407,12 +444,12 @@ export class GameActive {
     }
         
 
-    initializePokemonCards() {
-        const pokemonCards = [];
-        const modules = import.meta.glob('@/pokemon/*.json', { eager: true });
+    initializePokemonCards(): PokemonCard[] {
+        const pokemonCards: PokemonCard[] = [];
+        const modules: Record<string, unknown> = import.meta.glob('@/pokemon/*.json', { eager: true });
         for (const path in modules) {
-            const pokemonData = modules[path].default || modules[path];
-            const card = {
+            const pokemonData = modules[path] as { [key: string]: any };
+            const card: PokemonCard = {
                 name: pokemonData.name,
                 value: pokemonData.order % 5+1,   
                 image: pokemonData.sprite,
@@ -426,14 +463,18 @@ export class GameActive {
         return pokemonCards;
     }
 
-    initializeDeck() {
-        const deck = [];
+    initializeDeck(): PokemonCard[] {
+        const deck: PokemonCard[] = [];
         this.pokemon_cards.forEach(card => {
             if (card.evolvedFrom === null && deck.length < 40) {
                 deck.push(card);
             }
         });
         return deck;
+    }
+
+    isClickable(entity: Entity): entity is Entity & { handleClick: (event: MouseEvent | TouchEvent) => void } {
+        return 'handleClick' in entity && typeof (entity as any).handleClick === 'function';
     }
 
 }

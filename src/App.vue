@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import ScoreBar from "./components/score-bar/ScoreBar.vue";
 import RotateDevice from "./components/RotateDevice.vue";
 import CurrentMoney from "./components/CurrentMoney.vue";
@@ -16,13 +16,13 @@ const updateOrientation = () => {
 };
 
 const rotateDevice = computed(() => {
-  return orientation.value === "portrait" || width.value <= 600;
+  return orientation.value.includes("portrait") || width.value <= 600;
 });
 
-const canvas = ref(null);
+const canvas = ref<HTMLCanvasElement | null>(null);
 const isMounted = ref(false);
 
-const game = ref(null);
+const game = ref<GameActive | null>(null);
 
 // GAME INITIALIZATION
 
@@ -34,7 +34,9 @@ onMounted(() => {
     canvas.value = document.querySelector("canvas");
   }
 
-  game.value = new GameActive(canvas.value);
+  if (canvas.value) {
+    game.value = new GameActive(canvas.value);
+  }
 
   loop();
 
@@ -62,7 +64,11 @@ const loop = () => {
     v-if="!rotateDevice"
     class="flex flex-row justify-between items-center w-[100vw] h-[100vh]"
   >
-    <ScoreBar v-if="game" :is-mounted="isMounted" :game="game" />
+    <ScoreBar
+      v-if="game"
+      :is-mounted="isMounted"
+      :game="game"
+    />
     <div
       class="h-full w-full border-solid border-[6vh] border-score-board-background"
     >
@@ -73,7 +79,11 @@ const loop = () => {
         />
       </div>
     </div>
-    <CurrentMoney v-if="isMounted" class="fixed top-1 right-1" :game="game" />
+    <CurrentMoney
+      v-if="isMounted && game"
+      class="fixed top-1 right-1"
+      :game="game"
+    />
   </div>
   <div v-else>
     <RotateDevice />

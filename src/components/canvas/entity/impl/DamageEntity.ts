@@ -1,7 +1,13 @@
-import Entity from '../entity.js';
+import Entity from '../entity';
+import { Screen } from '../../screen';
 
 export class DamageEntity extends Entity {
-    constructor(x, y, damage) {
+    textColor: string;
+    delta: number;
+    movement: number;
+    damage: number;
+
+    constructor(x: number, y: number, damage: number) {
         super(x, y)
         this.textColor = "#FF0000"
         this.delta = 0;
@@ -9,14 +15,14 @@ export class DamageEntity extends Entity {
         this.damage = damage;
     }
 
-    draw(screen, t) {
+    draw(screen: Screen) {
         screen.c().fillStyle = this.textColor;
         screen.c().font = '32px Arial';
         screen.c().textAlign = 'center';
-        screen.c().fillText(this.damage, this.x, this.y);
+        screen.c().fillText(this.damage.toString(), this.x, this.y);
     }
 
-    update(t) {
+    update() {
         this.delta += 1;
         this.y -= 2 * this.movement;
 
@@ -26,6 +32,8 @@ export class DamageEntity extends Entity {
     }
 
     destroy() {
+      if (this.game) {
         this.game.removeEntity(this);
+      }
     }
 }

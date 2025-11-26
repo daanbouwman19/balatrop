@@ -1,7 +1,14 @@
-import Entity from '../entity.js';
+import Entity from '../entity';
+import { Screen } from '../../screen';
 
 export class GameOverEntity extends Entity {
-    constructor(x, y) {
+    width: number;
+    height: number;
+    message: string;
+    fontSize: number;
+    fontFamily: string;
+
+    constructor(x: number, y: number) {
         super(x, y);
         this.width = 400;
         this.height = 200;
@@ -10,7 +17,7 @@ export class GameOverEntity extends Entity {
         this.fontFamily = "Arial";
     }
 
-    draw(screen, t) {
+    draw(screen: Screen) {
         // Draw semi-transparent background over the entire screen
         screen.c().fillStyle = "rgba(0, 0, 0, 0.7)";
         screen.c().fillRect(0, 0, screen.width, screen.height);
@@ -23,7 +30,7 @@ export class GameOverEntity extends Entity {
         screen.c().fillText(this.message, this.x, this.y);
     }
 
-    update(t) {
+    update() {
         // No update logic needed for static display
     }
 }

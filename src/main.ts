@@ -3,6 +3,4 @@ import App from './App.vue'
 import './assets/tailwind.css';
 import './assets/stylesheet.css';
 
-;
-
 createApp(App).mount('#app')

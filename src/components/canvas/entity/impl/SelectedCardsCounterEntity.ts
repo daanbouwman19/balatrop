@@ -1,15 +1,17 @@
-import Entity from '../entity.js';
-import { CardEntity } from './cardEntity.js'; // Adjust the path as needed
+import Entity from '../entity';
+import { CardEntity } from './cardEntity'; // Adjust the path as needed
+import { GameActive } from '../../GameActive';
+import { Screen } from '../../screen';
 
 export class SelectedCardsCounterEntity extends Entity {
-    constructor(game) {
+    constructor(game: GameActive) {
         super(0, 0);
         this.game = game;
     }
 
-    draw(screen, t) {
+    draw(screen: Screen) {
         const selectedCardsCount = this.game.entities.filter(
-            entity => entity instanceof CardEntity && entity.selected
+            (entity: Entity) => entity instanceof CardEntity && entity.selected
         ).length;
         const maxSelectedCards = 5;
 
@@ -20,7 +22,7 @@ export class SelectedCardsCounterEntity extends Entity {
         screen.c().fillText(`Selected: ${selectedCardsCount}/${maxSelectedCards}`, 10, 30);
     }
 
-    update(t) {
+    update() {
         // No update logic needed
     }
 }

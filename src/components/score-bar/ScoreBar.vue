@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import EnemyStats from "./enemy/EnemyStats.vue";
 import EnemyHeader from "./enemy/EnemyHeader.vue";
 import CurrentScore from "./current-round/CurrentScore.vue";

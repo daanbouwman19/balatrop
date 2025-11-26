@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import DuitseFrank from '../../icons/DuitseFrank.vue'
 import { GameActive } from '@/components/canvas/GameActive';
 
@@ -9,7 +9,7 @@ defineProps({
     }
 });
 
-const generateArray = (count) => {
+const generateArray = (count: number) => {
     return Array.from({ length: count }, (_, index) => index);
 }
 </script>

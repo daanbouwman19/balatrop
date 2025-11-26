@@ -1,13 +1,17 @@
-import Entity from '../entity.js';
+import Entity from '../entity';
+import { GameActive } from '../../GameActive';
+import { Screen } from '../../screen';
 
 export class SubmitsRemainingEntity extends Entity {
-    constructor(game) {
+    lastSubmitsRemaining: number;
+
+    constructor(game: GameActive) {
         super(0, 0);
         this.game = game;
         this.lastSubmitsRemaining = this.game.submitsRemaining;
     }
 
-    draw(screen, t) {
+    draw(screen: Screen) {
         const submitsRemaining = this.game.submitsRemaining;
 
         // Draw the submits remaining at the top-right corner
@@ -17,7 +21,7 @@ export class SubmitsRemainingEntity extends Entity {
         screen.c().fillText(`Submits Remaining: ${submitsRemaining}`, screen.width - 10, 30);
     }
 
-    update(t) {
+    update() {
         // Check if submitsRemaining has changed
         if (this.lastSubmitsRemaining !== this.game.submitsRemaining) {
             this.lastSubmitsRemaining = this.game.submitsRemaining;

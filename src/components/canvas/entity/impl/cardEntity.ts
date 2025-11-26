@@ -1,16 +1,70 @@
-import { lerp } from "@/utils/math.js";
-import Entity from "../entity.js";
-import * as Particle from './Particle.js';
+import { lerp } from "@/utils/math";
+import Entity from "../entity";
+import * as Particle from './Particle';
 import typeRelationsMap from "@/typeRelationsMap.json"
+import { Screen } from "../screen";
+
+export interface PokemonCard {
+    name: string;
+    value: number;
+    image: string;
+    evolvedFrom: string | null;
+    evolvesTo: string | null;
+    types: { type: { name: string } }[];
+    entity: CardEntity | null;
+}
+
+interface Target {
+    pokemon: {
+        types: { type: { name: string } }[];
+    };
+    damage: (damage: number) => void;
+    x: number;
+    y: number;
+}
+
+interface DamageRelations {
+    doubleDamageTo: string[];
+    halfDamageTo: string[];
+    noDamageTo: string[];
+}
+
+interface TypeRelations {
+    [key: string]: DamageRelations;
+}
+
+interface AttackHistoryItem {
+    card: {
+        name: string;
+        type: { type: { name: string } }[];
+    };
+    damage: number;
+}
+
 
 export class CardEntity extends Entity {
+    rotation: number;
+    index: number;
+    card: PokemonCard;
+    image: HTMLImageElement;
+    ready: boolean;
+    width: number;
+    height: number;
+    background: HTMLImageElement;
+    typeImages: HTMLImageElement[];
+    hovered: boolean;
+    z: number;
+    selected: boolean;
+    lt: number;
+    animation: (screen: Screen, t: number, lt: number) => void;
 
-    constructor(x, y, card) {
+
+    constructor(x: number, y: number, card: PokemonCard) {
         super(x, y);
         this.rotation = 0;
         this.index = 0;
-        card.entity = this;
         this.card = card;
+        card.entity = this;
 
         this.image = new Image(200, 200);
         this.image.src = this.card.image;
@@ -25,7 +79,6 @@ export class CardEntity extends Entity {
 
         this.background = new Image(this.width, this.height);
         this.background.src = "/images/back.png"
-        this.background.z = -1
 
         this.typeImages = []
 
@@ -43,7 +96,7 @@ export class CardEntity extends Entity {
         this.lt = 0;
 
         const handSize = 8
-        this.animation = (screen, t, lt) => {
+        this.animation = (screen, t) => {
             // Idle animation & Selected animation
             const handSpan = screen.width - 200;
 
@@ -70,7 +123,7 @@ export class CardEntity extends Entity {
     }
 
 
-    resize(screen) {
+    resize(screen: Screen) {
         const size = Math.min(screen.height/10, 96);
 
         this.width = size;
@@ -89,13 +142,15 @@ export class CardEntity extends Entity {
     handleClick() {
         if (this.hovered) {
             if (!this.selected) {
-                const selectedCards = this.game.entities.filter(
-                    entity => entity instanceof CardEntity && entity.selected
-                );
-                if (selectedCards.length < 5) {
-                    this.selected = true;
-                } else {
-                    console.log("You can only select up to 5 Pokémon at the same time!");
+                if(this.game) {
+                    const selectedCards = this.game.entities.filter(
+                        (entity: Entity) => entity instanceof CardEntity && entity.selected
+                    );
+                    if (selectedCards.length < 5) {
+                        this.selected = true;
+                    } else {
+                        console.log("You can only select up to 5 Pokémon at the same time!");
+                    }
                 }
             } else {
                 this.selected = false;
@@ -103,7 +158,7 @@ export class CardEntity extends Entity {
         }
     }
 
-    calculateTypeMultiplier(targetTypes) {
+    calculateTypeMultiplier(targetTypes: { type: { name: string } }[]): number {
         if (!this.card.types || !targetTypes || !Array.isArray(this.card.types) || !Array.isArray(targetTypes)) {
             console.error("Invalid types provided.");
             return 1; // Default multiplier
@@ -111,19 +166,20 @@ export class CardEntity extends Entity {
 
         // Initialize the multiplier to 1
         let multiplier = 1;
+        const typedTypeRelationsMap = typeRelationsMap as TypeRelations;
 
         // Iterate over the card's types
         this.card.types.forEach((cardTypeObj) => {
             const cardTypeName = cardTypeObj.type.name; // Get the name of the type (e.g., "water")
 
             // Ensure the card type exists in the type relations map
-            if (!typeRelationsMap[cardTypeName]) {
+            if (!typedTypeRelationsMap[cardTypeName]) {
                 console.warn(`Type "${cardTypeName}" not found in typeRelationsMap.`);
                 return;
             }
 
             // Get the damage relations for this card type
-            const damageRelations = typeRelationsMap[cardTypeName];
+            const damageRelations = typedTypeRelationsMap[cardTypeName];
 
             // Check each target type against this card type's damage relations
             targetTypes.forEach((type) => {
@@ -139,15 +195,15 @@ export class CardEntity extends Entity {
         return multiplier;
     }
     
-    attack(target, attackMultiplier, attackHistory) {
-        let baseDamage = this.card.value
-        let markiplier = this.calculateTypeMultiplier(target.pokemon.types)
-        let damage = baseDamage * markiplier * attackMultiplier
+    attack(target: Target, attackMultiplier: number, attackHistory: AttackHistoryItem[]) {
+        const baseDamage = this.card.value
+        const markiplier = this.calculateTypeMultiplier(target.pokemon.types)
+        const damage = baseDamage * markiplier * attackMultiplier
 
         attackHistory.push({
             card: {
                 name: this.card.name,
-                type: this.card.types  /// Element type or something
+                type: this.card.types
             },
             damage: damage
         });
@@ -161,7 +217,7 @@ export class CardEntity extends Entity {
         const angle = Math.atan2(targetY - this.y, targetX - this.x);
 
         this.lt = 0;
-        this.animation = (screen, t, lt) => {
+        this.animation = (_screen, _t, lt) => {
             // Attack animation
 
             this.x += Math.cos(angle) * 50 * (1 - lt/20);
@@ -170,8 +226,10 @@ export class CardEntity extends Entity {
             this.rotation = angle + Math.PI/2;
 
             if (lt == 20) {
-                const part = Particle.blood(targetX, targetY);
-                this.game.addEntity(part);
+                if (this.game) {
+                    const part = Particle.blood(targetX, targetY);
+                    this.game.addEntity(part);
+                }
             }
 
             if (lt > 50) {
@@ -182,7 +240,7 @@ export class CardEntity extends Entity {
         }
     }
 
-    draw(screen, t) {
+    draw(screen: Screen, t: number) {
             // screen.drawRectangle(this.x, this.y, this.width, this.height, this.color);
 
         if (!this.ready) return;
@@ -215,7 +273,6 @@ export class CardEntity extends Entity {
         translate();
 
         const halfWidth = this.width / 2 - 24
-        const halfHeight = this.height / 2 - 16
 
         screen.drawRectangle(0, 0, this.width, this.height, "#FFFFFFC8", 15)
         screen.c().drawImage(this.image, 0, 0)
@@ -243,20 +300,20 @@ export class CardEntity extends Entity {
         // screen.drawRectangle(mouse.x, mouse.y, 20, 20, '#00ff00');
     }
 
-    update(t) {
+    update() {
+        if(this.game) {
+            if (this.game.STATE == "SELECT_CARDS") {
+                const mouse = this.game.screen.mouse;
 
-        if (this.game.STATE == "SELECT_CARDS") {
-            const mouse = this.game.screen.mouse;
-
-            this.hovered = (mouse.x > this.x - this.width/2 && mouse.x < this.x + this.width/2 && mouse.y > this.y - this.height/2 && mouse.y < this.y + this.height/2);
-            if (this.hovered) {
-                this.z = lerp(this.z, 2, 0.4);
-            } else {
-                this.z = lerp(this.z, 0, 0.4);
-                if (this.z < 0.08) this.z = 0;
+                this.hovered = (mouse.x > this.x - this.width/2 && mouse.x < this.x + this.width/2 && mouse.y > this.y - this.height/2 && mouse.y < this.y + this.height/2);
+                if (this.hovered) {
+                    this.z = lerp(this.z, 2, 0.4);
+                } else {
+                    this.z = lerp(this.z, 0, 0.4);
+                    if (this.z < 0.08) this.z = 0;
+                }
             }
         }
-
     }
 
 }
