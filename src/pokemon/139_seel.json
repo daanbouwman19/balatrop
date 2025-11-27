@@ -1,23 +1,23 @@
 {
-    "name": "seel",
-    "order": 139,
-    "types": [
-        {
-            "slot": 1,
-            "type": {
-                "name": "water",
-                "url": "https://pokeapi.co/api/v2/type/11/"
-            }
-        }
-    ],
-    "cries": {
-        "latest": "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/latest/86.ogg",
-        "legacy": "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/legacy/86.ogg"
-    },
-    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/86.png",
-    "evolvedFrom": null,
-    "evolvesTo": {
-        "name": "dewgong",
-        "file": "140_dewgong.json"
+  "name": "seel",
+  "order": 139,
+  "types": [
+    {
+      "slot": 1,
+      "type": {
+        "name": "water",
+        "url": "https://pokeapi.co/api/v2/type/11/"
+      }
     }
+  ],
+  "cries": {
+    "latest": "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/latest/86.ogg",
+    "legacy": "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/legacy/86.ogg"
+  },
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/86.png",
+  "evolvedFrom": null,
+  "evolvesTo": {
+    "name": "dewgong",
+    "file": "140_dewgong.json"
+  }
 }

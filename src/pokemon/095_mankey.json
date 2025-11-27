@@ -1,23 +1,23 @@
 {
-    "name": "mankey",
-    "order": 95,
-    "types": [
-        {
-            "slot": 1,
-            "type": {
-                "name": "fighting",
-                "url": "https://pokeapi.co/api/v2/type/2/"
-            }
-        }
-    ],
-    "cries": {
-        "latest": "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/latest/56.ogg",
-        "legacy": "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/legacy/56.ogg"
-    },
-    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/56.png",
-    "evolvedFrom": null,
-    "evolvesTo": {
-        "name": "primeape",
-        "file": "096_primeape.json"
+  "name": "mankey",
+  "order": 95,
+  "types": [
+    {
+      "slot": 1,
+      "type": {
+        "name": "fighting",
+        "url": "https://pokeapi.co/api/v2/type/2/"
+      }
     }
+  ],
+  "cries": {
+    "latest": "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/latest/56.ogg",
+    "legacy": "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/legacy/56.ogg"
+  },
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/56.png",
+  "evolvedFrom": null,
+  "evolvesTo": {
+    "name": "primeape",
+    "file": "096_primeape.json"
+  }
 }

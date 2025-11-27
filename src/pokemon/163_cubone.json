@@ -1,23 +1,23 @@
 {
-    "name": "cubone",
-    "order": 163,
-    "types": [
-        {
-            "slot": 1,
-            "type": {
-                "name": "ground",
-                "url": "https://pokeapi.co/api/v2/type/5/"
-            }
-        }
-    ],
-    "cries": {
-        "latest": "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/latest/104.ogg",
-        "legacy": "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/legacy/104.ogg"
-    },
-    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/104.png",
-    "evolvedFrom": null,
-    "evolvesTo": {
-        "name": "marowak",
-        "file": "164_marowak.json"
+  "name": "cubone",
+  "order": 163,
+  "types": [
+    {
+      "slot": 1,
+      "type": {
+        "name": "ground",
+        "url": "https://pokeapi.co/api/v2/type/5/"
+      }
     }
+  ],
+  "cries": {
+    "latest": "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/latest/104.ogg",
+    "legacy": "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/legacy/104.ogg"
+  },
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/104.png",
+  "evolvedFrom": null,
+  "evolvesTo": {
+    "name": "marowak",
+    "file": "164_marowak.json"
+  }
 }

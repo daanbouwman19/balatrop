@@ -1,18 +1,18 @@
 {
-    "name": "electabuzz",
-    "order": 202,
-    "types": [
-        {
-            "slot": 1,
-            "type": {
-                "name": "electric",
-                "url": "https://pokeapi.co/api/v2/type/13/"
-            }
-        }
-    ],
-    "cries": {
-        "latest": "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/latest/125.ogg",
-        "legacy": "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/legacy/125.ogg"
-    },
-    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/125.png"
+  "name": "electabuzz",
+  "order": 202,
+  "types": [
+    {
+      "slot": 1,
+      "type": {
+        "name": "electric",
+        "url": "https://pokeapi.co/api/v2/type/13/"
+      }
+    }
+  ],
+  "cries": {
+    "latest": "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/latest/125.ogg",
+    "legacy": "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/legacy/125.ogg"
+  },
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/125.png"
 }

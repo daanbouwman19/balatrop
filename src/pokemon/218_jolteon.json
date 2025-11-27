@@ -1,23 +1,23 @@
 {
-    "name": "jolteon",
-    "order": 218,
-    "types": [
-        {
-            "slot": 1,
-            "type": {
-                "name": "electric",
-                "url": "https://pokeapi.co/api/v2/type/13/"
-            }
-        }
-    ],
-    "cries": {
-        "latest": "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/latest/135.ogg",
-        "legacy": "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/legacy/135.ogg"
-    },
-    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/135.png",
-    "evolvedFrom": {
-        "name": "eevee",
-        "file": "215_eevee.json"
-    },
-    "evolvesTo": null
+  "name": "jolteon",
+  "order": 218,
+  "types": [
+    {
+      "slot": 1,
+      "type": {
+        "name": "electric",
+        "url": "https://pokeapi.co/api/v2/type/13/"
+      }
+    }
+  ],
+  "cries": {
+    "latest": "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/latest/135.ogg",
+    "legacy": "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/legacy/135.ogg"
+  },
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/135.png",
+  "evolvedFrom": {
+    "name": "eevee",
+    "file": "215_eevee.json"
+  },
+  "evolvesTo": null
 }
