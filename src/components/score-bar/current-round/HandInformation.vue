@@ -10,7 +10,7 @@ const props = defineProps({
 });
 
 const cardsLeft = computed(
-  () => props.game.player_deck.length - props.game.drawed_this_round.length
+  () => props.game.player_deck.length - props.game.drawed_this_round.length,
 );
 </script>
 

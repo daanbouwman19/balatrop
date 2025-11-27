@@ -38,7 +38,7 @@ onMounted(() => {
     game.value = new GameActive(canvas.value);
   }
 
-  loop();
+  requestAnimationFrame(loop);
 
   isMounted.value = true;
 });
@@ -50,9 +50,18 @@ onUnmounted(() => {
 
 // GAME LOOP
 
-const loop = () => {
+let lastTime = 0;
+const loop = (timestamp: number) => {
+  if (!lastTime) lastTime = timestamp;
+  const deltaTime = timestamp - lastTime;
+  lastTime = timestamp;
+
+  // 60Hz target: 1000ms / 60frames ≈ 16.666ms per frame
+  // dtFactor = 1 means we are running at 60Hz
+  const dtFactor = deltaTime / (1000 / 60);
+
   if (game.value) {
-    game.value.update();
+    game.value.update(dtFactor);
     game.value.draw();
   }
 
@@ -64,11 +73,7 @@ const loop = () => {
     v-if="!rotateDevice"
     class="flex flex-row justify-between items-center w-[100vw] h-[100vh]"
   >
-    <ScoreBar
-      v-if="game"
-      :is-mounted="isMounted"
-      :game="game"
-    />
+    <ScoreBar v-if="game" :is-mounted="isMounted" :game="game" />
     <div
       class="h-full w-full border-solid border-[6vh] border-score-board-background"
     >

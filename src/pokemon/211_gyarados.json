@@ -1,30 +1,30 @@
 {
-    "name": "gyarados",
-    "order": 211,
-    "types": [
-        {
-            "slot": 1,
-            "type": {
-                "name": "water",
-                "url": "https://pokeapi.co/api/v2/type/11/"
-            }
-        },
-        {
-            "slot": 2,
-            "type": {
-                "name": "flying",
-                "url": "https://pokeapi.co/api/v2/type/3/"
-            }
-        }
-    ],
-    "cries": {
-        "latest": "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/latest/130.ogg",
-        "legacy": "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/legacy/130.ogg"
+  "name": "gyarados",
+  "order": 211,
+  "types": [
+    {
+      "slot": 1,
+      "type": {
+        "name": "water",
+        "url": "https://pokeapi.co/api/v2/type/11/"
+      }
     },
-    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/130.png",
-    "evolvedFrom": {
-        "name": "magikarp",
-        "file": "210_magikarp.json"
-    },
-    "evolvesTo": null
+    {
+      "slot": 2,
+      "type": {
+        "name": "flying",
+        "url": "https://pokeapi.co/api/v2/type/3/"
+      }
+    }
+  ],
+  "cries": {
+    "latest": "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/latest/130.ogg",
+    "legacy": "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/legacy/130.ogg"
+  },
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/130.png",
+  "evolvedFrom": {
+    "name": "magikarp",
+    "file": "210_magikarp.json"
+  },
+  "evolvesTo": null
 }

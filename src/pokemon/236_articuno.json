@@ -1,27 +1,27 @@
 {
-    "name": "articuno",
-    "order": 236,
-    "types": [
-        {
-            "slot": 1,
-            "type": {
-                "name": "ice",
-                "url": "https://pokeapi.co/api/v2/type/15/"
-            }
-        },
-        {
-            "slot": 2,
-            "type": {
-                "name": "flying",
-                "url": "https://pokeapi.co/api/v2/type/3/"
-            }
-        }
-    ],
-    "cries": {
-        "latest": "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/latest/144.ogg",
-        "legacy": "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/legacy/144.ogg"
+  "name": "articuno",
+  "order": 236,
+  "types": [
+    {
+      "slot": 1,
+      "type": {
+        "name": "ice",
+        "url": "https://pokeapi.co/api/v2/type/15/"
+      }
     },
-    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/144.png",
-    "evolvedFrom": null,
-    "evolvesTo": null
+    {
+      "slot": 2,
+      "type": {
+        "name": "flying",
+        "url": "https://pokeapi.co/api/v2/type/3/"
+      }
+    }
+  ],
+  "cries": {
+    "latest": "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/latest/144.ogg",
+    "legacy": "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/legacy/144.ogg"
+  },
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/144.png",
+  "evolvedFrom": null,
+  "evolvesTo": null
 }
