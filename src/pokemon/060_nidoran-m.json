@@ -1,23 +1,23 @@
 {
-  "name": "nidoran-m",
-  "order": 60,
-  "types": [
-    {
-      "slot": 1,
-      "type": {
-        "name": "poison",
-        "url": "https://pokeapi.co/api/v2/type/4/"
-      }
+    "name": "nidoran-m",
+    "order": 60,
+    "types": [
+        {
+            "slot": 1,
+            "type": {
+                "name": "poison",
+                "url": "https://pokeapi.co/api/v2/type/4/"
+            }
+        }
+    ],
+    "cries": {
+        "latest": "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/latest/32.ogg",
+        "legacy": "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/legacy/32.ogg"
+    },
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/32.png",
+    "evolvedFrom": null,
+    "evolvesTo": {
+        "name": "nidorino",
+        "file": "061_nidorino.json"
     }
-  ],
-  "cries": {
-    "latest": "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/latest/32.ogg",
-    "legacy": "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/legacy/32.ogg"
-  },
-  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/32.png",
-  "evolvedFrom": null,
-  "evolvesTo": {
-    "name": "nidorino",
-    "file": "061_nidorino.json"
-  }
 }

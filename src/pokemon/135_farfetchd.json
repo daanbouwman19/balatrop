@@ -1,27 +1,27 @@
 {
-  "name": "farfetchd",
-  "order": 135,
-  "types": [
-    {
-      "slot": 1,
-      "type": {
-        "name": "normal",
-        "url": "https://pokeapi.co/api/v2/type/1/"
-      }
+    "name": "farfetchd",
+    "order": 135,
+    "types": [
+        {
+            "slot": 1,
+            "type": {
+                "name": "normal",
+                "url": "https://pokeapi.co/api/v2/type/1/"
+            }
+        },
+        {
+            "slot": 2,
+            "type": {
+                "name": "flying",
+                "url": "https://pokeapi.co/api/v2/type/3/"
+            }
+        }
+    ],
+    "cries": {
+        "latest": "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/latest/83.ogg",
+        "legacy": "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/legacy/83.ogg"
     },
-    {
-      "slot": 2,
-      "type": {
-        "name": "flying",
-        "url": "https://pokeapi.co/api/v2/type/3/"
-      }
-    }
-  ],
-  "cries": {
-    "latest": "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/latest/83.ogg",
-    "legacy": "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/legacy/83.ogg"
-  },
-  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/83.png",
-  "evolvedFrom": null,
-  "evolvesTo": null
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/83.png",
+    "evolvedFrom": null,
+    "evolvesTo": null
 }

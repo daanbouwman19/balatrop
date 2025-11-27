@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup>
 import DuitseFrank from "../components/icons/DuitseFrank.vue";
 import { GameActive } from "./canvas/GameActive";
 

@@ -1,23 +1,23 @@
 {
-  "name": "golduck",
-  "order": 94,
-  "types": [
-    {
-      "slot": 1,
-      "type": {
-        "name": "water",
-        "url": "https://pokeapi.co/api/v2/type/11/"
-      }
-    }
-  ],
-  "cries": {
-    "latest": "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/latest/55.ogg",
-    "legacy": "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/legacy/55.ogg"
-  },
-  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/55.png",
-  "evolvedFrom": {
-    "name": "psyduck",
-    "file": "093_psyduck.json"
-  },
-  "evolvesTo": null
+    "name": "golduck",
+    "order": 94,
+    "types": [
+        {
+            "slot": 1,
+            "type": {
+                "name": "water",
+                "url": "https://pokeapi.co/api/v2/type/11/"
+            }
+        }
+    ],
+    "cries": {
+        "latest": "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/latest/55.ogg",
+        "legacy": "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/legacy/55.ogg"
+    },
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/55.png",
+    "evolvedFrom": {
+        "name": "psyduck",
+        "file": "093_psyduck.json"
+    },
+    "evolvesTo": null
 }

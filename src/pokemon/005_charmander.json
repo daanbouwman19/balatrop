@@ -1,23 +1,23 @@
 {
-  "name": "charmander",
-  "order": 5,
-  "types": [
-    {
-      "slot": 1,
-      "type": {
-        "name": "fire",
-        "url": "https://pokeapi.co/api/v2/type/10/"
-      }
+    "name": "charmander",
+    "order": 5,
+    "types": [
+        {
+            "slot": 1,
+            "type": {
+                "name": "fire",
+                "url": "https://pokeapi.co/api/v2/type/10/"
+            }
+        }
+    ],
+    "cries": {
+        "latest": "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/latest/4.ogg",
+        "legacy": "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/legacy/4.ogg"
+    },
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/4.png",
+    "evolvedFrom": null,
+    "evolvesTo": {
+        "name": "charmeleon",
+        "file": "006_charmeleon.json"
     }
-  ],
-  "cries": {
-    "latest": "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/latest/4.ogg",
-    "legacy": "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/legacy/4.ogg"
-  },
-  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/4.png",
-  "evolvedFrom": null,
-  "evolvesTo": {
-    "name": "charmeleon",
-    "file": "006_charmeleon.json"
-  }
 }

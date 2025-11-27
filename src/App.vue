@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup>
 import ScoreBar from "./components/score-bar/ScoreBar.vue";
 import RotateDevice from "./components/RotateDevice.vue";
 import CurrentMoney from "./components/CurrentMoney.vue";
@@ -16,13 +16,13 @@ const updateOrientation = () => {
 };
 
 const rotateDevice = computed(() => {
-  return orientation.value.includes("portrait") || width.value <= 600;
+  return orientation.value === "portrait" || width.value <= 600;
 });
 
-const canvas = ref<HTMLCanvasElement | null>(null);
+const canvas = ref(null);
 const isMounted = ref(false);
 
-const game = ref<GameActive | null>(null);
+const game = ref(null);
 
 // GAME INITIALIZATION
 
@@ -34,11 +34,9 @@ onMounted(() => {
     canvas.value = document.querySelector("canvas");
   }
 
-  if (canvas.value) {
-    game.value = new GameActive(canvas.value);
-  }
+  game.value = new GameActive(canvas.value);
 
-  requestAnimationFrame(loop);
+  loop();
 
   isMounted.value = true;
 });
@@ -50,16 +48,9 @@ onUnmounted(() => {
 
 // GAME LOOP
 
-let lastTime = 0;
-const loop = (timestamp: number) => {
-  if (!lastTime) lastTime = timestamp;
-  const deltaTime = timestamp - lastTime;
-  lastTime = timestamp;
-
-  const dtFactor = deltaTime / (1000 / 60);
-
+const loop = () => {
   if (game.value) {
-    game.value.update(dtFactor);
+    game.value.update();
     game.value.draw();
   }
 
@@ -82,11 +73,7 @@ const loop = (timestamp: number) => {
         />
       </div>
     </div>
-    <CurrentMoney
-      v-if="isMounted && game"
-      class="fixed top-1 right-1"
-      :game="game"
-    />
+    <CurrentMoney v-if="isMounted" class="fixed top-1 right-1" :game="game" />
   </div>
   <div v-else>
     <RotateDevice />

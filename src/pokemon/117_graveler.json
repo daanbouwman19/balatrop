@@ -1,33 +1,33 @@
 {
-  "name": "graveler",
-  "order": 117,
-  "types": [
-    {
-      "slot": 1,
-      "type": {
-        "name": "rock",
-        "url": "https://pokeapi.co/api/v2/type/6/"
-      }
+    "name": "graveler",
+    "order": 117,
+    "types": [
+        {
+            "slot": 1,
+            "type": {
+                "name": "rock",
+                "url": "https://pokeapi.co/api/v2/type/6/"
+            }
+        },
+        {
+            "slot": 2,
+            "type": {
+                "name": "ground",
+                "url": "https://pokeapi.co/api/v2/type/5/"
+            }
+        }
+    ],
+    "cries": {
+        "latest": "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/latest/75.ogg",
+        "legacy": "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/legacy/75.ogg"
     },
-    {
-      "slot": 2,
-      "type": {
-        "name": "ground",
-        "url": "https://pokeapi.co/api/v2/type/5/"
-      }
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/75.png",
+    "evolvedFrom": {
+        "name": "geodude",
+        "file": "115_geodude.json"
+    },
+    "evolvesTo": {
+        "name": "golem",
+        "file": "119_golem.json"
     }
-  ],
-  "cries": {
-    "latest": "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/latest/75.ogg",
-    "legacy": "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/legacy/75.ogg"
-  },
-  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/75.png",
-  "evolvedFrom": {
-    "name": "geodude",
-    "file": "115_geodude.json"
-  },
-  "evolvesTo": {
-    "name": "golem",
-    "file": "119_golem.json"
-  }
 }

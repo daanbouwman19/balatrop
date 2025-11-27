@@ -1,23 +1,23 @@
 {
-  "name": "caterpie",
-  "order": 14,
-  "types": [
-    {
-      "slot": 1,
-      "type": {
-        "name": "bug",
-        "url": "https://pokeapi.co/api/v2/type/7/"
-      }
+    "name": "caterpie",
+    "order": 14,
+    "types": [
+        {
+            "slot": 1,
+            "type": {
+                "name": "bug",
+                "url": "https://pokeapi.co/api/v2/type/7/"
+            }
+        }
+    ],
+    "cries": {
+        "latest": "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/latest/10.ogg",
+        "legacy": "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/legacy/10.ogg"
+    },
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10.png",
+    "evolvedFrom": null,
+    "evolvesTo": {
+        "name": "metapod",
+        "file": "015_metapod.json"
     }
-  ],
-  "cries": {
-    "latest": "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/latest/10.ogg",
-    "legacy": "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/legacy/10.ogg"
-  },
-  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10.png",
-  "evolvedFrom": null,
-  "evolvesTo": {
-    "name": "metapod",
-    "file": "015_metapod.json"
-  }
 }

@@ -1,23 +1,23 @@
 {
-  "name": "weezing",
-  "order": 174,
-  "types": [
-    {
-      "slot": 1,
-      "type": {
-        "name": "poison",
-        "url": "https://pokeapi.co/api/v2/type/4/"
-      }
-    }
-  ],
-  "cries": {
-    "latest": "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/latest/110.ogg",
-    "legacy": "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/legacy/110.ogg"
-  },
-  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/110.png",
-  "evolvedFrom": {
-    "name": "koffing",
-    "file": "173_koffing.json"
-  },
-  "evolvesTo": null
+    "name": "weezing",
+    "order": 174,
+    "types": [
+        {
+            "slot": 1,
+            "type": {
+                "name": "poison",
+                "url": "https://pokeapi.co/api/v2/type/4/"
+            }
+        }
+    ],
+    "cries": {
+        "latest": "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/latest/110.ogg",
+        "legacy": "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/legacy/110.ogg"
+    },
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/110.png",
+    "evolvedFrom": {
+        "name": "koffing",
+        "file": "173_koffing.json"
+    },
+    "evolvesTo": null
 }

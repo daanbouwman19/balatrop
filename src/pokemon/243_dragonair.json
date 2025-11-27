@@ -1,26 +1,26 @@
 {
-  "name": "dragonair",
-  "order": 243,
-  "types": [
-    {
-      "slot": 1,
-      "type": {
-        "name": "dragon",
-        "url": "https://pokeapi.co/api/v2/type/16/"
-      }
+    "name": "dragonair",
+    "order": 243,
+    "types": [
+        {
+            "slot": 1,
+            "type": {
+                "name": "dragon",
+                "url": "https://pokeapi.co/api/v2/type/16/"
+            }
+        }
+    ],
+    "cries": {
+        "latest": "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/latest/148.ogg",
+        "legacy": "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/legacy/148.ogg"
+    },
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/148.png",
+    "evolvedFrom": {
+        "name": "dratini",
+        "file": "242_dratini.json"
+    },
+    "evolvesTo": {
+        "name": "dragonite",
+        "file": "244_dragonite.json"
     }
-  ],
-  "cries": {
-    "latest": "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/latest/148.ogg",
-    "legacy": "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/legacy/148.ogg"
-  },
-  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/148.png",
-  "evolvedFrom": {
-    "name": "dratini",
-    "file": "242_dratini.json"
-  },
-  "evolvesTo": {
-    "name": "dragonite",
-    "file": "244_dragonite.json"
-  }
 }
