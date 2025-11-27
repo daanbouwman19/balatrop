@@ -41,6 +41,8 @@ export class GameActive {
   attack_queue: CardEntity[];
   cardTypes: { [key: string]: number };
   attack_history: AttackLog[];
+  actionTimer: number;
+  subStep: number;
 
   constructor(canvas: HTMLCanvasElement) {
     this.pokemon_cards = this.initializePokemonCards();
@@ -53,6 +55,8 @@ export class GameActive {
     this.STATE = "START";
     this.t = 0;
     this.anim = 0;
+    this.actionTimer = 0;
+    this.subStep = 0;
 
     this.selectedCardsCounter = null;
 
@@ -150,6 +154,8 @@ export class GameActive {
 
     this.STATE = state;
     this.anim = 0;
+    this.actionTimer = 0;
+    this.subStep = 0;
 
     if (state === "FILLHAND") {
       this.drawed_this_round = [];
@@ -265,6 +271,8 @@ export class GameActive {
     this.STATE = "START";
     this.t = 0;
     this.anim = 0;
+    this.actionTimer = 0;
+    this.subStep = 0;
     this.player_deck = this.initializeDeck();
     this.drawed_this_round = [];
     this.hand_cards = [];
@@ -314,6 +322,7 @@ export class GameActive {
   update(dt: number): void {
     this.t += dt;
     this.anim += dt;
+    this.actionTimer += dt;
 
     // Ensure hand_cards are updated
     if (this.hand_cards.length > 0) {
@@ -334,7 +343,8 @@ export class GameActive {
     if (this.STATE === "FILLHAND") {
       const HAND_SIZE = 8;
 
-      if (this.t % 10 == 0) {
+      if (this.actionTimer >= 10) {
+        this.actionTimer = 0;
         if (this.hand_cards.length < HAND_SIZE) {
           this.addDeckCardToMakeEntityJeMoeder();
         } else {
@@ -344,8 +354,10 @@ export class GameActive {
     }
 
     if (this.STATE === "ADD_DAMAGE") {
-      if (this.anim % 10 == 0) {
-        if (this.anim % 20 == 0) {
+      if (this.actionTimer >= 10) {
+        this.actionTimer = 0;
+
+        if (this.subStep === 0) {
           const currentCard = this.attack_queue.shift()?.card;
           if (!currentCard || !currentCard.entity) return;
 
@@ -371,6 +383,7 @@ export class GameActive {
               ),
             );
           }
+          this.subStep = 1;
         } else if (this.attack_queue.length > 0) {
           const currentCard = this.attack_queue[0].card;
           if (!currentCard.entity) return;
@@ -388,6 +401,7 @@ export class GameActive {
               damage,
             ),
           );
+          this.subStep = 0;
         } else {
           this.enterState("ATTACK");
         }
@@ -395,7 +409,8 @@ export class GameActive {
     }
 
     if (this.STATE === "ATTACK") {
-      if (this.anim % 10 == 0) {
+      if (this.actionTimer >= 10) {
+        this.actionTimer = 0;
         if (this.attack_queue.length > 0) {
           const attacker = this.attack_queue[0];
           attacker.attack(
@@ -498,9 +513,7 @@ export class GameActive {
     return deck;
   }
 
-  isClickable(
-    entity: Entity,
-  ): entity is Entity & {
+  isClickable(entity: Entity): entity is Entity & {
     handleClick: (event: MouseEvent | TouchEvent) => void;
   } {
     return (
