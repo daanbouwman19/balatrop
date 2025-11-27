@@ -1,10 +1,23 @@
 import { lerp } from "@/utils/math.js";
 import Entity from "../entity.js";
 import { CorpseEntity } from "./CorpseEntity";
+import { Screen } from "../../screen";
 
 export class EnemyEntity extends Entity {
+    resizeHelpMe: number;
+    width: number;
+    height: number;
+    imageUri: string;
+    image: HTMLImageElement;
+    ready: boolean;
+    pokemon: any;
+    typeImages: HTMLImageElement[];
+    hp: number;
+    maxHp: number;
+    damageTaken: number;
+    damageTakenDisplayDelay: number;
 
-    constructor(x, y, width, height, pokemon, difficulty) {
+    constructor(x: number, y: number, width: number, height: number, pokemon: any, difficulty: number) {
         super(x, y);
         this.resizeHelpMe = width / 96;
         this.width = width;
@@ -24,7 +37,7 @@ export class EnemyEntity extends Entity {
 
         this.typeImages = []
 
-        pokemon.types.forEach((type) => {
+        pokemon.types.forEach((type: any) => {
             const image = new Image(48, 16)
             image.src = `images/${type.type.name}.png`
             this.typeImages.push(image)
@@ -36,7 +49,7 @@ export class EnemyEntity extends Entity {
         this.damageTakenDisplayDelay = 0;
     }
 
-    draw(screen, t) {
+    draw(screen: Screen, t: number) {
         if (!this.ready) return;
 
         const targetY = Math.sin(t * 0.01) * 10;
@@ -72,7 +85,7 @@ export class EnemyEntity extends Entity {
         screen.c().restore();
     }
 
-    damage(amount) {
+    damage(amount: number) {
         this.hp -= amount;
         this.damageTaken += amount;
         this.damageTakenDisplayDelay = 5;
@@ -84,7 +97,7 @@ export class EnemyEntity extends Entity {
 
         if (dead) {
             const corpse = new CorpseEntity(this);
-            this.game.addEntity(corpse);
+            this.game?.addEntity(corpse);
         }
 
         return dead;

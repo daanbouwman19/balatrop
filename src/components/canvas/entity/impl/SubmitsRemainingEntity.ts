@@ -12,6 +12,7 @@ export class SubmitsRemainingEntity extends Entity {
     }
 
     draw(screen: Screen) {
+        if (!this.game) return;
         const submitsRemaining = this.game.submitsRemaining;
 
         // Draw the submits remaining at the top-right corner
@@ -22,6 +23,7 @@ export class SubmitsRemainingEntity extends Entity {
     }
 
     update() {
+        if (!this.game) return;
         // Check if submitsRemaining has changed
         if (this.lastSubmitsRemaining !== this.game.submitsRemaining) {
             this.lastSubmitsRemaining = this.game.submitsRemaining;

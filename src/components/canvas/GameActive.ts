@@ -47,6 +47,7 @@ export class GameActive {
         this.enemy = new EnemyEntity(0, 0, 0, 0, this.pokemon_cards[0], 0);
         this.submitsRemaining = 0;
         this.attack_queue = [];
+        this.cardTypes = {};
         this.attack_history = [];
         // States
         this.STATE = "START";

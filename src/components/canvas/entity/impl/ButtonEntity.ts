@@ -56,7 +56,7 @@ export class ButtonEntity extends Entity {
         this.disabled = this.isDisabled();
 
         // Update hover state only if not disabled
-        if (!this.disabled) {
+        if (!this.disabled && this.game) {
             this.hovered = this.game.screen.mouse.x > this.x &&
                            this.game.screen.mouse.x < this.x + this.width &&
                            this.game.screen.mouse.y > this.y &&

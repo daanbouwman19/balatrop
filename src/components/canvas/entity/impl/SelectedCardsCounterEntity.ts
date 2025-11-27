@@ -10,6 +10,7 @@ export class SelectedCardsCounterEntity extends Entity {
     }
 
     draw(screen: Screen) {
+        if (!this.game) return;
         const selectedCardsCount = this.game.entities.filter(
             (entity: Entity) => entity instanceof CardEntity && entity.selected
         ).length;

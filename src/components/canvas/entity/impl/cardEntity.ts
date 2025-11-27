@@ -2,14 +2,14 @@ import { lerp } from "@/utils/math";
 import Entity from "../entity";
 import * as Particle from './Particle';
 import typeRelationsMap from "@/typeRelationsMap.json"
-import { Screen } from "../screen";
+import { Screen } from "../../screen";
 
 export interface PokemonCard {
     name: string;
     value: number;
     image: string;
     evolvedFrom: string | null;
-    evolvesTo: string | null;
+    evolvesTo: string[] | null;
     types: { type: { name: string } }[];
     entity: CardEntity | null;
 }
