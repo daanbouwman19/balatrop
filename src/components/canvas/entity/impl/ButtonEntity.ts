@@ -80,7 +80,7 @@ export class ButtonEntity extends Entity {
       );
   }
 
-  update(_dt: number) {
+  update() {
     // Update disabled state
     this.disabled = this.isDisabled();
 

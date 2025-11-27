@@ -457,10 +457,23 @@ export class GameActive {
   }
 
   drawCardFromDeck(): PokemonCard {
+    if (this.player_deck.length === 0) {
+      console.error("Player deck is empty!");
+      return this.pokemon_cards[0];
+    }
+
     let card: PokemonCard;
+    let attempts = 0;
     do {
       card =
         this.player_deck[Math.floor(Math.random() * this.player_deck.length)];
+      attempts++;
+      if (attempts > 100) {
+        console.warn(
+          "Could not find a unique card after 100 attempts. Allowing duplicate.",
+        );
+        break;
+      }
     } while (this.drawed_this_round.includes(card));
 
     this.drawed_this_round.push(card);

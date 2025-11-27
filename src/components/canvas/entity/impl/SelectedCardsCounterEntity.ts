@@ -25,7 +25,7 @@ export class SelectedCardsCounterEntity extends Entity {
       .fillText(`Selected: ${selectedCardsCount}/${maxSelectedCards}`, 10, 30);
   }
 
-  update(_dt: number) {
+  update() {
     // No update logic needed
   }
 }

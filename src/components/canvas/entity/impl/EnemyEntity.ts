@@ -2,6 +2,7 @@ import { lerp } from "@/utils/math";
 import Entity from "../entity";
 import { CorpseEntity } from "./CorpseEntity";
 import { Screen } from "../../screen";
+import { PokemonCard } from "./cardEntity";
 
 export class EnemyEntity extends Entity {
   resizeHelpMe: number;
@@ -10,7 +11,7 @@ export class EnemyEntity extends Entity {
   imageUri: string;
   image: HTMLImageElement;
   ready: boolean;
-  pokemon: any;
+  pokemon: PokemonCard;
   typeImages: HTMLImageElement[];
   hp: number;
   maxHp: number;
@@ -22,7 +23,7 @@ export class EnemyEntity extends Entity {
     y: number,
     width: number,
     height: number,
-    pokemon: any,
+    pokemon: PokemonCard,
     difficulty: number,
   ) {
     super(x, y);
@@ -44,7 +45,7 @@ export class EnemyEntity extends Entity {
 
     this.typeImages = [];
 
-    pokemon.types.forEach((type: any) => {
+    pokemon.types.forEach((type) => {
       const image = new Image(48, 16);
       image.src = `images/${type.type.name}.png`;
       this.typeImages.push(image);
@@ -110,8 +111,7 @@ export class EnemyEntity extends Entity {
     return dead;
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  update(_dt: number) {
+  update() {
     // No update logic needed
   }
 }

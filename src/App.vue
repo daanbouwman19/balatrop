@@ -56,8 +56,6 @@ const loop = (timestamp: number) => {
   const deltaTime = timestamp - lastTime;
   lastTime = timestamp;
 
-  // 60Hz target: 1000ms / 60frames ≈ 16.666ms per frame
-  // dtFactor = 1 means we are running at 60Hz
   const dtFactor = deltaTime / (1000 / 60);
 
   if (game.value) {

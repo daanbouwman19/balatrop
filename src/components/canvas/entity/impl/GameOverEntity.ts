@@ -30,7 +30,7 @@ export class GameOverEntity extends Entity {
     screen.c().fillText(this.message, this.x, this.y);
   }
 
-  update(_dt: number) {
+  update() {
     // No update logic needed for static display
   }
 }

@@ -28,7 +28,7 @@ export class SubmitsRemainingEntity extends Entity {
       );
   }
 
-  update(_dt: number) {
+  update() {
     if (!this.game) return;
     // Check if submitsRemaining has changed
     if (this.lastSubmitsRemaining !== this.game.submitsRemaining) {

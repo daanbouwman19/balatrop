@@ -252,7 +252,7 @@ export class CardEntity extends Entity {
     };
   }
 
-  draw(screen: Screen, _t: number) {
+  draw(screen: Screen) {
     // screen.drawRectangle(this.x, this.y, this.width, this.height, this.color);
 
     if (!this.ready) return;

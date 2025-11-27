@@ -108,7 +108,7 @@ export class Particle extends Entity {
     }
   }
 
-  draw(screen: Screen, _t: number) {
+  draw(screen: Screen) {
     this.batch.forEach((particle) => {
       this.disp(particle, screen);
     });
