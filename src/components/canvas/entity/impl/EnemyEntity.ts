@@ -90,4 +90,9 @@ export class EnemyEntity extends Entity {
         return dead;
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    update(t: number) {
+        // No update logic needed
+    }
+
 }

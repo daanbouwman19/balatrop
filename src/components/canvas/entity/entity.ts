@@ -1,6 +1,8 @@
 
 import { GameActive } from "../GameActive";
-export default class Entity {
+import { Screen } from "../screen";
+
+export default abstract class Entity {
     x: number;
     y: number;
     game: GameActive | null;
@@ -16,13 +18,9 @@ export default class Entity {
         this.game = game;
     }
 
-    draw(): void {
-        // to be implemented by subclasses
-    }
+    abstract draw(screen: Screen, t: number): void;
 
-    update(): void {
-        // to be implemented by subclasses
-    }
+    abstract update(t: number): void;
 
     destroy() {
       if (this.game) {

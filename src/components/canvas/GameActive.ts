@@ -97,8 +97,8 @@ export class GameActive {
         });
         window.addEventListener("keydown", (event: KeyboardEvent) => {
             this.entities.forEach(entity => {
-                if ('keydown' in entity && typeof (entity as any).keydown === 'function') {
-                    (entity as any).keydown(event);
+                if (this.isKeydownListener(entity)) {
+                    entity.keydown(event);
                 }
             });
         });
@@ -442,13 +442,13 @@ export class GameActive {
         card.entity = cardEntity; // Ensure card.entity is set
         this.hand_cards.push(card);
     }
-        
+
 
     initializePokemonCards(): PokemonCard[] {
         const pokemonCards: PokemonCard[] = [];
         const modules: Record<string, unknown> = import.meta.glob('@/pokemon/*.json', { eager: true });
         for (const path in modules) {
-            const pokemonData = modules[path] as { [key: string]: any };
+            const pokemonData = modules[path] as PokemonJsonData;
             const card: PokemonCard = {
                 name: pokemonData.name,
                 value: pokemonData.order % 5+1,   
@@ -474,7 +474,20 @@ export class GameActive {
     }
 
     isClickable(entity: Entity): entity is Entity & { handleClick: (event: MouseEvent | TouchEvent) => void } {
-        return 'handleClick' in entity && typeof (entity as any).handleClick === 'function';
+        return 'handleClick' in entity && typeof (entity as Record<string, unknown>).handleClick === 'function';
     }
 
+    isKeydownListener(entity: Entity): entity is Entity & { keydown: (event: KeyboardEvent) => void } {
+        return 'keydown' in entity && typeof (entity as Record<string, unknown>).keydown === 'function';
+    }
+
+}
+
+interface PokemonJsonData {
+    name: string;
+    order: number;
+    sprite: string;
+    evolvedFrom: string | null;
+    evolvesTo: string[];
+    types: { type: { name: string } }[];
 }
