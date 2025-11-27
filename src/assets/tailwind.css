@@ -2,10 +2,10 @@
 
 @theme {
   /* Colors */
-  --color-transparent: #00000000;
+  --color-transparent: transparent;
   --color-text-color: #ffffff;
   --color-money-color: #ffff00;
-  --color-offset-yellow: #ffffff;
+  --color-offset-white: #ffffff;
   --color-background: #dddddd;
   --color-score-board-enemy-header-background: #000000;
   --color-score-board-enemy-card-background: #ffff00;

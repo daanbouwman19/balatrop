@@ -357,6 +357,11 @@ export class GameActive {
       if (this.actionTimer >= 10) {
         this.actionTimer = 0;
 
+        if (this.attack_queue.length === 0) {
+          this.enterState("ATTACK");
+          return;
+        }
+
         if (this.subStep === 0) {
           const currentCard = this.attack_queue[0]?.card;
           if (!currentCard || !currentCard.entity) return;
@@ -384,7 +389,7 @@ export class GameActive {
             );
           }
           this.subStep = 1;
-        } else if (this.attack_queue.length > 0) {
+        } else {
           const currentCard = this.attack_queue[0].card;
           if (!currentCard.entity) return;
           const damage =
@@ -403,8 +408,6 @@ export class GameActive {
           );
           this.attack_queue.shift();
           this.subStep = 0;
-        } else {
-          this.enterState("ATTACK");
         }
       }
     }
@@ -457,13 +460,13 @@ export class GameActive {
     this.entities = this.entities.filter((e) => e !== entity);
   }
 
-  drawCardFromDeck(): PokemonCard {
+  drawCardFromDeck(): PokemonCard | undefined {
     const availableCards = this.player_deck.filter(
       (card) => !this.drawed_this_round.includes(card),
     );
 
     if (availableCards.length === 0) {
-      throw new Error("No cards available to draw.");
+      return undefined;
     }
 
     const card =
@@ -478,6 +481,7 @@ export class GameActive {
 
   addCardToHand(): void {
     const card = this.drawCardFromDeck();
+    if (!card) return;
 
     const cardEntity = new CardEntity(this.screen.width / 2, -500, card);
     this.addEntity(cardEntity);

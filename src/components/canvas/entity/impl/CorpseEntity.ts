@@ -28,17 +28,17 @@ export class CorpseEntity extends Entity {
     this.entity.y = 0;
   }
 
-  update(_dt: number) {
-    this.dy += 0.1;
+  update(dt: number) {
+    this.dy += 0.1 * dt;
 
-    this.x += this.dx;
-    this.y += this.dy;
-    this.rotation += this.dRotation;
+    this.x += this.dx * dt;
+    this.y += this.dy * dt;
+    this.rotation += this.dRotation * dt;
 
-    this.life -= 1;
+    this.life -= 1 * dt;
 
     if (this.scale > 0) {
-      this.scale -= 0.01;
+      this.scale -= 0.01 * dt;
     }
 
     if (this.life < 0) {
