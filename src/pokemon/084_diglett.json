@@ -1,23 +1,23 @@
 {
-    "name": "diglett",
-    "order": 84,
-    "types": [
-        {
-            "slot": 1,
-            "type": {
-                "name": "ground",
-                "url": "https://pokeapi.co/api/v2/type/5/"
-            }
-        }
-    ],
-    "cries": {
-        "latest": "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/latest/50.ogg",
-        "legacy": "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/legacy/50.ogg"
-    },
-    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/50.png",
-    "evolvedFrom": null,
-    "evolvesTo": {
-        "name": "dugtrio",
-        "file": "086_dugtrio.json"
+  "name": "diglett",
+  "order": 84,
+  "types": [
+    {
+      "slot": 1,
+      "type": {
+        "name": "ground",
+        "url": "https://pokeapi.co/api/v2/type/5/"
+      }
     }
+  ],
+  "cries": {
+    "latest": "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/latest/50.ogg",
+    "legacy": "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/legacy/50.ogg"
+  },
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/50.png",
+  "evolvedFrom": null,
+  "evolvesTo": {
+    "name": "dugtrio",
+    "file": "086_dugtrio.json"
+  }
 }

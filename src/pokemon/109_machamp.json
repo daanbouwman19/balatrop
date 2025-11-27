@@ -1,23 +1,23 @@
 {
-    "name": "machamp",
-    "order": 109,
-    "types": [
-        {
-            "slot": 1,
-            "type": {
-                "name": "fighting",
-                "url": "https://pokeapi.co/api/v2/type/2/"
-            }
-        }
-    ],
-    "cries": {
-        "latest": "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/latest/68.ogg",
-        "legacy": "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/legacy/68.ogg"
-    },
-    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/68.png",
-    "evolvedFrom": {
-        "name": "machoke",
-        "file": "108_machoke.json"
-    },
-    "evolvesTo": null
+  "name": "machamp",
+  "order": 109,
+  "types": [
+    {
+      "slot": 1,
+      "type": {
+        "name": "fighting",
+        "url": "https://pokeapi.co/api/v2/type/2/"
+      }
+    }
+  ],
+  "cries": {
+    "latest": "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/latest/68.ogg",
+    "legacy": "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/legacy/68.ogg"
+  },
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/68.png",
+  "evolvedFrom": {
+    "name": "machoke",
+    "file": "108_machoke.json"
+  },
+  "evolvesTo": null
 }

@@ -1,30 +1,30 @@
 {
-    "name": "omanyte",
-    "order": 228,
-    "types": [
-        {
-            "slot": 1,
-            "type": {
-                "name": "rock",
-                "url": "https://pokeapi.co/api/v2/type/6/"
-            }
-        },
-        {
-            "slot": 2,
-            "type": {
-                "name": "water",
-                "url": "https://pokeapi.co/api/v2/type/11/"
-            }
-        }
-    ],
-    "cries": {
-        "latest": "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/latest/138.ogg",
-        "legacy": "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/legacy/138.ogg"
+  "name": "omanyte",
+  "order": 228,
+  "types": [
+    {
+      "slot": 1,
+      "type": {
+        "name": "rock",
+        "url": "https://pokeapi.co/api/v2/type/6/"
+      }
     },
-    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/138.png",
-    "evolvedFrom": null,
-    "evolvesTo": {
-        "name": "omastar",
-        "file": "229_omastar.json"
+    {
+      "slot": 2,
+      "type": {
+        "name": "water",
+        "url": "https://pokeapi.co/api/v2/type/11/"
+      }
     }
+  ],
+  "cries": {
+    "latest": "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/latest/138.ogg",
+    "legacy": "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/legacy/138.ogg"
+  },
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/138.png",
+  "evolvedFrom": null,
+  "evolvesTo": {
+    "name": "omastar",
+    "file": "229_omastar.json"
+  }
 }

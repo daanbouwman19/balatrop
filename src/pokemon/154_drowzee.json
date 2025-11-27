@@ -1,23 +1,23 @@
 {
-    "name": "drowzee",
-    "order": 154,
-    "types": [
-        {
-            "slot": 1,
-            "type": {
-                "name": "psychic",
-                "url": "https://pokeapi.co/api/v2/type/14/"
-            }
-        }
-    ],
-    "cries": {
-        "latest": "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/latest/96.ogg",
-        "legacy": "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/legacy/96.ogg"
-    },
-    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/96.png",
-    "evolvedFrom": null,
-    "evolvesTo": {
-        "name": "hypno",
-        "file": "155_hypno.json"
+  "name": "drowzee",
+  "order": 154,
+  "types": [
+    {
+      "slot": 1,
+      "type": {
+        "name": "psychic",
+        "url": "https://pokeapi.co/api/v2/type/14/"
+      }
     }
+  ],
+  "cries": {
+    "latest": "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/latest/96.ogg",
+    "legacy": "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/legacy/96.ogg"
+  },
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/96.png",
+  "evolvedFrom": null,
+  "evolvesTo": {
+    "name": "hypno",
+    "file": "155_hypno.json"
+  }
 }

@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import EnemyStats from "./enemy/EnemyStats.vue";
 import EnemyHeader from "./enemy/EnemyHeader.vue";
 import CurrentScore from "./current-round/CurrentScore.vue";
@@ -19,24 +19,15 @@ defineProps({
 </script>
 
 <template>
-  <div
-    v-if="isMounted"
-    class="h-full text-text-color overflow-visible"
-  >
+  <div v-if="isMounted" class="h-full text-text-color overflow-visible">
     <div
       class="w-[8vw] h-[8vw] bg-[navy] rounded-full border-background border-4 absolute top-[5vh] left-[5vh] shadow-2xl"
     />
     <div
       class="h-full w-52 bg-score-board-background flex flex-col flex-1 justify-center shadow-inner gap"
     >
-      <EnemyHeader
-        class="mx-auto w-[90%] p-1"
-        :game="game"
-      />
-      <EnemyStats
-        :game="game"
-        class="w-[90%]"
-      />
+      <EnemyHeader class="mx-auto w-[90%] p-1" :game="game" />
+      <EnemyStats :game="game" class="w-[90%]" />
       <CurrentScore :game="game" />
       <HandInformation :game="game" />
     </div>

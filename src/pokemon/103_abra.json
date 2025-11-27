@@ -1,23 +1,23 @@
 {
-    "name": "abra",
-    "order": 103,
-    "types": [
-        {
-            "slot": 1,
-            "type": {
-                "name": "psychic",
-                "url": "https://pokeapi.co/api/v2/type/14/"
-            }
-        }
-    ],
-    "cries": {
-        "latest": "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/latest/63.ogg",
-        "legacy": "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/legacy/63.ogg"
-    },
-    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/63.png",
-    "evolvedFrom": null,
-    "evolvesTo": {
-        "name": "kadabra",
-        "file": "104_kadabra.json"
+  "name": "abra",
+  "order": 103,
+  "types": [
+    {
+      "slot": 1,
+      "type": {
+        "name": "psychic",
+        "url": "https://pokeapi.co/api/v2/type/14/"
+      }
     }
+  ],
+  "cries": {
+    "latest": "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/latest/63.ogg",
+    "legacy": "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/legacy/63.ogg"
+  },
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/63.png",
+  "evolvedFrom": null,
+  "evolvesTo": {
+    "name": "kadabra",
+    "file": "104_kadabra.json"
+  }
 }
