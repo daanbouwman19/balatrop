@@ -112,6 +112,7 @@ export class EnemyEntity extends Entity {
 
     this.y = lerp(this.y, targetY, 1 - Math.pow(1 - 0.1, dt));
     if (this.damageTakenDisplayDelay > 0) this.damageTakenDisplayDelay -= dt;
-    else this.damageTaken = lerp(this.damageTaken, 0, 1 - Math.pow(1 - 0.1, dt));
+    else
+      this.damageTaken = lerp(this.damageTaken, 0, 1 - Math.pow(1 - 0.1, dt));
   }
 }
