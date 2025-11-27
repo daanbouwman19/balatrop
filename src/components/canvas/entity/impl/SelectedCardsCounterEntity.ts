@@ -9,7 +9,7 @@ export class SelectedCardsCounterEntity extends Entity {
     this.game = game;
   }
 
-  draw(screen: Screen) {
+  draw(screen: Screen, _t: number) {
     if (!this.game) return;
     const selectedCardsCount = this.game.entities.filter(
       (entity: Entity) => entity instanceof CardEntity && entity.selected,
@@ -25,7 +25,7 @@ export class SelectedCardsCounterEntity extends Entity {
       .fillText(`Selected: ${selectedCardsCount}/${maxSelectedCards}`, 10, 30);
   }
 
-  update() {
+  update(_dt: number) {
     // No update logic needed
   }
 }

@@ -15,7 +15,7 @@ export class DamageEntity extends Entity {
     this.damage = damage;
   }
 
-  draw(screen: Screen) {
+  draw(screen: Screen, _t: number) {
     screen.c().fillStyle = this.textColor;
     screen.c().font = "32px Arial";
     screen.c().textAlign = "center";

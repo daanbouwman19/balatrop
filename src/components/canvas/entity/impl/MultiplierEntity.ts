@@ -15,7 +15,7 @@ export class MultiplierEntity extends Entity {
     this.multiplier = multiplier;
   }
 
-  draw(screen: Screen) {
+  draw(screen: Screen, _t: number) {
     screen.c().fillStyle = this.textColor;
     screen.c().font = "32px Arial";
     screen.c().textAlign = "center";

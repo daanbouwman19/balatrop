@@ -11,7 +11,7 @@ export class SubmitsRemainingEntity extends Entity {
     this.lastSubmitsRemaining = this.game.submitsRemaining;
   }
 
-  draw(screen: Screen) {
+  draw(screen: Screen, _t: number) {
     if (!this.game) return;
     const submitsRemaining = this.game.submitsRemaining;
 
@@ -28,7 +28,7 @@ export class SubmitsRemainingEntity extends Entity {
       );
   }
 
-  update() {
+  update(_dt: number) {
     if (!this.game) return;
     // Check if submitsRemaining has changed
     if (this.lastSubmitsRemaining !== this.game.submitsRemaining) {

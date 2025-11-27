@@ -346,7 +346,7 @@ export class GameActive {
       if (this.actionTimer >= 10) {
         this.actionTimer = 0;
         if (this.hand_cards.length < HAND_SIZE) {
-          this.addDeckCardToMakeEntityJeMoeder();
+          this.addCardToHand();
         } else {
           this.enterState("SELECT_CARDS");
         }
@@ -357,8 +357,13 @@ export class GameActive {
       if (this.actionTimer >= 10) {
         this.actionTimer = 0;
 
+        if (this.attack_queue.length === 0) {
+          this.enterState("ATTACK");
+          return;
+        }
+
         if (this.subStep === 0) {
-          const currentCard = this.attack_queue.shift()?.card;
+          const currentCard = this.attack_queue[0]?.card;
           if (!currentCard || !currentCard.entity) return;
 
           let multiplier = 0;
@@ -384,7 +389,7 @@ export class GameActive {
             );
           }
           this.subStep = 1;
-        } else if (this.attack_queue.length > 0) {
+        } else {
           const currentCard = this.attack_queue[0].card;
           if (!currentCard.entity) return;
           const damage =
@@ -401,9 +406,8 @@ export class GameActive {
               damage,
             ),
           );
+          this.attack_queue.shift();
           this.subStep = 0;
-        } else {
-          this.enterState("ATTACK");
         }
       }
     }
@@ -456,26 +460,17 @@ export class GameActive {
     this.entities = this.entities.filter((e) => e !== entity);
   }
 
-  drawCardFromDeck(): PokemonCard {
-    if (this.player_deck.length === 0) {
-      console.error("Player deck is empty!");
-      return this.pokemon_cards[0];
+  drawCardFromDeck(): PokemonCard | undefined {
+    const availableCards = this.player_deck.filter(
+      (card) => !this.drawed_this_round.includes(card),
+    );
+
+    if (availableCards.length === 0) {
+      return undefined;
     }
 
-    let card: PokemonCard;
-    let attempts = 0;
-    do {
-      card =
-        this.player_deck[Math.floor(Math.random() * this.player_deck.length)];
-      attempts++;
-      if (attempts > 100) {
-        console.warn(
-          "Could not find a unique card after 100 attempts. Allowing duplicate.",
-        );
-        break;
-      }
-    } while (this.drawed_this_round.includes(card));
-
+    const card =
+      availableCards[Math.floor(Math.random() * availableCards.length)];
     this.drawed_this_round.push(card);
     return card;
   }
@@ -484,8 +479,9 @@ export class GameActive {
     this.enterState("FILLHAND");
   }
 
-  addDeckCardToMakeEntityJeMoeder(): void {
+  addCardToHand(): void {
     const card = this.drawCardFromDeck();
+    if (!card) return;
 
     const cardEntity = new CardEntity(this.screen.width / 2, -500, card);
     this.addEntity(cardEntity);
