@@ -70,7 +70,7 @@ export class FrankEntity extends Entity {
     this.y = 0;
   }
 
-  draw(screen: Screen) {
+  draw(screen: Screen, _t: number) {
     if (!this.ready) return;
 
     const size = Math.min(screen.height / 4, 200) * 2;

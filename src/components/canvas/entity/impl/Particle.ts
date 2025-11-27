@@ -47,7 +47,7 @@ export function blood(x: number, y: number): Particle {
         particle.life < 10 &&
         particle.s !== undefined
       ) {
-        particle.s = lerp(particle.s, 0, 0.1 * dt);
+        particle.s = lerp(particle.s, 0, 1 - Math.pow(1 - 0.1, dt));
       }
 
       if (particle.life !== undefined) {
@@ -108,7 +108,7 @@ export class Particle extends Entity {
     }
   }
 
-  draw(screen: Screen) {
+  draw(screen: Screen, _t: number) {
     this.batch.forEach((particle) => {
       this.disp(particle, screen);
     });

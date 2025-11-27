@@ -40,7 +40,7 @@ export class ButtonEntity extends Entity {
     }
   }
 
-  draw(screen: Screen) {
+  draw(screen: Screen, _t: number) {
     // Update disabled state
     this.disabled = this.isDisabled();
 
@@ -80,7 +80,7 @@ export class ButtonEntity extends Entity {
       );
   }
 
-  update() {
+  update(_dt: number) {
     // Update disabled state
     this.disabled = this.isDisabled();
 

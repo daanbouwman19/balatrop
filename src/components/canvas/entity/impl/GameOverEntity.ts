@@ -17,7 +17,7 @@ export class GameOverEntity extends Entity {
     this.fontFamily = "Arial";
   }
 
-  draw(screen: Screen) {
+  draw(screen: Screen, _t: number) {
     // Draw semi-transparent background over the entire screen
     screen.c().fillStyle = "rgba(0, 0, 0, 0.7)";
     screen.c().fillRect(0, 0, screen.width, screen.height);
@@ -30,7 +30,7 @@ export class GameOverEntity extends Entity {
     screen.c().fillText(this.message, this.x, this.y);
   }
 
-  update() {
+  update(_dt: number) {
     // No update logic needed for static display
   }
 }

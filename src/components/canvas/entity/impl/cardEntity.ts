@@ -108,8 +108,8 @@ export class CardEntity extends Entity {
       const targetY =
         screen.height - 200 + Math.sin(t * 0.01 + this.index) * 10;
 
-      this.x = lerp(this.x, targetX, 0.1 * dt);
-      this.y = lerp(this.y, targetY, 0.1 * dt);
+      this.x = lerp(this.x, targetX, 1 - Math.pow(1 - 0.1, dt));
+      this.y = lerp(this.y, targetY, 1 - Math.pow(1 - 0.1, dt));
 
       if (!this.selected) {
         this.lt = 0;
@@ -117,8 +117,8 @@ export class CardEntity extends Entity {
       }
       if (this.selected) {
         if (this.rotation < 4) this.rotation = 4;
-        this.y = lerp(this.y, screen.height - 400, 0.1 * dt);
-        this.rotation = lerp(this.rotation, 6.5, 0.1 * dt);
+        this.y = lerp(this.y, screen.height - 400, 1 - Math.pow(1 - 0.1, dt));
+        this.rotation = lerp(this.rotation, 6.5, 1 - Math.pow(1 - 0.1, dt));
       }
     };
 
@@ -252,7 +252,7 @@ export class CardEntity extends Entity {
     };
   }
 
-  draw(screen: Screen) {
+  draw(screen: Screen, _t: number) {
     // screen.drawRectangle(this.x, this.y, this.width, this.height, this.color);
 
     if (!this.ready) return;
@@ -329,9 +329,9 @@ export class CardEntity extends Entity {
           mouse.y > this.y - this.height / 2 &&
           mouse.y < this.y + this.height / 2;
         if (this.hovered) {
-          this.z = lerp(this.z, 2, 0.4 * dt);
+          this.z = lerp(this.z, 2, 1 - Math.pow(1 - 0.4, dt));
         } else {
-          this.z = lerp(this.z, 0, 0.4 * dt);
+          this.z = lerp(this.z, 0, 1 - Math.pow(1 - 0.4, dt));
           if (this.z < 0.08) this.z = 0;
         }
       }

@@ -1,2 +1,27 @@
 @import "tailwindcss";
-@config "../../tailwind.config.js";
+
+@theme {
+  /* Colors */
+  --color-transparent: #00000000;
+  --color-text-color: #ffffff;
+  --color-money-color: #ffff00;
+  --color-offset-yellow: #ffffff;
+  --color-background: #dddddd;
+  --color-score-board-enemy-header-background: #000000;
+  --color-score-board-enemy-card-background: #ffff00;
+  --color-score-board-background: #db092c;
+  --color-score-board-background-dark: transparent;
+  --color-score-board-enemy-background: #000000;
+  --color-score-board-current-score-background: #000000;
+  --color-score-board-current-multi-background: #000000;
+
+  /* Font Sizes */
+  --text-sm: 14px;
+  --text-sm--line-height: 20px;
+  --text-base: 16px;
+  --text-base--line-height: 24px;
+  --text-lg: 20px;
+  --text-lg--line-height: 28px;
+  --text-xl: 24px;
+  --text-xl--line-height: 32px;
+}

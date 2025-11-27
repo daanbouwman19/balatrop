@@ -28,7 +28,7 @@ export class CorpseEntity extends Entity {
     this.entity.y = 0;
   }
 
-  update() {
+  update(_dt: number) {
     this.dy += 0.1;
 
     this.x += this.dx;
