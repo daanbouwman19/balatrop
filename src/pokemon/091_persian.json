@@ -1,23 +1,23 @@
 {
-  "name": "persian",
-  "order": 91,
-  "types": [
-    {
-      "slot": 1,
-      "type": {
-        "name": "normal",
-        "url": "https://pokeapi.co/api/v2/type/1/"
-      }
-    }
-  ],
-  "cries": {
-    "latest": "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/latest/53.ogg",
-    "legacy": "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/legacy/53.ogg"
-  },
-  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/53.png",
-  "evolvedFrom": {
-    "name": "meowth",
-    "file": "088_meowth.json"
-  },
-  "evolvesTo": null
+    "name": "persian",
+    "order": 91,
+    "types": [
+        {
+            "slot": 1,
+            "type": {
+                "name": "normal",
+                "url": "https://pokeapi.co/api/v2/type/1/"
+            }
+        }
+    ],
+    "cries": {
+        "latest": "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/latest/53.ogg",
+        "legacy": "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/legacy/53.ogg"
+    },
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/53.png",
+    "evolvedFrom": {
+        "name": "meowth",
+        "file": "088_meowth.json"
+    },
+    "evolvesTo": null
 }

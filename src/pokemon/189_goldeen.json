@@ -1,23 +1,23 @@
 {
-  "name": "goldeen",
-  "order": 189,
-  "types": [
-    {
-      "slot": 1,
-      "type": {
-        "name": "water",
-        "url": "https://pokeapi.co/api/v2/type/11/"
-      }
+    "name": "goldeen",
+    "order": 189,
+    "types": [
+        {
+            "slot": 1,
+            "type": {
+                "name": "water",
+                "url": "https://pokeapi.co/api/v2/type/11/"
+            }
+        }
+    ],
+    "cries": {
+        "latest": "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/latest/118.ogg",
+        "legacy": "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/legacy/118.ogg"
+    },
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/118.png",
+    "evolvedFrom": null,
+    "evolvesTo": {
+        "name": "seaking",
+        "file": "190_seaking.json"
     }
-  ],
-  "cries": {
-    "latest": "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/latest/118.ogg",
-    "legacy": "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/legacy/118.ogg"
-  },
-  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/118.png",
-  "evolvedFrom": null,
-  "evolvesTo": {
-    "name": "seaking",
-    "file": "190_seaking.json"
-  }
 }

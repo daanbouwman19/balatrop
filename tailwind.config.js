@@ -1,13 +1,15 @@
 export default {
-  content: ["./src/**/*.{vue,js,ts,jsx,tsx}"],
+  content: [
+    './src/**/*.{vue,js,ts,jsx,tsx}'
+  ],
   theme: {
     extend: {
       colors: {
-        transparent: "#00000000",
+        "transparent": "#00000000",
         "text-color": "#FFFFFF",
         "money-color": "#FFFF00",
         "offset-yellow": "#FFFFFF",
-        background: "#DDDDDD",
+        "background": "#DDDDDD",
         "score-board-enemy-header-background": "#000000",
         "score-board-enemy-card-background": "#FFFF00",
         "score-board-background": "#DB092C",
@@ -21,11 +23,12 @@ export default {
       // }
     },
     fontSize: {
-      sm: ["14px", "20px"],
-      base: ["16px", "24px"],
-      lg: ["20px", "28px"],
-      xl: ["24px", "32px"],
+      sm: ['14px', '20px'],
+      base: ['16px', '24px'],
+      lg: ['20px', '28px'],
+      xl: ['24px', '32px'],
     },
   },
   plugins: [],
-};
+}
+

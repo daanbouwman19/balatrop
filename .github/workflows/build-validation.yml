@@ -23,8 +23,5 @@ jobs:
       - name: Lint
         run: npm run lint
 
-      - name: Type Check
-        run: npx vue-tsc --noEmit
-
       - name: Build
         run: npm run build

@@ -1,23 +1,23 @@
 {
-  "name": "rattata",
-  "order": 25,
-  "types": [
-    {
-      "slot": 1,
-      "type": {
-        "name": "normal",
-        "url": "https://pokeapi.co/api/v2/type/1/"
-      }
+    "name": "rattata",
+    "order": 25,
+    "types": [
+        {
+            "slot": 1,
+            "type": {
+                "name": "normal",
+                "url": "https://pokeapi.co/api/v2/type/1/"
+            }
+        }
+    ],
+    "cries": {
+        "latest": "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/latest/19.ogg",
+        "legacy": "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/legacy/19.ogg"
+    },
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/19.png",
+    "evolvedFrom": null,
+    "evolvesTo": {
+        "name": "raticate",
+        "file": "027_raticate.json"
     }
-  ],
-  "cries": {
-    "latest": "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/latest/19.ogg",
-    "legacy": "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/legacy/19.ogg"
-  },
-  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/19.png",
-  "evolvedFrom": null,
-  "evolvesTo": {
-    "name": "raticate",
-    "file": "027_raticate.json"
-  }
 }

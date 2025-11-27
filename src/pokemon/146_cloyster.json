@@ -1,30 +1,30 @@
 {
-  "name": "cloyster",
-  "order": 146,
-  "types": [
-    {
-      "slot": 1,
-      "type": {
-        "name": "water",
-        "url": "https://pokeapi.co/api/v2/type/11/"
-      }
+    "name": "cloyster",
+    "order": 146,
+    "types": [
+        {
+            "slot": 1,
+            "type": {
+                "name": "water",
+                "url": "https://pokeapi.co/api/v2/type/11/"
+            }
+        },
+        {
+            "slot": 2,
+            "type": {
+                "name": "ice",
+                "url": "https://pokeapi.co/api/v2/type/15/"
+            }
+        }
+    ],
+    "cries": {
+        "latest": "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/latest/91.ogg",
+        "legacy": "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/legacy/91.ogg"
     },
-    {
-      "slot": 2,
-      "type": {
-        "name": "ice",
-        "url": "https://pokeapi.co/api/v2/type/15/"
-      }
-    }
-  ],
-  "cries": {
-    "latest": "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/latest/91.ogg",
-    "legacy": "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/legacy/91.ogg"
-  },
-  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/91.png",
-  "evolvedFrom": {
-    "name": "shellder",
-    "file": "145_shellder.json"
-  },
-  "evolvesTo": null
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/91.png",
+    "evolvedFrom": {
+        "name": "shellder",
+        "file": "145_shellder.json"
+    },
+    "evolvesTo": null
 }

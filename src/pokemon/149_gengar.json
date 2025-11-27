@@ -1,30 +1,30 @@
 {
-  "name": "gengar",
-  "order": 149,
-  "types": [
-    {
-      "slot": 1,
-      "type": {
-        "name": "ghost",
-        "url": "https://pokeapi.co/api/v2/type/8/"
-      }
+    "name": "gengar",
+    "order": 149,
+    "types": [
+        {
+            "slot": 1,
+            "type": {
+                "name": "ghost",
+                "url": "https://pokeapi.co/api/v2/type/8/"
+            }
+        },
+        {
+            "slot": 2,
+            "type": {
+                "name": "poison",
+                "url": "https://pokeapi.co/api/v2/type/4/"
+            }
+        }
+    ],
+    "cries": {
+        "latest": "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/latest/94.ogg",
+        "legacy": "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/legacy/94.ogg"
     },
-    {
-      "slot": 2,
-      "type": {
-        "name": "poison",
-        "url": "https://pokeapi.co/api/v2/type/4/"
-      }
-    }
-  ],
-  "cries": {
-    "latest": "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/latest/94.ogg",
-    "legacy": "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/legacy/94.ogg"
-  },
-  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/94.png",
-  "evolvedFrom": {
-    "name": "haunter",
-    "file": "148_haunter.json"
-  },
-  "evolvesTo": null
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/94.png",
+    "evolvedFrom": {
+        "name": "haunter",
+        "file": "148_haunter.json"
+    },
+    "evolvesTo": null
 }

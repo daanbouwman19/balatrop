@@ -1,23 +1,23 @@
 {
-  "name": "eevee",
-  "order": 215,
-  "types": [
-    {
-      "slot": 1,
-      "type": {
-        "name": "normal",
-        "url": "https://pokeapi.co/api/v2/type/1/"
-      }
+    "name": "eevee",
+    "order": 215,
+    "types": [
+        {
+            "slot": 1,
+            "type": {
+                "name": "normal",
+                "url": "https://pokeapi.co/api/v2/type/1/"
+            }
+        }
+    ],
+    "cries": {
+        "latest": "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/latest/133.ogg",
+        "legacy": "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/legacy/133.ogg"
+    },
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/133.png",
+    "evolvedFrom": null,
+    "evolvesTo": {
+        "name": "vaporeon",
+        "file": "217_vaporeon.json"
     }
-  ],
-  "cries": {
-    "latest": "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/latest/133.ogg",
-    "legacy": "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/legacy/133.ogg"
-  },
-  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/133.png",
-  "evolvedFrom": null,
-  "evolvesTo": {
-    "name": "vaporeon",
-    "file": "217_vaporeon.json"
-  }
 }

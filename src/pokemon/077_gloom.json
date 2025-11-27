@@ -1,33 +1,33 @@
 {
-  "name": "gloom",
-  "order": 77,
-  "types": [
-    {
-      "slot": 1,
-      "type": {
-        "name": "grass",
-        "url": "https://pokeapi.co/api/v2/type/12/"
-      }
+    "name": "gloom",
+    "order": 77,
+    "types": [
+        {
+            "slot": 1,
+            "type": {
+                "name": "grass",
+                "url": "https://pokeapi.co/api/v2/type/12/"
+            }
+        },
+        {
+            "slot": 2,
+            "type": {
+                "name": "poison",
+                "url": "https://pokeapi.co/api/v2/type/4/"
+            }
+        }
+    ],
+    "cries": {
+        "latest": "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/latest/44.ogg",
+        "legacy": "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/legacy/44.ogg"
     },
-    {
-      "slot": 2,
-      "type": {
-        "name": "poison",
-        "url": "https://pokeapi.co/api/v2/type/4/"
-      }
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/44.png",
+    "evolvedFrom": {
+        "name": "oddish",
+        "file": "076_oddish.json"
+    },
+    "evolvesTo": {
+        "name": "vileplume",
+        "file": "078_vileplume.json"
     }
-  ],
-  "cries": {
-    "latest": "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/latest/44.ogg",
-    "legacy": "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/legacy/44.ogg"
-  },
-  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/44.png",
-  "evolvedFrom": {
-    "name": "oddish",
-    "file": "076_oddish.json"
-  },
-  "evolvesTo": {
-    "name": "vileplume",
-    "file": "078_vileplume.json"
-  }
 }

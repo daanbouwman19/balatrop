@@ -1,18 +1,18 @@
 {
-  "name": "clefairy",
-  "order": 64,
-  "types": [
-    {
-      "slot": 1,
-      "type": {
-        "name": "fairy",
-        "url": "https://pokeapi.co/api/v2/type/18/"
-      }
-    }
-  ],
-  "cries": {
-    "latest": "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/latest/35.ogg",
-    "legacy": "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/legacy/35.ogg"
-  },
-  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/35.png"
+    "name": "clefairy",
+    "order": 64,
+    "types": [
+        {
+            "slot": 1,
+            "type": {
+                "name": "fairy",
+                "url": "https://pokeapi.co/api/v2/type/18/"
+            }
+        }
+    ],
+    "cries": {
+        "latest": "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/latest/35.ogg",
+        "legacy": "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/legacy/35.ogg"
+    },
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/35.png"
 }

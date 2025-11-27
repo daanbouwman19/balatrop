@@ -1,9 +1,9 @@
-<script setup lang="ts"></script>
+<script setup>
+
+</script>
 
 <template>
-  <div
-    class="flex justify-center items-center align-center w-[100vw] h-[100vh] bg-background"
-  >
+  <div class="flex justify-center items-center align-center w-[100vw] h-[100vh] bg-background">
     <h1>Please rotate device your device 90 degrees</h1>
   </div>
 </template>

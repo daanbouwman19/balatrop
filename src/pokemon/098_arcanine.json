@@ -1,23 +1,23 @@
 {
-  "name": "arcanine",
-  "order": 98,
-  "types": [
-    {
-      "slot": 1,
-      "type": {
-        "name": "fire",
-        "url": "https://pokeapi.co/api/v2/type/10/"
-      }
-    }
-  ],
-  "cries": {
-    "latest": "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/latest/59.ogg",
-    "legacy": "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/legacy/59.ogg"
-  },
-  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/59.png",
-  "evolvedFrom": {
-    "name": "growlithe",
-    "file": "097_growlithe.json"
-  },
-  "evolvesTo": null
+    "name": "arcanine",
+    "order": 98,
+    "types": [
+        {
+            "slot": 1,
+            "type": {
+                "name": "fire",
+                "url": "https://pokeapi.co/api/v2/type/10/"
+            }
+        }
+    ],
+    "cries": {
+        "latest": "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/latest/59.ogg",
+        "legacy": "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/legacy/59.ogg"
+    },
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/59.png",
+    "evolvedFrom": {
+        "name": "growlithe",
+        "file": "097_growlithe.json"
+    },
+    "evolvesTo": null
 }

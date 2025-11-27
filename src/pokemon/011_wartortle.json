@@ -1,26 +1,26 @@
 {
-  "name": "wartortle",
-  "order": 11,
-  "types": [
-    {
-      "slot": 1,
-      "type": {
-        "name": "water",
-        "url": "https://pokeapi.co/api/v2/type/11/"
-      }
+    "name": "wartortle",
+    "order": 11,
+    "types": [
+        {
+            "slot": 1,
+            "type": {
+                "name": "water",
+                "url": "https://pokeapi.co/api/v2/type/11/"
+            }
+        }
+    ],
+    "cries": {
+        "latest": "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/latest/8.ogg",
+        "legacy": "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/legacy/8.ogg"
+    },
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/8.png",
+    "evolvedFrom": {
+        "name": "squirtle",
+        "file": "010_squirtle.json"
+    },
+    "evolvesTo": {
+        "name": "blastoise",
+        "file": "012_blastoise.json"
     }
-  ],
-  "cries": {
-    "latest": "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/latest/8.ogg",
-    "legacy": "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/legacy/8.ogg"
-  },
-  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/8.png",
-  "evolvedFrom": {
-    "name": "squirtle",
-    "file": "010_squirtle.json"
-  },
-  "evolvesTo": {
-    "name": "blastoise",
-    "file": "012_blastoise.json"
-  }
 }

@@ -1,23 +1,23 @@
 {
-  "name": "arbok",
-  "order": 33,
-  "types": [
-    {
-      "slot": 1,
-      "type": {
-        "name": "poison",
-        "url": "https://pokeapi.co/api/v2/type/4/"
-      }
-    }
-  ],
-  "cries": {
-    "latest": "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/latest/24.ogg",
-    "legacy": "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/legacy/24.ogg"
-  },
-  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/24.png",
-  "evolvedFrom": {
-    "name": "ekans",
-    "file": "032_ekans.json"
-  },
-  "evolvesTo": null
+    "name": "arbok",
+    "order": 33,
+    "types": [
+        {
+            "slot": 1,
+            "type": {
+                "name": "poison",
+                "url": "https://pokeapi.co/api/v2/type/4/"
+            }
+        }
+    ],
+    "cries": {
+        "latest": "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/latest/24.ogg",
+        "legacy": "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/legacy/24.ogg"
+    },
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/24.png",
+    "evolvedFrom": {
+        "name": "ekans",
+        "file": "032_ekans.json"
+    },
+    "evolvesTo": null
 }
