@@ -1,19 +1,16 @@
 <script setup lang="ts">
 import { computed } from "vue";
-import { GameActive } from "@/components/canvas/GameActive";
+import type { GameState } from "@/game/GameState";
 
-const props = defineProps({
-  game: {
-    type: GameActive,
-    required: true,
-  },
-});
+const props = defineProps<{
+  game: GameState;
+}>();
 
 const enemyName = computed(() => {
-  if (props.game.STATE === "INTRO") {
-    return "Frank";
+  if (props.game.state === "INTRO") {
+    return "Rival";
   }
-  return `${props.game.enemy.pokemon.name}`;
+  return props.game.enemy?.pokemon.name || "Unknown";
 });
 </script>
 

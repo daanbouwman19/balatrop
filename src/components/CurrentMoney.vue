@@ -1,21 +1,20 @@
 <script setup lang="ts">
-import DuitseFrank from "../components/icons/DuitseFrank.vue";
-import { GameActive } from "./canvas/GameActive";
+import CoinIcon from "../components/icons/CoinIcon.vue";
+import type { GameState } from "../game/GameState";
 
-defineProps({
-  game: {
-    type: GameActive,
-    required: true,
-  },
-});
+defineProps<{
+  game: GameState;
+}>();
 </script>
 
 <template>
   <div
-    class="flex flex-row justify-center items-center bg-transparent text-money-color text-shadow font-bold py-0.5 px-1"
+    class="bg-score-board-background border-4 border-score-board-border p-4 rounded-lg shadow-lg flex items-center gap-2"
   >
-    <DuitseFrank class="h-[24px] w-[24px]" />
-    <span class="text-xl">{{ game.score }}</span>
+    <CoinIcon class="w-8 h-8" />
+    <span class="text-2xl font-bold text-white font-mono">{{
+      game.score
+    }}</span>
   </div>
 </template>
 

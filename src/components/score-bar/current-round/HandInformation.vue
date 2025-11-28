@@ -1,13 +1,10 @@
 <script setup lang="ts">
-import { GameActive } from "@/components/canvas/GameActive";
+import type { GameState } from "@/game/GameState";
 import { computed } from "vue";
 
-const props = defineProps({
-  game: {
-    type: GameActive,
-    required: true,
-  },
-});
+const props = defineProps<{
+  game: GameState;
+}>();
 
 const cardsLeft = computed(
   () => props.game.player_deck.length - props.game.drawed_this_round.length,

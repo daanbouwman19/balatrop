@@ -1,13 +1,10 @@
 <script setup lang="ts">
-import DuitseFrank from "../../icons/DuitseFrank.vue";
-import { GameActive } from "@/components/canvas/GameActive";
+import CoinIcon from "../../icons/CoinIcon.vue";
+import type { GameState } from "@/game/GameState";
 
-defineProps({
-  game: {
-    type: GameActive,
-    required: true,
-  },
-});
+defineProps<{
+  game: GameState;
+}>();
 
 const generateArray = (count: number) => {
   return Array.from({ length: count }, (_, index) => index);
@@ -21,7 +18,7 @@ const generateArray = (count: number) => {
     <div class="flex flex-col">
       <span class="text-xl text-center">Reward:</span>
       <div class="flex flex-row justify-center items-center h-[20px]">
-        <DuitseFrank
+        <CoinIcon
           v-for="index in generateArray(game.fightReward)"
           :key="index"
           class="w-[24px] h-[24px] mx-0.5"
