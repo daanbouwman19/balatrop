@@ -76,12 +76,11 @@ describe("CardEntity", () => {
       expect(multiplier).toBe(1);
     });
 
-    it("should stack multipliers for multiple card types", () => {
-      // If a card has two types, both apply their multipliers.
-      // Example: Flying (2x to Bug) + Rock (2x to Bug) -> 4x
-      // Let's find a real example or just trust the logic.
+    it("should take max multiplier for multiple card types (not stack)", () => {
+      // If a card has two types, use the best one.
       // Fire deals 2x to Bug. Flying deals 2x to Bug.
       // Charizard is Fire/Flying. Target: Bug.
+      // Max(2, 2) = 2.
 
       const card = createPokemonCard(["fire", "flying"]);
       cardEntity = new CardEntity(0, 0, card);
@@ -89,7 +88,7 @@ describe("CardEntity", () => {
       const targetTypes = [{ type: { name: "bug" } }];
       const multiplier = cardEntity.calculateTypeMultiplier(targetTypes);
 
-      expect(multiplier).toBe(4);
+      expect(multiplier).toBe(2);
     });
 
     it("should stack multipliers for multiple target types", () => {
