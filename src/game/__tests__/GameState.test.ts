@@ -23,13 +23,13 @@ describe("GameState", () => {
     expect(gameState.state).toBe("INTRO");
     expect(gameState.introMessage).toBe("Welcome to the game!");
 
-    // Advance through messages
-    const messagesCount = 7; // Based on restartGame array
-    for (let i = 0; i < messagesCount - 1; i++) {
+    // Advance through messages until the last one is left
+    while (gameState.introMessages.length > 1) {
       gameState.nextIntroMessage();
     }
 
     // Last message
+    gameState.nextIntroMessage();
     expect(gameState.introMessage).toBe("Smell ya later!");
 
     // Finish intro
