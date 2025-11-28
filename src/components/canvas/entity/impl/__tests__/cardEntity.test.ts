@@ -1,6 +1,5 @@
-import { describe, it, expect, vi, beforeEach } from "vitest";
+import { describe, it, expect, vi } from "vitest";
 import { CardEntity, PokemonCard } from "../cardEntity";
-import typeRelationsMap from "@/typeRelationsMap.json";
 
 // Mock dependencies if necessary.
 // For now, CardEntity uses Image, which is available via jsdom.
@@ -25,9 +24,9 @@ describe("CardEntity", () => {
       const card = createPokemonCard(["normal"]);
       cardEntity = new CardEntity(0, 0, card);
 
-      // @ts-ignore - Testing robust handling of invalid input
+      // @ts-expect-error Testing robust handling of invalid input
       expect(cardEntity.calculateTypeMultiplier(null)).toBe(1);
-      // @ts-ignore
+      // @ts-expect-error Testing robust handling of invalid input
       expect(cardEntity.calculateTypeMultiplier(undefined)).toBe(1);
     });
 
