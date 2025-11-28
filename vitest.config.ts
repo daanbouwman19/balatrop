@@ -17,7 +17,7 @@ export default defineConfig({
       provider: "v8",
       reporter: ["text", "json", "html"],
       include: ["src/**/*.ts", "src/**/*.vue"],
-      exclude: ["src/tests/**"],
+      exclude: ["src/tests/**", "src/**/*.test.ts", "src/**/*.spec.ts"],
     },
     exclude: ["src/tests/e2e/**", "node_modules/**"],
   },
