@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import DuitseFrank from "../components/icons/DuitseFrank.vue";
-import { GameActive } from "./canvas/GameActive";
+import { GameState } from "@/game/GameState";
 
 defineProps({
   game: {
-    type: GameActive,
+    type: Object,
     required: true,
   },
 });

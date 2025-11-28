@@ -4,7 +4,7 @@ import EnemyHeader from "./enemy/EnemyHeader.vue";
 import CurrentScore from "./current-round/CurrentScore.vue";
 import HandInformation from "./current-round/HandInformation.vue";
 
-import { GameActive } from "../canvas/GameActive";
+import { GameState } from "@/game/GameState";
 
 defineProps({
   isMounted: {
@@ -12,7 +12,7 @@ defineProps({
     required: true,
   },
   game: {
-    type: GameActive,
+    type: Object,
     required: true,
   },
 });
