@@ -86,6 +86,9 @@ describe("App.vue", () => {
   });
 
   it("shows RotateDevice when width is small", async () => {
+    const wrapper = mount(App);
+    expect(wrapper.find(".rotate-device-stub").exists()).toBe(false);
+
     // Set mobile width
     Object.defineProperty(window, "innerWidth", {
       writable: true,
@@ -95,10 +98,7 @@ describe("App.vue", () => {
 
     // Dispatch resize to trigger updateWidth
     window.dispatchEvent(new Event("resize"));
-
-    const wrapper = mount(App);
-    // Need to wait for reactivity if it wasn't initial mount
-    // But since we set it before mount, setup() should pick it up.
+    await wrapper.vm.$nextTick();
 
     expect(wrapper.find(".rotate-device-stub").exists()).toBe(true);
   });
