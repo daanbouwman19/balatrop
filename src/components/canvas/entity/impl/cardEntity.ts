@@ -172,12 +172,15 @@ export class CardEntity extends Entity {
       return 1; // Default multiplier
     }
 
-    // Initialize the multiplier to 1
-    let multiplier = 1;
+    // Initialize the max multiplier to 0. We want to find the best effectiveness among all attacker types.
+    // If we simply multiplied everything, dual types would be either overpowered (16x) or useless (0x).
+    let maxMultiplier = 0;
+    let hasValidType = false;
     const typedTypeRelationsMap = typeRelationsMap as TypeRelations;
 
-    // Iterate over the card's types
+    // Iterate over the card's types to find the one that yields the highest multiplier
     this.card.types.forEach((cardTypeObj) => {
+      let currentTypeMultiplier = 1;
       const cardTypeName = cardTypeObj.type.name; // Get the name of the type (e.g., "water")
 
       // Ensure the card type exists in the type relations map
@@ -186,21 +189,34 @@ export class CardEntity extends Entity {
         return;
       }
 
+      hasValidType = true;
+
       // Get the damage relations for this card type
       const damageRelations = typedTypeRelationsMap[cardTypeName];
 
       // Check each target type against this card type's damage relations
       targetTypes.forEach((type) => {
         if (damageRelations.doubleDamageTo.includes(type.type.name)) {
-          multiplier *= 2; // Double damage
+          currentTypeMultiplier *= 2; // Double damage
         } else if (damageRelations.halfDamageTo.includes(type.type.name)) {
-          multiplier *= 0.5; // Half damage
+          currentTypeMultiplier *= 0.5; // Half damage
         } else if (damageRelations.noDamageTo.includes(type.type.name)) {
-          multiplier *= 0; // No damage
+          currentTypeMultiplier *= 0; // No damage
         }
       });
+
+      // Update max multiplier if this type is more effective
+      if (currentTypeMultiplier > maxMultiplier) {
+        maxMultiplier = currentTypeMultiplier;
+      }
     });
-    return multiplier;
+
+    // If no valid types were processed (e.g. unknown types), return 1 as fallback
+    if (!hasValidType) {
+      return 1;
+    }
+
+    return maxMultiplier;
   }
 
   attack(
