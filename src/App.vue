@@ -4,7 +4,7 @@ import RotateDevice from "./components/RotateDevice.vue";
 import CurrentMoney from "./components/CurrentMoney.vue";
 import PokemonCard from "./components/PokemonCard.vue";
 import { GameState } from "./game/GameState";
-import { computed, ref, onMounted, onUnmounted, reactive } from "vue";
+import { computed, ref, onMounted, onUnmounted, reactive, watch } from "vue";
 
 const width = ref(window.innerWidth);
 const orientation = ref(window.screen.orientation?.type || "portrait");
@@ -25,8 +25,6 @@ const isHit = ref(false);
 
 // Initialize GameState as reactive so refs are unwrapped in template
 const game = reactive(new GameState());
-
-import { watch } from "vue";
 
 watch(
   () => game.enemy?.hp,

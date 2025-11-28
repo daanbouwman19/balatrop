@@ -89,7 +89,7 @@ export class GameState {
         evolvedFrom: pokemonData.evolvedFrom,
         evolvesTo: pokemonData.evolvesTo,
         types: pokemonData.types,
-        id: Math.random().toString(36).substring(7), // Simple unique ID
+        id: crypto.randomUUID(), // Unique ID
       };
       pokemonCards.push(card);
     }
@@ -123,6 +123,15 @@ export class GameState {
     this.submitsRemaining = 3;
     this.fightReward = 5;
 
+    this.introMessages = [
+      "Welcome to the game!",
+      "I am your Rival.",
+      "I want coins.",
+      "You will get coins for me.",
+      "Or else.",
+      "You will lose.",
+      "Smell ya later!",
+    ];
     this.startIntro();
   }
 
@@ -241,6 +250,34 @@ export class GameState {
     return hasValidType ? maxMultiplier : 1;
   }
 
+  calculateCurrentHandStats() {
+    let multiplier = 1;
+    let damage = 0;
+    const cardTypesCount: { [key: string]: number } = {};
+
+    this.selectedCards.forEach((card) => {
+      // Calculate Multiplier
+      card.types.forEach((type) => {
+        const typeName = type.type.name;
+        if (cardTypesCount[typeName]) {
+          multiplier += 1.5;
+          cardTypesCount[typeName]++;
+        } else {
+          cardTypesCount[typeName] = 1;
+        }
+      });
+
+      // Calculate Damage
+      const baseDamage = card.value;
+      const typeMultiplier = this.enemy
+        ? this.calculateTypeMultiplier(card, this.enemy.pokemon.types)
+        : 1;
+      damage += baseDamage * typeMultiplier;
+    });
+
+    return { multiplier, damage };
+  }
+
   submitHand() {
     if (
       this.state !== "SELECT_CARDS" ||
@@ -251,46 +288,8 @@ export class GameState {
 
     this.submitsRemaining -= 1;
 
-    // Calculate Multiplier Logic
-    let totalCardsMultiplier = 1;
-    const cardTypesCount: { [key: string]: number } = {};
-
-    // First pass: Calculate combo multiplier
-    this.selectedCards.forEach((card) => {
-      card.types.forEach((type) => {
-        const typeName = type.type.name;
-        if (cardTypesCount[typeName]) {
-          totalCardsMultiplier += 1.5;
-          cardTypesCount[typeName]++;
-        } else {
-          cardTypesCount[typeName] = 1;
-        }
-      });
-    });
-
-    // Second pass: Calculate Damage
-    let totalDamage = 0;
-    interface AttackHistoryItem {
-      cardName: string;
-      damage: number;
-    }
-    const attackHistory: AttackHistoryItem[] = [];
-
-    this.selectedCards.forEach((card) => {
-      const baseDamage = card.value;
-      const typeMultiplier = this.calculateTypeMultiplier(
-        card,
-        this.enemy!.pokemon.types,
-      );
-      const damage = baseDamage * typeMultiplier * totalCardsMultiplier;
-
-      totalDamage += damage;
-
-      attackHistory.push({
-        cardName: card.name,
-        damage: damage,
-      });
-    });
+    const { multiplier, damage } = this.calculateCurrentHandStats();
+    const totalDamage = damage * multiplier;
 
     // Remove played cards (Starts animation)
     this.hand_cards = this.hand_cards.filter(
@@ -331,32 +330,10 @@ export class GameState {
   }
 
   get currentMultiplier() {
-    let multiplier = 1;
-    const cardTypesCount: { [key: string]: number } = {};
-    this.selectedCards.forEach((card) => {
-      card.types.forEach((type) => {
-        const typeName = type.type.name;
-        if (cardTypesCount[typeName]) {
-          multiplier += 1.5;
-          cardTypesCount[typeName]++;
-        } else {
-          cardTypesCount[typeName] = 1;
-        }
-      });
-    });
-    return multiplier;
+    return this.calculateCurrentHandStats().multiplier;
   }
 
   get currentDamage() {
-    let damage = 0;
-    const multiplier = this.currentMultiplier;
-    this.selectedCards.forEach((card) => {
-      const typeMult = this.calculateTypeMultiplier(
-        card,
-        this.enemy?.pokemon.types || [],
-      );
-      damage += card.value * typeMult * multiplier;
-    });
-    return damage;
+    return this.calculateCurrentHandStats().damage;
   }
 }

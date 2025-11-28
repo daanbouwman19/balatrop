@@ -8,9 +8,9 @@ const props = defineProps<{
 
 const enemyName = computed(() => {
   if (props.game.state === "INTRO") {
-    return "Frank";
+    return "Rival";
   }
-  return `${props.game.enemy?.pokemon.name || "Unknown"}`;
+  return props.game.enemy?.pokemon.name || "Unknown";
 });
 </script>
 

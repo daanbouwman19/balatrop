@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import DuitseFrank from "../../icons/DuitseFrank.vue";
+import CoinIcon from "../../icons/CoinIcon.vue";
 import type { GameState } from "@/game/GameState";
 
 defineProps<{
@@ -18,7 +18,7 @@ const generateArray = (count: number) => {
     <div class="flex flex-col">
       <span class="text-xl text-center">Reward:</span>
       <div class="flex flex-row justify-center items-center h-[20px]">
-        <DuitseFrank
+        <CoinIcon
           v-for="index in generateArray(game.fightReward)"
           :key="index"
           class="w-[24px] h-[24px] mx-0.5"
