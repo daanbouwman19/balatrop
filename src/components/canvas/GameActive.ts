@@ -413,7 +413,7 @@ export class GameActive {
     }
 
     if (this.STATE === "ATTACK") {
-      if (this.actionTimer >= 10) {
+      if (this.actionTimer >= 30) {
         this.actionTimer = 0;
         if (this.attack_queue.length > 0) {
           const attacker = this.attack_queue[0];
