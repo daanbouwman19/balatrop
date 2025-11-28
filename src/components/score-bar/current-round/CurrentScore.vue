@@ -1,13 +1,10 @@
 <script setup lang="ts">
 import { computed } from "vue";
-import { GameState } from "@/game/GameState";
+import type { GameState } from "@/game/GameState";
 
-const props = defineProps({
-  game: {
-    type: Object,
-    required: true,
-  },
-});
+const props = defineProps<{
+  game: GameState;
+}>();
 
 const currentHandScore = computed(() => {
   return props.game.currentMultiplier * props.game.currentDamage;

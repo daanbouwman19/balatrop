@@ -4,18 +4,12 @@ import EnemyHeader from "./enemy/EnemyHeader.vue";
 import CurrentScore from "./current-round/CurrentScore.vue";
 import HandInformation from "./current-round/HandInformation.vue";
 
-import { GameState } from "@/game/GameState";
+import type { GameState } from "@/game/GameState";
 
-defineProps({
-  isMounted: {
-    type: Boolean,
-    required: true,
-  },
-  game: {
-    type: Object,
-    required: true,
-  },
-});
+defineProps<{
+  isMounted: boolean;
+  game: GameState;
+}>();
 </script>
 
 <template>

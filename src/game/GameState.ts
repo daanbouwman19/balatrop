@@ -1,4 +1,3 @@
-
 import typeRelationsMap from "@/typeRelationsMap.json";
 
 // Interfaces
@@ -40,7 +39,8 @@ interface TypeRelations {
 
 export class GameState {
   // State
-  state: "START" | "INTRO" | "FILLHAND" | "SELECT_CARDS" | "GAME_OVER" = "START";
+  state: "START" | "INTRO" | "FILLHAND" | "SELECT_CARDS" | "GAME_OVER" =
+    "START";
 
   hand_cards: PokemonCard[] = [];
   player_deck: PokemonCard[] = [];
@@ -78,7 +78,7 @@ export class GameState {
     const pokemonCards: PokemonCard[] = [];
     const modules: Record<string, unknown> = import.meta.glob(
       "@/pokemon/*.json",
-      { eager: true }
+      { eager: true },
     );
     for (const path in modules) {
       const pokemonData = modules[path] as PokemonJsonData;
@@ -160,7 +160,7 @@ export class GameState {
 
   drawCardFromDeck(): PokemonCard | undefined {
     const availableCards = this.player_deck.filter(
-      (card) => !this.drawed_this_round.includes(card)
+      (card) => !this.drawed_this_round.includes(card),
     );
 
     if (availableCards.length === 0) {
@@ -204,7 +204,7 @@ export class GameState {
 
   calculateTypeMultiplier(
     card: PokemonCard,
-    targetTypes: { type: { name: string } }[]
+    targetTypes: { type: { name: string } }[],
   ): number {
     if (!card.types || !targetTypes) return 1;
 
@@ -270,13 +270,17 @@ export class GameState {
 
     // Second pass: Calculate Damage
     let totalDamage = 0;
-    const attackHistory: any[] = [];
+    interface AttackHistoryItem {
+      cardName: string;
+      damage: number;
+    }
+    const attackHistory: AttackHistoryItem[] = [];
 
     this.selectedCards.forEach((card) => {
       const baseDamage = card.value;
       const typeMultiplier = this.calculateTypeMultiplier(
         card,
-        this.enemy!.pokemon.types
+        this.enemy!.pokemon.types,
       );
       const damage = baseDamage * typeMultiplier * totalCardsMultiplier;
 
@@ -290,55 +294,55 @@ export class GameState {
 
     // Remove played cards (Starts animation)
     this.hand_cards = this.hand_cards.filter(
-      (c) => !this.selectedCards.includes(c)
+      (c) => !this.selectedCards.includes(c),
     );
     this.selectedCards = [];
 
     // Delay damage application to sync with animation
     setTimeout(() => {
-        // Apply Damage
-        if (this.enemy) {
-            this.enemy.hp -= totalDamage;
-            this.enemy.damageTaken += totalDamage; // Could be used for animation
-            
-            // Check Death
-            if (this.enemy.hp <= 0) {
-              this.enemies_defeated += 1;
-              this.score += this.fightReward;
-              this.spawnEnemy();
-              // If submits remaining > 0, refill hand?
-              // Old logic: if submits > 0 -> FILLHAND.
-              if (this.submitsRemaining > 0) {
-                this.fillHand();
-              } else {
-                // If enemy died but no submits left?
-                // Wait, if enemy dies, we get new enemy and resets submits?
-                // Old logic: spawnEnemy() resets submits to 3.
-                // So yes.
-                this.fillHand();
-              }
-            } else {
-              if (this.submitsRemaining <= 0) {
-                this.state = 'GAME_OVER';
-              }
-            }
+      // Apply Damage
+      if (this.enemy) {
+        this.enemy.hp -= totalDamage;
+        this.enemy.damageTaken += totalDamage; // Could be used for animation
+
+        // Check Death
+        if (this.enemy.hp <= 0) {
+          this.enemies_defeated += 1;
+          this.score += this.fightReward;
+          this.spawnEnemy();
+          // If submits remaining > 0, refill hand?
+          // Old logic: if submits > 0 -> FILLHAND.
+          if (this.submitsRemaining > 0) {
+            this.fillHand();
+          } else {
+            // If enemy died but no submits left?
+            // Wait, if enemy dies, we get new enemy and resets submits?
+            // Old logic: spawnEnemy() resets submits to 3.
+            // So yes.
+            this.fillHand();
+          }
+        } else {
+          if (this.submitsRemaining <= 0) {
+            this.state = "GAME_OVER";
+          }
         }
+      }
     }, 300);
   }
 
   get currentMultiplier() {
     let multiplier = 1;
     const cardTypesCount: { [key: string]: number } = {};
-    this.selectedCards.forEach(card => {
-       card.types.forEach(type => {
-         const typeName = type.type.name;
-         if (cardTypesCount[typeName]) {
-           multiplier += 1.5;
-           cardTypesCount[typeName]++;
-         } else {
-           cardTypesCount[typeName] = 1;
-         }
-       });
+    this.selectedCards.forEach((card) => {
+      card.types.forEach((type) => {
+        const typeName = type.type.name;
+        if (cardTypesCount[typeName]) {
+          multiplier += 1.5;
+          cardTypesCount[typeName]++;
+        } else {
+          cardTypesCount[typeName] = 1;
+        }
+      });
     });
     return multiplier;
   }
@@ -346,8 +350,11 @@ export class GameState {
   get currentDamage() {
     let damage = 0;
     const multiplier = this.currentMultiplier;
-    this.selectedCards.forEach(card => {
-      const typeMult = this.calculateTypeMultiplier(card, this.enemy?.pokemon.types || []);
+    this.selectedCards.forEach((card) => {
+      const typeMult = this.calculateTypeMultiplier(
+        card,
+        this.enemy?.pokemon.types || [],
+      );
       damage += card.value * typeMult * multiplier;
     });
     return damage;

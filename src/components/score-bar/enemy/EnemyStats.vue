@@ -1,13 +1,10 @@
 <script setup lang="ts">
 import DuitseFrank from "../../icons/DuitseFrank.vue";
-import { GameState } from "@/game/GameState";
+import type { GameState } from "@/game/GameState";
 
-defineProps({
-  game: {
-    type: Object,
-    required: true,
-  },
-});
+defineProps<{
+  game: GameState;
+}>();
 
 const generateArray = (count: number) => {
   return Array.from({ length: count }, (_, index) => index);

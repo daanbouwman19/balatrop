@@ -1,13 +1,10 @@
 <script setup lang="ts">
 import DuitseFrank from "../components/icons/DuitseFrank.vue";
-import { GameState } from "@/game/GameState";
+import type { GameState } from "../game/GameState";
 
-defineProps({
-  game: {
-    type: Object,
-    required: true,
-  },
-});
+defineProps<{
+  game: GameState;
+}>();
 </script>
 
 <template>

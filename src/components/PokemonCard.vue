@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { PokemonCard } from "../game/GameState";
 
-const props = defineProps<{
+defineProps<{
   card: PokemonCard;
   selected: boolean;
 }>();

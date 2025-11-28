@@ -2,7 +2,7 @@
 import ScoreBar from "./components/score-bar/ScoreBar.vue";
 import RotateDevice from "./components/RotateDevice.vue";
 import CurrentMoney from "./components/CurrentMoney.vue";
-import Card from "./components/Card.vue";
+import PokemonCard from "./components/PokemonCard.vue";
 import { GameState } from "./game/GameState";
 import { computed, ref, onMounted, onUnmounted, reactive } from "vue";
 
@@ -37,7 +37,7 @@ watch(
         isHit.value = false;
       }, 500);
     }
-  }
+  },
 );
 
 const onLeave = (el: Element, done: () => void) => {
@@ -83,7 +83,7 @@ const onLeave = (el: Element, done: () => void) => {
     {
       duration: 1000,
       fill: "forwards",
-    }
+    },
   );
 
   animation.onfinish = () => {
@@ -128,8 +128,8 @@ onUnmounted(() => {
       <h1 class="text-6xl mb-8 text-red-600 font-bold">GAME OVER</h1>
       <div class="text-2xl mb-8">Score: {{ game.score }}</div>
       <button
-        @click="game.restartGame()"
         class="px-8 py-4 bg-green-600 text-xl font-bold rounded hover:bg-green-500 transition-colors"
+        @click="game.restartGame()"
       >
         Restart Game
       </button>
@@ -186,11 +186,11 @@ onUnmounted(() => {
           class="flex gap-4 absolute top-1/2 transform -translate-y-1/2 right-10 flex-col"
         >
           <button
-            @click="game.submitHand()"
+            class="px-6 py-3 bg-blue-600 text-white font-bold rounded-lg shadow-lg hover:bg-blue-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors border-2 border-blue-800"
             :disabled="
               game.submitsRemaining <= 0 || game.selectedCards.length === 0
             "
-            class="px-6 py-3 bg-blue-600 text-white font-bold rounded-lg shadow-lg hover:bg-blue-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors border-2 border-blue-800"
+            @click="game.submitHand()"
           >
             Submit Hand
             <div class="text-xs font-normal">
@@ -226,15 +226,15 @@ onUnmounted(() => {
                 'z-10 -translate-y-10': game.selectedCards.includes(card),
               }"
             >
-              <Card
-                :card="card"
-                :selected="game.selectedCards.includes(card)"
-                @click="game.toggleSelectCard(card)"
+              <PokemonCard
                 class="w-full h-full"
                 :class="{
                   'animate-idle-bounce': !game.selectedCards.includes(card),
                 }"
                 :style="{ animationDelay: `${index * 0.1}s` }"
+                :card="card"
+                :selected="game.selectedCards.includes(card)"
+                @click="game.toggleSelectCard(card)"
               />
             </div>
           </TransitionGroup>
