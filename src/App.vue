@@ -27,6 +27,7 @@ const game = reactive(new GameState());
 
 
 const enemyImageRef = ref<HTMLElement | null>(null);
+const hoveredCardIndex = ref(-1);
 
 const triggerEnemyHit = () => {
     if (!enemyImageRef.value) return;
@@ -271,6 +272,7 @@ onUnmounted(() => {
         <!-- Hand Area -->
         <div
           class="w-full flex justify-center items-end h-[260px] relative mb-4"
+          @mouseleave="hoveredCardIndex = -1"
         >
           <TransitionGroup
             name="hand"
@@ -282,15 +284,22 @@ onUnmounted(() => {
               v-for="(card, index) in game.hand_cards"
               :key="card.id"
               :data-index="index"
-              class="relative transition-all duration-200 origin-bottom ease-out"
+              class="relative transition-all duration-300 origin-bottom ease-out"
               :class="{
                 'z-10 -translate-y-10': game.selectedCards.includes(card),
+                'z-20': hoveredCardIndex === index
               }"
+               :style="{
+                  transform: hoveredCardIndex !== -1 && hoveredCardIndex !== index
+                    ? `translateX(${index < hoveredCardIndex ? '-30px' : '30px'})`
+                    : ''
+               }"
+               @mouseenter="hoveredCardIndex = index"
             >
               <PokemonCard
                 class="w-full h-full"
                 :class="{
-                  'animate-idle-bounce': !game.selectedCards.includes(card),
+                  'animate-idle-bounce': !game.selectedCards.includes(card) && hoveredCardIndex === -1,
                 }"
                 :style="{ animationDelay: `${index * 0.1}s` }"
                 :card="card"
