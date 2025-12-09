@@ -195,6 +195,19 @@ onUnmounted(() => {
               Remaining: {{ game.submitsRemaining }}
             </div>
           </button>
+            
+          <button
+            class="px-6 py-3 bg-red-600 text-white font-bold rounded-lg shadow-lg hover:bg-red-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors border-2 border-red-800 mt-4"
+            :disabled="
+              game.discardsRemaining <= 0 || game.selectedCards.length === 0
+            "
+            @click="game.discardSelected()"
+          >
+            Discard
+            <div class="text-xs font-normal">
+              Remaining: {{ game.discardsRemaining }}
+            </div>
+          </button>
 
           <!-- Predicted Damage Info -->
           <div
@@ -219,7 +232,7 @@ onUnmounted(() => {
             <div
               v-for="(card, index) in game.hand_cards"
               :key="card.id"
-              class="relative transition-all duration-300 hover:z-20 hover:-translate-y-12 origin-bottom"
+              class="relative transition-all duration-200 hover:z-20 hover:-translate-y-16 hover:scale-110 origin-bottom ease-out"
               :class="{
                 'z-10 -translate-y-10': game.selectedCards.includes(card),
               }"

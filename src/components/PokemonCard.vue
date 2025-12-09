@@ -17,7 +17,7 @@ const emit = defineEmits<{
     :class="{
       'border-blue-500 shadow-[0_0_15px_rgba(59,130,246,0.6)] -translate-y-5':
         selected,
-      'border-gray-300 hover:-translate-y-2': !selected,
+      'border-gray-300 hover:border-yellow-400 hover:shadow-[0_0_10px_rgba(250,204,21,0.5)] hover:brightness-105': !selected,
     }"
     @click="emit('click')"
   >

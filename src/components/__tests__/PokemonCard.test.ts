@@ -44,6 +44,20 @@ describe("PokemonCard.vue", () => {
     expect(div.classes()).toContain("-translate-y-5");
   });
 
+  it("applies hover classes when not selected", () => {
+    const wrapper = mount(PokemonCard, {
+      props: {
+        card: mockCard,
+        selected: false,
+      },
+    });
+
+    const div = wrapper.find("div");
+    // Check for new hover classes
+    expect(div.classes()).toContain("hover:border-yellow-400");
+    expect(div.classes()).toContain("hover:brightness-105");
+  });
+
   it("emits click event", async () => {
     const wrapper = mount(PokemonCard, {
       props: {
