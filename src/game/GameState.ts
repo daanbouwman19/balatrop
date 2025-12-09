@@ -60,15 +60,7 @@ export class GameState {
 
   // Intro state
   introMessage = "";
-  introMessages = [
-    "Welcome to the game!",
-    "I am Professor Frank.",
-    "I want beer.",
-    "You will get beer for me.",
-    "Or else.",
-    "You will die.",
-    "Byeee",
-  ];
+  introMessages: string[] = [];
 
   constructor() {
     this.pokemon_cards = this.initializePokemonCards();
