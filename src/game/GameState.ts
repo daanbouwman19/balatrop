@@ -400,7 +400,7 @@ export class GameState {
     // Let's settle on the updates happening when the "bulk" of cards hit?
     // Or just push it to the end.
     // If animations are staggered by 100ms, last card hits at 300 + (N-1)*100.
-    const delay = 300 + cardCount * 100;
+    const delay = 450 + (cardCount - 1) * 100;
 
     setTimeout(() => {
       // Apply Damage
