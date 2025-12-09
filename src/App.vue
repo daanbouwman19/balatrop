@@ -25,38 +25,40 @@ const isMounted = ref(false);
 // Initialize GameState as reactive so refs are unwrapped in template
 const game = reactive(new GameState());
 
-
 const enemyImageRef = ref<HTMLElement | null>(null);
 const hoveredCardIndex = ref(-1);
 
 const triggerEnemyHit = () => {
-    if (!enemyImageRef.value) return;
-    
-    // Create a new animation instance for this specific hit
-    // Use composite 'add' to stack multiple hits visually
-    // Create a new animation instance for this specific hit
-    // Use composite 'add' to stack multiple hits visually
-    enemyImageRef.value.animate([
-        { transform: 'translate(0, 0) scale(1, 1)', offset: 0 },
-        // Strong Knockback (Fly Up/Back) - No rotation to prevent spin stacking
-        { transform: `translate(0, -40px) scale(0.95, 1.05)`, offset: 0.1 }, 
-        // Hover/Hang briefly at peak
-        { transform: `translate(0, -35px) scale(0.98, 1.02)`, offset: 0.3 }, 
-        // Slow Return with overshoot
-        { transform: 'translate(0, 10px) scale(1.02, 0.98)', offset: 0.6 },
-        { transform: 'translate(0, 0) scale(1, 1)', offset: 1 }
-    ], {
-        duration: 800, 
-        easing: 'cubic-bezier(0.2, 0.8, 0.2, 1)', // Smooth ease out-in
-        composite: 'add'
-    });
+  if (!enemyImageRef.value) return;
+
+  // Create a new animation instance for this specific hit
+  // Use composite 'add' to stack multiple hits visually
+  // Create a new animation instance for this specific hit
+  // Use composite 'add' to stack multiple hits visually
+  enemyImageRef.value.animate(
+    [
+      { transform: "translate(0, 0) scale(1, 1)", offset: 0 },
+      // Strong Knockback (Fly Up/Back) - No rotation to prevent spin stacking
+      { transform: `translate(0, -40px) scale(0.95, 1.05)`, offset: 0.1 },
+      // Hover/Hang briefly at peak
+      { transform: `translate(0, -35px) scale(0.98, 1.02)`, offset: 0.3 },
+      // Slow Return with overshoot
+      { transform: "translate(0, 10px) scale(1.02, 0.98)", offset: 0.6 },
+      { transform: "translate(0, 0) scale(1, 1)", offset: 1 },
+    ],
+    {
+      duration: 800,
+      easing: "cubic-bezier(0.2, 0.8, 0.2, 1)", // Smooth ease out-in
+      composite: "add",
+    },
+  );
 };
 
 const onLeave = (el: Element, done: () => void) => {
   const element = el as HTMLElement;
   const rect = element.getBoundingClientRect();
-  const index = parseInt(element.dataset.index || "0"); 
-  
+  const index = parseInt(element.dataset.index || "0");
+
   let targetX = window.innerWidth / 2;
   let targetY = window.innerHeight * 0.2;
 
@@ -65,77 +67,73 @@ const onLeave = (el: Element, done: () => void) => {
     const enemyRect = enemyImageRef.value.getBoundingClientRect();
     // Target X: Center of card aligns with center of enemy
     targetX = enemyRect.left + enemyRect.width / 2 - rect.width / 2;
-    
+
     // Target Y: Top of card aligns with Center of enemy
     // absolute Y position of where we want the card top to be.
     targetY = enemyRect.top + enemyRect.height / 2;
   }
 
   // Fall destination: Bottom of screen with random spread
-  const fallX = targetX + (Math.random() * 400 - 200); 
-  const fallY = window.innerHeight + 200; 
+  const fallX = targetX + (Math.random() * 400 - 200);
+  const fallY = window.innerHeight + 200;
 
-
-
-    // Animation Sequence
-    const animation = element.animate(
-      [
-        {
-          transform: `translate(0, 0) scale(1) rotate(0deg)`,
-          opacity: 1,
-          zIndex: 100,
-          offset: 0,
-          easing: "cubic-bezier(0.25, 1, 0.5, 1)", 
-        },
-        {
-          // Impact Point
-          transform: `translate(${targetX - rect.left}px, ${
-            targetY - rect.top
-          }px) scale(0.8) rotate(${Math.random() * 60 - 30}deg)`,
-          opacity: 1,
-          zIndex: 100,
-          offset: 0.3, 
-          easing: "cubic-bezier(0.4, 0, 1, 1)", 
-        },
-        {
-            // Bounce Back/Up (Impact Reaction)
-            // Move partially back towards start and up slightly
-             transform: `translate(${(targetX - rect.left) * 0.9}px, ${
-                (targetY - rect.top) - 50
-              }px) scale(0.7) rotate(${Math.random() * 120 - 60}deg)`,
-              opacity: 1,
-              zIndex: 100,
-              offset: 0.45,
-              easing: "ease-out"
-        },
-        {
-          // Fall off screen
-          transform: `translate(${fallX - rect.left}px, ${
-            fallY - rect.top
-          }px) scale(0.4) rotate(${Math.random() * 720 - 360}deg)`,
-          opacity: 1,
-          zIndex: 100,
-          offset: 1,
-        },
-      ],
+  // Animation Sequence
+  const animation = element.animate(
+    [
       {
-        duration: 1500, 
-        delay: index * 100, 
-        fill: "forwards",
+        transform: `translate(0, 0) scale(1) rotate(0deg)`,
+        opacity: 1,
+        zIndex: 100,
+        offset: 0,
+        easing: "cubic-bezier(0.25, 1, 0.5, 1)",
       },
-    );
+      {
+        // Impact Point
+        transform: `translate(${targetX - rect.left}px, ${
+          targetY - rect.top
+        }px) scale(0.8) rotate(${Math.random() * 60 - 30}deg)`,
+        opacity: 1,
+        zIndex: 100,
+        offset: 0.3,
+        easing: "cubic-bezier(0.4, 0, 1, 1)",
+      },
+      {
+        // Bounce Back/Up (Impact Reaction)
+        // Move partially back towards start and up slightly
+        transform: `translate(${(targetX - rect.left) * 0.9}px, ${
+          targetY - rect.top - 50
+        }px) scale(0.7) rotate(${Math.random() * 120 - 60}deg)`,
+        opacity: 1,
+        zIndex: 100,
+        offset: 0.45,
+        easing: "ease-out",
+      },
+      {
+        // Fall off screen
+        transform: `translate(${fallX - rect.left}px, ${
+          fallY - rect.top
+        }px) scale(0.4) rotate(${Math.random() * 720 - 360}deg)`,
+        opacity: 1,
+        zIndex: 100,
+        offset: 1,
+      },
+    ],
+    {
+      duration: 1500,
+      delay: index * 100,
+      fill: "forwards",
+    },
+  );
 
   const hitTime = index * 100 + 300;
   setTimeout(() => {
-      triggerEnemyHit();
+    triggerEnemyHit();
   }, hitTime);
 
   animation.onfinish = () => {
     done();
   };
 };
-
-
 
 onMounted(() => {
   window.addEventListener("resize", updateWidth);
@@ -147,8 +145,6 @@ onUnmounted(() => {
   window.removeEventListener("resize", updateWidth);
   window.removeEventListener("orientationchange", updateOrientation);
 });
-
-
 </script>
 
 <template>
@@ -245,7 +241,7 @@ onUnmounted(() => {
               Remaining: {{ game.submitsRemaining }}
             </div>
           </button>
-            
+
           <button
             class="px-6 py-3 bg-red-600 text-white font-bold rounded-lg shadow-lg hover:bg-red-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors border-2 border-red-800 mt-4"
             :disabled="
@@ -287,19 +283,22 @@ onUnmounted(() => {
               class="relative transition-all duration-300 origin-bottom ease-out"
               :class="{
                 'z-10 -translate-y-10': game.selectedCards.includes(card),
-                'z-20': hoveredCardIndex === index
+                'z-20': hoveredCardIndex === index,
               }"
-               :style="{
-                  transform: hoveredCardIndex !== -1 && hoveredCardIndex !== index
+              :style="{
+                transform:
+                  hoveredCardIndex !== -1 && hoveredCardIndex !== index
                     ? `translateX(${index < hoveredCardIndex ? '-30px' : '30px'})`
-                    : ''
-               }"
-               @mouseenter="hoveredCardIndex = index"
+                    : '',
+              }"
+              @mouseenter="hoveredCardIndex = index"
             >
               <PokemonCard
                 class="w-full h-full"
                 :class="{
-                  'animate-idle-bounce': !game.selectedCards.includes(card) && hoveredCardIndex === -1,
+                  'animate-idle-bounce':
+                    !game.selectedCards.includes(card) &&
+                    hoveredCardIndex === -1,
                 }"
                 :style="{ animationDelay: `${index * 0.1}s` }"
                 :card="card"
@@ -317,16 +316,12 @@ onUnmounted(() => {
         :game="game"
         class="fixed top-4 right-4 z-40"
       />
-
-
     </div>
   </div>
   <div v-else>
     <RotateDevice />
   </div>
 </template>
-
-
 
 <style scoped>
 .text-shadow {
@@ -382,8 +377,4 @@ onUnmounted(() => {
   animation: hit 0.5s ease-in-out;
   filter: brightness(2) sepia(1) hue-rotate(-50deg) saturate(5); /* Flash red/white */
 }
-
-
-
-
 </style>

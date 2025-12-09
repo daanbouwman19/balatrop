@@ -17,7 +17,9 @@ const generateArray = (count: number) => {
   >
     <div class="flex flex-col">
       <span class="text-xl text-center">Reward:</span>
-      <div class="flex flex-row justify-center items-center flex-wrap gap-1 px-2">
+      <div
+        class="flex flex-row justify-center items-center flex-wrap gap-1 px-2"
+      >
         <CoinIcon
           v-for="index in generateArray(game.fightReward)"
           :key="index"

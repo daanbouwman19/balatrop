@@ -153,18 +153,18 @@ export class GameState {
     const randomCard =
       this.pokemon_cards[Math.floor(Math.random() * this.pokemon_cards.length)];
     const difficulty = this.enemies_defeated;
-    
+
     // New Scaling: BaseHp + (Diff * Scale) + (BaseHp * 1.2^Diff)
     // Less punishing exponential, but adds linear progression.
     const baseHp = 300;
     const linearGrowth = difficulty * 50;
     const exponentialGrowth = baseHp * Math.pow(1.2, difficulty);
-    
+
     // For first enemy (difficulty=0): 0 + 300 = 300. Same as before.
     // difficulty=1: 50 + 360 = 410. (vs 450 old)
     // difficulty=5: 250 + 300*2.48 = 250 + 744 = 994. (vs 300*7.59 = 2277 old)
     // Much more reasonable scaling.
-    
+
     const hp = Math.floor(linearGrowth + exponentialGrowth);
 
     this.enemy = {
@@ -191,11 +191,11 @@ export class GameState {
     const card =
       availableCards[Math.floor(Math.random() * availableCards.length)];
     this.drawed_this_round.push(card);
-    
+
     // Return a clone with a unique ID to allow duplicates in hand without selection bugs
     return {
-        ...card,
-        id: crypto.randomUUID()
+      ...card,
+      id: crypto.randomUUID(),
     };
   }
 
@@ -214,16 +214,23 @@ export class GameState {
     }
     this.state = "SELECT_CARDS";
   }
-  
+
   discardSelected() {
-    if (this.state !== "SELECT_CARDS" || this.selectedCards.length === 0 || this.discardsRemaining <= 0) return;
-    
+    if (
+      this.state !== "SELECT_CARDS" ||
+      this.selectedCards.length === 0 ||
+      this.discardsRemaining <= 0
+    )
+      return;
+
     this.discardsRemaining -= 1;
-    
+
     // Remove selected cards from hand
-    this.hand_cards = this.hand_cards.filter(card => !this.selectedCards.includes(card));
+    this.hand_cards = this.hand_cards.filter(
+      (card) => !this.selectedCards.includes(card),
+    );
     this.selectedCards = [];
-    
+
     // Refill hand
     this.fillHand();
   }
@@ -280,18 +287,22 @@ export class GameState {
     return hasValidType ? maxMultiplier : 1;
   }
 
-  evaluateHand(cards: PokemonCard[]): { name: string; chips: number; mult: number } {
+  evaluateHand(cards: PokemonCard[]): {
+    name: string;
+    chips: number;
+    mult: number;
+  } {
     if (cards.length === 0) return { name: "High Card", chips: 0, mult: 0 };
 
     const values = cards.map((c) => c.value).sort((a, b) => a - b);
-    
+
     // Check Flush (All cards share at least one type)
     let isFlush = false;
     if (cards.length >= 5) {
-      let commonTypes = cards[0].types.map(t => t.type.name);
+      let commonTypes = cards[0].types.map((t) => t.type.name);
       for (let i = 1; i < cards.length; i++) {
-        const nextTypes = cards[i].types.map(t => t.type.name);
-        commonTypes = commonTypes.filter(c => nextTypes.includes(c));
+        const nextTypes = cards[i].types.map((t) => t.type.name);
+        commonTypes = commonTypes.filter((c) => nextTypes.includes(c));
       }
       isFlush = commonTypes.length > 0;
     }
@@ -310,30 +321,37 @@ export class GameState {
 
     // Check Counts
     const counts: Record<number, number> = {};
-    values.forEach(v => counts[v] = (counts[v] || 0) + 1);
+    values.forEach((v) => (counts[v] = (counts[v] || 0) + 1));
     const countValues = Object.values(counts).sort((a, b) => b - a);
 
-    if (countValues[0] === 5) return { name: "Five of a Kind", chips: 120, mult: 12 };
+    if (countValues[0] === 5)
+      return { name: "Five of a Kind", chips: 120, mult: 12 };
     // Buffed straight flush
-    if (isStraight && isFlush) return { name: "Straight Flush", chips: 120, mult: 10 };
-    if (countValues[0] === 4) return { name: "Four of a Kind", chips: 60, mult: 7 };
-    if (countValues[0] === 3 && countValues[1] === 2) return { name: "Full House", chips: 40, mult: 4 };
+    if (isStraight && isFlush)
+      return { name: "Straight Flush", chips: 120, mult: 10 };
+    if (countValues[0] === 4)
+      return { name: "Four of a Kind", chips: 60, mult: 7 };
+    if (countValues[0] === 3 && countValues[1] === 2)
+      return { name: "Full House", chips: 40, mult: 4 };
     // Buffed flush
     if (isFlush) return { name: "Flush", chips: 50, mult: 6 };
     // Buffed straight
     if (isStraight) return { name: "Straight", chips: 45, mult: 5 };
-    if (countValues[0] === 3) return { name: "Three of a Kind", chips: 30, mult: 3 };
-    if (countValues[0] === 2 && countValues[1] === 2) return { name: "Two Pair", chips: 20, mult: 2 };
+    if (countValues[0] === 3)
+      return { name: "Three of a Kind", chips: 30, mult: 3 };
+    if (countValues[0] === 2 && countValues[1] === 2)
+      return { name: "Two Pair", chips: 20, mult: 2 };
     if (countValues[0] === 2) return { name: "Pair", chips: 10, mult: 2 };
 
     return { name: "High Card", chips: 5, mult: 1 };
   }
 
   calculateCurrentHandStats() {
-    if (this.selectedCards.length === 0) return { multiplier: 0, damage: 0, handName: "None" };
+    if (this.selectedCards.length === 0)
+      return { multiplier: 0, damage: 0, handName: "None" };
 
     const handStats = this.evaluateHand(this.selectedCards);
-    
+
     let totalChips = handStats.chips;
     const totalMult = handStats.mult;
 
@@ -343,12 +361,16 @@ export class GameState {
       const typeEffectiveness = this.enemy
         ? this.getTypeEffectiveness(card, this.enemy.pokemon.types)
         : 1;
-      
+
       const cardChips = Math.floor(baseCardChips * typeEffectiveness);
       totalChips += cardChips;
     });
 
-    return { multiplier: totalMult, damage: totalChips, handName: handStats.name };
+    return {
+      multiplier: totalMult,
+      damage: totalChips,
+      handName: handStats.name,
+    };
   }
 
   submitHand() {
@@ -378,7 +400,7 @@ export class GameState {
     // Let's settle on the updates happening when the "bulk" of cards hit?
     // Or just push it to the end.
     // If animations are staggered by 100ms, last card hits at 300 + (N-1)*100.
-    const delay = 300 + (cardCount * 100);
+    const delay = 300 + cardCount * 100;
 
     setTimeout(() => {
       // Apply Damage
@@ -398,7 +420,7 @@ export class GameState {
           if (this.submitsRemaining <= 0) {
             this.state = "GAME_OVER";
           } else {
-             this.fillHand();
+            this.fillHand();
           }
         }
       }
@@ -412,8 +434,8 @@ export class GameState {
   get currentDamage() {
     return this.calculateCurrentHandStats().damage;
   }
-  
+
   get currentHandName() {
-      return this.calculateCurrentHandStats().handName;
+    return this.calculateCurrentHandStats().handName;
   }
 }

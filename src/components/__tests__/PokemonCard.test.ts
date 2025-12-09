@@ -58,5 +58,4 @@ describe("PokemonCard.vue", () => {
     expect(innerDiv.classes()).toContain("group-hover:border-yellow-400");
     expect(innerDiv.classes()).toContain("group-hover:brightness-105");
   });
-
 });

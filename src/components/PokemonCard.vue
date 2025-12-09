@@ -13,7 +13,7 @@ const emit = defineEmits<{
 
 <template>
   <!-- Static Hit/Layout Container -->
-  <div 
+  <div
     class="relative w-[150px] h-[200px] cursor-pointer select-none group"
     @click="emit('click')"
   >
@@ -23,14 +23,15 @@ const emit = defineEmits<{
       :class="{
         'border-blue-500 shadow-[0_0_15px_rgba(59,130,246,0.6)] -translate-y-5':
           selected,
-        'border-gray-300 group-hover:-translate-y-5 group-hover:border-yellow-400 group-hover:shadow-[0_0_10px_rgba(250,204,21,0.5)] group-hover:brightness-105': !selected,
+        'border-gray-300 group-hover:-translate-y-5 group-hover:border-yellow-400 group-hover:shadow-[0_0_10px_rgba(250,204,21,0.5)] group-hover:brightness-105':
+          !selected,
       }"
     >
       <!-- Name -->
       <div class="text-center font-bold text-sm text-gray-800 truncate w-full">
         {{ card.name }}
       </div>
-  
+
       <!-- Sprite -->
       <div class="flex-grow flex items-center justify-center">
         <img
@@ -39,7 +40,7 @@ const emit = defineEmits<{
           class="w-24 h-24 object-contain"
         />
       </div>
-  
+
       <!-- Types -->
       <div class="flex gap-1 justify-center w-full mb-1">
         <div v-for="(type, index) in card.types" :key="index">
@@ -50,13 +51,11 @@ const emit = defineEmits<{
           />
         </div>
       </div>
-  
+
       <!-- Value/Stats -->
       <div class="text-xs text-gray-500 font-mono">Val: {{ card.value }}</div>
     </div>
   </div>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>
