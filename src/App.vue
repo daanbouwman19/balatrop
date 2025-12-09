@@ -28,13 +28,27 @@ const game = reactive(new GameState());
 const enemyImageRef = ref<HTMLElement | null>(null);
 const hoveredCardIndex = ref(-1);
 
+// --- Damage Numbers ---
+interface DamageNumber {
+  id: number;
+  value: string;
+  x: number;
+  y: number;
+}
+const damageNumbers = ref<DamageNumber[]>([]);
+
+// --- Screen Shake ---
+const isShaking = ref(false);
+
+const triggerScreenShake = () => {
+  isShaking.value = true;
+  setTimeout(() => (isShaking.value = false), 200);
+};
+
 const triggerEnemyHit = () => {
   if (!enemyImageRef.value) return;
 
-  // Create a new animation instance for this specific hit
-  // Use composite 'add' to stack multiple hits visually
-  // Create a new animation instance for this specific hit
-  // Use composite 'add' to stack multiple hits visually
+  // 1. Movement Animation (Existing - Keep composite: 'add' for stacking hits)
   enemyImageRef.value.animate(
     [
       { transform: "translate(0, 0) scale(1, 1)", offset: 0 },
@@ -52,6 +66,52 @@ const triggerEnemyHit = () => {
       composite: "add",
     },
   );
+
+  // 2. Flash Animation (New - Visual feedback)
+  enemyImageRef.value.animate(
+    [
+      {
+        filter: "brightness(1) sepia(0) hue-rotate(0deg) saturate(1)",
+        offset: 0,
+      },
+      {
+        filter: "brightness(2) sepia(1) hue-rotate(-50deg) saturate(5)",
+        offset: 0.1,
+      }, // Flash Red
+      {
+        filter: "brightness(1) sepia(0) hue-rotate(0deg) saturate(1)",
+        offset: 1,
+      },
+    ],
+    {
+      duration: 300,
+      easing: "ease-out",
+    },
+  );
+
+  // 3. Spawn Damage Number
+  const rect = enemyImageRef.value.getBoundingClientRect();
+  const randomX = (Math.random() - 0.5) * 40;
+  const randomY = (Math.random() - 0.5) * 40;
+
+  const newNumber: DamageNumber = {
+    id: Date.now() + Math.random(),
+    value: "POW!", // Placeholder for now
+    x: rect.left + rect.width / 2 + randomX,
+    y: rect.top + randomY,
+  };
+
+  damageNumbers.value.push(newNumber);
+  setTimeout(() => {
+    damageNumbers.value = damageNumbers.value.filter(
+      (n) => n.id !== newNumber.id,
+    );
+  }, 1000);
+
+  // 4. Screen Shake (Random chance)
+  if (Math.random() > 0.7) {
+    triggerScreenShake();
+  }
 };
 
 const onLeave = (el: Element, done: () => void) => {
@@ -188,6 +248,7 @@ onUnmounted(() => {
       <!-- Game Board (Center) -->
       <div
         class="flex-grow flex flex-col items-center justify-between p-4 bg-[url('/images/pixel_background.jpg')] bg-cover relative border-[20px] border-score-board-background m-2 rounded-lg box-border"
+        :class="{ 'animate-shake': isShaking }"
       >
         <!-- Enemy Area -->
         <div v-if="game.enemy" class="flex flex-col items-center mt-4 w-full">
@@ -316,6 +377,20 @@ onUnmounted(() => {
         :game="game"
         class="fixed top-4 right-4 z-40"
       />
+
+      <!-- Damage Numbers Overlay -->
+      <div class="fixed inset-0 pointer-events-none z-50 overflow-hidden">
+        <TransitionGroup name="damage-number">
+          <div
+            v-for="num in damageNumbers"
+            :key="num.id"
+            class="absolute text-4xl font-black text-white stroke-black text-shadow-lg"
+            :style="{ left: `${num.x}px`, top: `${num.y}px` }"
+          >
+            {{ num.value }}
+          </div>
+        </TransitionGroup>
+      </div>
     </div>
   </div>
   <div v-else>
@@ -375,6 +450,54 @@ onUnmounted(() => {
 
 .animate-hit {
   animation: hit 0.5s ease-in-out;
-  filter: brightness(2) sepia(1) hue-rotate(-50deg) saturate(5); /* Flash red/white */
+}
+
+@keyframes hit {
+  0% {
+    filter: brightness(1);
+  }
+  25% {
+    filter: brightness(2) sepia(1) hue-rotate(-50deg) saturate(5);
+  }
+  100% {
+    filter: brightness(1);
+  }
+}
+
+@keyframes shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-5px) translateY(2px);
+  }
+  75% {
+    transform: translateX(5px) translateY(-2px);
+  }
+}
+
+.animate-shake {
+  animation: shake 0.2s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+}
+
+.stroke-black {
+  -webkit-text-stroke: 2px black;
+}
+
+/* Damage Number Transitions */
+.damage-number-enter-active {
+  transition: all 0.5s ease-out;
+}
+.damage-number-enter-from {
+  opacity: 0;
+  transform: translateY(20px) scale(0.5);
+}
+.damage-number-leave-active {
+  transition: all 0.5s ease-in;
+}
+.damage-number-leave-to {
+  opacity: 0;
+  transform: translateY(-50px) scale(1.5);
 }
 </style>
