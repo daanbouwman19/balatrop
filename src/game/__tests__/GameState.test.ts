@@ -160,6 +160,71 @@ describe("GameState", () => {
     expect(result.mult).toBe(10);
   });
 
+  it("should handle intro message transitions", () => {
+    gameState.state = "INTRO";
+    gameState.introMessages = ["A", "B"];
+    gameState.nextIntroMessage();
+    expect(gameState.introMessage).toBe("A");
+    gameState.nextIntroMessage();
+    expect(gameState.introMessage).toBe("B");
+
+    // Last message cleared, triggers game start logic
+    gameState.nextIntroMessage();
+    expect(gameState.introMessage).toBe("");
+    expect(gameState.state).toBe("SELECT_CARDS");
+    expect(gameState.enemy).not.toBeNull();
+    expect(gameState.hand_cards.length).toBe(8);
+  });
+
+  it("should select and deselect cards", () => {
+    gameState.restartGame();
+    // Bypass intro
+    while (gameState.state === "INTRO") gameState.nextIntroMessage();
+
+    expect(gameState.selectedCards.length).toBe(0);
+    const c1 = gameState.hand_cards[0];
+    const c2 = gameState.hand_cards[1];
+
+    gameState.toggleSelectCard(c1);
+    expect(gameState.selectedCards).toContain(c1);
+
+    gameState.toggleSelectCard(c2);
+    expect(gameState.selectedCards).toContain(c2);
+
+    gameState.toggleSelectCard(c1);
+    expect(gameState.selectedCards).not.toContain(c1);
+    expect(gameState.selectedCards).toContain(c2);
+
+    // Max selection limit (5)
+    gameState.selectedCards = [];
+    const cards = gameState.hand_cards.slice(0, 5);
+    cards.forEach((c) => gameState.toggleSelectCard(c));
+    expect(gameState.selectedCards.length).toBe(5);
+
+    const c6 = gameState.hand_cards[5];
+    gameState.toggleSelectCard(c6);
+    expect(gameState.selectedCards.length).toBe(5); // Should not increase
+    expect(gameState.selectedCards).not.toContain(c6);
+  });
+
+  it("should game over if submits run out", () => {
+    vi.useFakeTimers();
+    gameState.restartGame();
+    while (gameState.state === "INTRO") gameState.nextIntroMessage();
+
+    if (gameState.enemy) gameState.enemy.hp = 999999;
+
+    gameState.submitsRemaining = 1;
+    const c1 = gameState.hand_cards[0];
+    gameState.selectedCards = [c1];
+
+    gameState.submitHand();
+    vi.advanceTimersByTime(1000); // Wait for hit logic
+
+    expect(gameState.state).toBe("GAME_OVER");
+    vi.useRealTimers();
+  });
+
   it("should calculate type effectiveness", () => {
     // Mock card and type map interactions are integration tests usually,
     // but we can test logic with known inputs.

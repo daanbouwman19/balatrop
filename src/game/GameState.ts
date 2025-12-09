@@ -62,6 +62,13 @@ export class GameState {
   introMessage = "";
   introMessages: string[] = [];
 
+  lastSubmittedHand: {
+    damage: number;
+    cardCount: number;
+    timestamp: number;
+    cards: { damage: number; id: string }[];
+  } | null = null;
+
   constructor() {
     this.pokemon_cards = this.initializePokemonCards();
     this.restartGame();
@@ -340,14 +347,14 @@ export class GameState {
 
   calculateCurrentHandStats() {
     if (this.selectedCards.length === 0)
-      return { multiplier: 0, damage: 0, handName: "None" };
+      return { multiplier: 0, damage: 0, handName: "None", cardDetails: [] };
 
     const handStats = this.evaluateHand(this.selectedCards);
 
     let totalChips = handStats.chips;
     const totalMult = handStats.mult;
 
-    this.selectedCards.forEach((card) => {
+    const cardDetails = this.selectedCards.map((card) => {
       // Card Chips
       const baseCardChips = card.value * 10;
       const typeEffectiveness = this.enemy
@@ -356,12 +363,18 @@ export class GameState {
 
       const cardChips = Math.floor(baseCardChips * typeEffectiveness);
       totalChips += cardChips;
+
+      return {
+        id: card.id,
+        damage: cardChips * totalMult, // Damage contributed by this card
+      };
     });
 
     return {
       multiplier: totalMult,
       damage: totalChips,
       handName: handStats.name,
+      cardDetails,
     };
   }
 
@@ -381,6 +394,13 @@ export class GameState {
     // Capture number of cards for animation timing
     const cardCount = this.selectedCards.length;
 
+    this.lastSubmittedHand = {
+      damage: totalScore,
+      cardCount,
+      timestamp: Date.now(),
+      cards: stats.cardDetails,
+    };
+
     // Remove played cards (Starts animation)
     this.hand_cards = this.hand_cards.filter(
       (c) => !this.selectedCards.includes(c),
@@ -389,9 +409,6 @@ export class GameState {
 
     // Delay damage application to sync with stored animation (approx 300ms per card staggered)
     // Base delay 300ms + 100ms per card index
-    // Let's settle on the updates happening when the "bulk" of cards hit?
-    // Or just push it to the end.
-    // If animations are staggered by 100ms, last card hits at 300 + (N-1)*100.
     const delay = 450 + (cardCount - 1) * 100;
 
     setTimeout(() => {
@@ -418,7 +435,6 @@ export class GameState {
       }
     }, delay);
   }
-
   get currentMultiplier() {
     return this.calculateCurrentHandStats().multiplier;
   }

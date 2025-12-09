@@ -4,7 +4,7 @@ import RotateDevice from "./components/RotateDevice.vue";
 import CurrentMoney from "./components/CurrentMoney.vue";
 import PokemonCard from "./components/PokemonCard.vue";
 import { GameState } from "./game/GameState";
-import { ref, onMounted, onUnmounted, reactive, computed } from "vue";
+import { ref, onMounted, onUnmounted, reactive, computed, watch } from "vue";
 
 const width = ref(window.innerWidth);
 const orientation = ref(window.screen.orientation?.type || "portrait");
@@ -45,7 +45,7 @@ const triggerScreenShake = () => {
   setTimeout(() => (isShaking.value = false), 200);
 };
 
-const triggerEnemyHit = () => {
+const triggerEnemyHit = (damage: number) => {
   if (!enemyImageRef.value) return;
 
   // 1. Movement Animation (Existing - Keep composite: 'add' for stacking hits)
@@ -96,7 +96,7 @@ const triggerEnemyHit = () => {
 
   const newNumber: DamageNumber = {
     id: Date.now() + Math.random(),
-    value: "POW!", // Placeholder for now
+    value: damage.toString(),
     x: rect.left + rect.width / 2 + randomX,
     y: rect.top + randomY,
   };
@@ -113,6 +113,32 @@ const triggerEnemyHit = () => {
     triggerScreenShake();
   }
 };
+
+watch(
+  () => game.lastSubmittedHand,
+  (submission) => {
+    if (!submission) return;
+
+    // Trigger hit for each card
+    if (submission.cards) {
+      submission.cards.forEach((cardFn, index) => {
+        // Delay to sync with the last card's impact animation
+        // onLeave delay is index * 100
+        // onLeave animation total is 1500ms? No, hitTime was index * 100 + 450.
+        const animationDelay = 450 + index * 100;
+        setTimeout(() => {
+          triggerEnemyHit(cardFn.damage);
+        }, animationDelay);
+      });
+    } else {
+      // Fallback for safety or legacy
+      const animationDelay = 450 + (submission.cardCount - 1) * 100;
+      setTimeout(() => {
+        triggerEnemyHit(submission.damage);
+      }, animationDelay);
+    }
+  },
+);
 
 const onLeave = (el: Element, done: () => void) => {
   const element = el as HTMLElement;
@@ -185,10 +211,7 @@ const onLeave = (el: Element, done: () => void) => {
     },
   );
 
-  const hitTime = index * 100 + 300;
-  setTimeout(() => {
-    triggerEnemyHit();
-  }, hitTime);
+  // Removed old setTimeout trigger
 
   animation.onfinish = () => {
     done();

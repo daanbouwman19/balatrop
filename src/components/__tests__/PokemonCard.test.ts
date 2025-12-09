@@ -58,4 +58,16 @@ describe("PokemonCard.vue", () => {
     expect(innerDiv.classes()).toContain("group-hover:border-yellow-400");
     expect(innerDiv.classes()).toContain("group-hover:brightness-105");
   });
+
+  it("emits click event when clicked", async () => {
+    const wrapper = mount(PokemonCard, {
+      props: {
+        card: mockCard,
+        selected: false,
+      },
+    });
+
+    await wrapper.find("div").trigger("click");
+    expect(wrapper.emitted("click")).toBeTruthy();
+  });
 });
