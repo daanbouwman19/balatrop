@@ -39,12 +39,13 @@ describe("PokemonCard.vue", () => {
       },
     });
 
-    const div = wrapper.find("div");
-    expect(div.classes()).toContain("border-blue-500");
-    expect(div.classes()).toContain("-translate-y-5");
+    // The inner div has the conditional classes
+    const innerDiv = wrapper.find(".backdrop-blur-sm");
+    expect(innerDiv.classes()).toContain("border-blue-500");
+    expect(innerDiv.classes()).toContain("-translate-y-5");
   });
 
-  it("emits click event", async () => {
+  it("applies hover classes when not selected", () => {
     const wrapper = mount(PokemonCard, {
       props: {
         card: mockCard,
@@ -52,7 +53,21 @@ describe("PokemonCard.vue", () => {
       },
     });
 
-    await wrapper.trigger("click");
+    const innerDiv = wrapper.find(".backdrop-blur-sm");
+    // Check for new hover classes
+    expect(innerDiv.classes()).toContain("group-hover:border-yellow-400");
+    expect(innerDiv.classes()).toContain("group-hover:brightness-105");
+  });
+
+  it("emits click event when clicked", async () => {
+    const wrapper = mount(PokemonCard, {
+      props: {
+        card: mockCard,
+        selected: false,
+      },
+    });
+
+    await wrapper.find("div").trigger("click");
     expect(wrapper.emitted("click")).toBeTruthy();
   });
 });

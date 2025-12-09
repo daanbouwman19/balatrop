@@ -2,3 +2,11 @@
   font-family: "pokemon";
   src: url("/fonts/Pokemon_Solid.ttf") format("truetype");
 }
+
+/* Force pixelated rendering for all images and canvases (sprites) */
+*, *::before, *::after {
+  image-rendering: -moz-crisp-edges;
+  image-rendering: -webkit-crisp-edges;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+}

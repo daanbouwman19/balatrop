@@ -1,197 +1,210 @@
 import { describe, it, expect, beforeEach, vi } from "vitest";
-import { GameState } from "../GameState";
+import { GameState, PokemonCard } from "../GameState";
 
 describe("GameState", () => {
   let gameState: GameState;
 
+  // Helper to create mock cards
+  const createCard = (value: number, types: string[]): PokemonCard => ({
+    name: "mock",
+    value,
+    image: "mock.png",
+    evolvedFrom: null,
+    evolvesTo: null,
+    types: types.map((t) => ({ type: { name: t } })),
+    id: crypto.randomUUID(),
+  });
+
   beforeEach(() => {
-    // Reset any mocks if needed
     vi.restoreAllMocks();
     gameState = new GameState();
   });
 
   it("should initialize with correct default state", () => {
-    expect(gameState.state).toBe("INTRO"); // constructor calls restartGame -> startIntro
+    expect(gameState.state).toBe("INTRO");
     expect(gameState.pokemon_cards.length).toBeGreaterThan(0);
     expect(gameState.player_deck.length).toBe(40);
     expect(gameState.hand_cards.length).toBe(0);
     expect(gameState.score).toBe(0);
+    expect(gameState.fightReward).toBe(50);
+    expect(gameState.discardsRemaining).toBe(3);
   });
 
-  it("should transition through intro messages", () => {
-    gameState.restartGame();
-    expect(gameState.state).toBe("INTRO");
-    expect(gameState.introMessage).toBe("Welcome to the game!");
+  it("should evaluate High Card", () => {
+    const cards = [
+      createCard(1, ["normal"]),
+      createCard(2, ["fire"]),
+      createCard(4, ["water"]), // Gap, no straight
+      createCard(3, ["grass"]),
+    ];
+    // With 4 cards 1,2,3,4 it is just High Card.
+    const result = gameState.evaluateHand(cards);
+    expect(result.name).toBe("High Card");
+    expect(result.chips).toBe(5);
+    expect(result.mult).toBe(1);
+  });
 
-    // Advance through messages until the last one is left
-    while (gameState.introMessages.length > 1) {
-      gameState.nextIntroMessage();
-    }
+  it("should evaluate Pair", () => {
+    const cards = [createCard(5, ["normal"]), createCard(5, ["fire"])];
+    const result = gameState.evaluateHand(cards);
+    expect(result.name).toBe("Pair");
+    expect(result.chips).toBe(10);
+    expect(result.mult).toBe(2);
+  });
 
-    // Last message
+  it("should evaluate Two Pair", () => {
+    const cards = [
+      createCard(5, ["normal"]),
+      createCard(5, ["fire"]),
+      createCard(3, ["water"]),
+      createCard(3, ["grass"]),
+    ];
+    const result = gameState.evaluateHand(cards);
+    expect(result.name).toBe("Two Pair");
+    expect(result.chips).toBe(20);
+    expect(result.mult).toBe(2);
+  });
+
+  it("should evaluate Three of a Kind", () => {
+    const cards = [
+      createCard(5, ["normal"]),
+      createCard(5, ["fire"]),
+      createCard(5, ["water"]),
+    ];
+    const result = gameState.evaluateHand(cards);
+    expect(result.name).toBe("Three of a Kind");
+    expect(result.chips).toBe(30);
+    expect(result.mult).toBe(3);
+  });
+
+  it("should evaluate Straight", () => {
+    const cards = [
+      createCard(1, ["normal"]),
+      createCard(2, ["fire"]),
+      createCard(3, ["water"]),
+      createCard(4, ["grass"]),
+      createCard(5, ["electric"]),
+    ];
+    const result = gameState.evaluateHand(cards);
+    expect(result.name).toBe("Straight");
+    expect(result.chips).toBe(45);
+    expect(result.mult).toBe(5);
+  });
+
+  it("should evaluate Flush", () => {
+    const cards = [
+      createCard(1, ["fire"]),
+      createCard(1, ["fire"]),
+      createCard(3, ["fire"]),
+      createCard(4, ["fire"]),
+      createCard(5, ["fire"]),
+    ];
+    const result = gameState.evaluateHand(cards);
+    expect(result.name).toBe("Flush");
+    expect(result.chips).toBe(50);
+    expect(result.mult).toBe(6);
+  });
+
+  it("should evaluate Full House", () => {
+    const cards = [
+      createCard(5, ["normal"]),
+      createCard(5, ["fire"]),
+      createCard(5, ["water"]),
+      createCard(2, ["grass"]),
+      createCard(2, ["electric"]),
+    ];
+    const result = gameState.evaluateHand(cards);
+    expect(result.name).toBe("Full House");
+    expect(result.chips).toBe(40);
+    expect(result.mult).toBe(4);
+  });
+
+  it("should evaluate Four of a Kind", () => {
+    const cards = [
+      createCard(5, ["normal"]),
+      createCard(5, ["fire"]),
+      createCard(5, ["water"]),
+      createCard(5, ["grass"]),
+    ];
+    const result = gameState.evaluateHand(cards);
+    expect(result.name).toBe("Four of a Kind");
+    expect(result.chips).toBe(60);
+    expect(result.mult).toBe(7);
+  });
+
+  it("should evaluate Five of a Kind", () => {
+    const cards = [
+      createCard(5, ["normal"]),
+      createCard(5, ["fire"]),
+      createCard(5, ["water"]),
+      createCard(5, ["grass"]),
+      createCard(5, ["electric"]),
+    ];
+    const result = gameState.evaluateHand(cards);
+    expect(result.name).toBe("Five of a Kind");
+    expect(result.chips).toBe(120);
+    expect(result.mult).toBe(12);
+  });
+
+  it("should evaluate Straight Flush", () => {
+    const cards = [
+      createCard(1, ["fire"]),
+      createCard(2, ["fire"]),
+      createCard(3, ["fire"]),
+      createCard(4, ["fire"]),
+      createCard(5, ["fire"]),
+    ];
+    const result = gameState.evaluateHand(cards);
+    expect(result.name).toBe("Straight Flush");
+    expect(result.chips).toBe(120);
+    expect(result.mult).toBe(10);
+  });
+
+  it("should handle intro message transitions", () => {
+    gameState.state = "INTRO";
+    gameState.introMessages = ["A", "B"];
     gameState.nextIntroMessage();
-    expect(gameState.introMessage).toBe("Smell ya later!");
-
-    // Finish intro
+    expect(gameState.introMessage).toBe("A");
     gameState.nextIntroMessage();
-    expect(gameState.state).toBe("SELECT_CARDS"); // fillHand sets it to SELECT_CARDS
+    expect(gameState.introMessage).toBe("B");
+
+    // Last message cleared, triggers game start logic
+    gameState.nextIntroMessage();
+    expect(gameState.introMessage).toBe("");
+    expect(gameState.state).toBe("SELECT_CARDS");
     expect(gameState.enemy).not.toBeNull();
     expect(gameState.hand_cards.length).toBe(8);
   });
 
-  it("should fill hand correctly", () => {
-    gameState.hand_cards = [];
-    gameState.state = "START";
-    gameState.fillHand();
-
-    expect(gameState.hand_cards.length).toBe(8);
-    expect(gameState.state).toBe("SELECT_CARDS");
-    expect(gameState.drawed_this_round.length).toBe(8);
-  });
-
-  it("should not draw more cards if deck is empty", () => {
-    gameState.player_deck = [];
-    gameState.hand_cards = [];
-    gameState.fillHand();
-    expect(gameState.hand_cards.length).toBe(0);
-  });
-
-  it("should toggle card selection", () => {
-    gameState.state = "SELECT_CARDS";
-    const card = gameState.pokemon_cards[0];
-
-    // Select
-    gameState.toggleSelectCard(card);
-    expect(gameState.selectedCards).toContain(card);
-
-    // Deselect
-    gameState.toggleSelectCard(card);
-    expect(gameState.selectedCards).not.toContain(card);
-  });
-
-  it("should limit selection to 5 cards", () => {
-    gameState.state = "SELECT_CARDS";
-    const cards = gameState.pokemon_cards.slice(0, 6);
-
-    cards.forEach((card) => gameState.toggleSelectCard(card));
-
-    expect(gameState.selectedCards.length).toBe(5);
-    expect(gameState.selectedCards).toEqual(cards.slice(0, 5));
-  });
-
-  it("should calculate type multiplier correctly", () => {
-    // Mock card and target types
-    // Using known types from typeRelationsMap.json (need to assume content or mock it)
-    // Since we import the real json, we can rely on it if we know the data.
-    // Fire double damage to Grass.
-
-    const fireCard = {
-      ...gameState.pokemon_cards[0],
-      types: [{ type: { name: "fire" } }],
-    };
-    const grassTarget = [{ type: { name: "grass" } }];
-
-    const multiplier = gameState.calculateTypeMultiplier(fireCard, grassTarget);
-    expect(multiplier).toBe(2);
-
-    const waterCard = {
-      ...gameState.pokemon_cards[0],
-      types: [{ type: { name: "water" } }],
-    };
-    const fireTarget = [{ type: { name: "fire" } }];
-    // Water double damage to Fire
-    expect(gameState.calculateTypeMultiplier(waterCard, fireTarget)).toBe(2);
-
-    // Normal to Ghost (No damage)
-    const normalCard = {
-      ...gameState.pokemon_cards[0],
-      types: [{ type: { name: "normal" } }],
-    };
-    const ghostTarget = [{ type: { name: "ghost" } }];
-    expect(gameState.calculateTypeMultiplier(normalCard, ghostTarget)).toBe(0);
-  });
-
-  it("should calculate hand stats correctly", () => {
-    // Setup state
+  it("should select and deselect cards", () => {
     gameState.restartGame();
-    // fast forward to game
+    // Bypass intro
     while (gameState.state === "INTRO") gameState.nextIntroMessage();
 
-    const card1 = {
-      ...gameState.pokemon_cards[0],
-      value: 10,
-      types: [{ type: { name: "normal" } }],
-    };
-    const card2 = {
-      ...gameState.pokemon_cards[0],
-      value: 20,
-      types: [{ type: { name: "normal" } }],
-    }; // Same type -> multiplier bonus
-
-    gameState.selectedCards = [card1, card2];
-
-    // Mock enemy to have neutral type
-    if (gameState.enemy) {
-      gameState.enemy.pokemon.types = [];
-    }
-
-    const stats = gameState.calculateCurrentHandStats();
-
-    // Multiplier: 1 + 1.5 (pair) = 2.5 ??
-    // Logic:
-    // cardTypesCount['normal'] = 1 -> (first card)
-    // cardTypesCount['normal'] = 2 -> multiplier += 1.5
-    // Base multiplier 1.
-    // Total 2.5.
-
-    expect(stats.multiplier).toBe(2.5);
-    expect(stats.damage).toBe(30); // 10 + 20
-  });
-
-  it("should submit hand and deal damage", async () => {
-    vi.useFakeTimers();
-    gameState.restartGame();
-    while (gameState.state === "INTRO") gameState.nextIntroMessage();
-
-    const initialHp = gameState.enemy?.hp || 100;
-    const card = gameState.hand_cards[0];
-    gameState.toggleSelectCard(card);
-
-    gameState.submitHand();
-
-    // Wait for timeout
-    vi.advanceTimersByTime(300);
-
-    expect(gameState.enemy?.hp).toBeLessThan(initialHp);
     expect(gameState.selectedCards.length).toBe(0);
+    const c1 = gameState.hand_cards[0];
+    const c2 = gameState.hand_cards[1];
 
-    vi.useRealTimers();
-  });
+    gameState.toggleSelectCard(c1);
+    expect(gameState.selectedCards).toContain(c1);
 
-  it("should handle enemy death and respawn", () => {
-    vi.useFakeTimers();
-    gameState.restartGame();
-    while (gameState.state === "INTRO") gameState.nextIntroMessage();
+    gameState.toggleSelectCard(c2);
+    expect(gameState.selectedCards).toContain(c2);
 
-    if (!gameState.enemy) throw new Error("No enemy");
+    gameState.toggleSelectCard(c1);
+    expect(gameState.selectedCards).not.toContain(c1);
+    expect(gameState.selectedCards).toContain(c2);
 
-    // Force kill
-    const card = gameState.hand_cards[0];
-    gameState.toggleSelectCard(card);
+    // Max selection limit (5)
+    gameState.selectedCards = [];
+    const cards = gameState.hand_cards.slice(0, 5);
+    cards.forEach((c) => gameState.toggleSelectCard(c));
+    expect(gameState.selectedCards.length).toBe(5);
 
-    // Hack damage calculation to ensure kill
-    // We can just spyOn calculateCurrentHandStats or modify enemy HP directly?
-    // modifying enemy HP directly won't work because submitHand calculates damage.
-    // Let's set enemy HP to 1.
-    gameState.enemy.hp = 1;
-
-    gameState.submitHand();
-    vi.advanceTimersByTime(300);
-
-    expect(gameState.enemies_defeated).toBe(1);
-    expect(gameState.enemy.hp).toBeGreaterThan(0); // New enemy spawned
-
-    vi.useRealTimers();
+    const c6 = gameState.hand_cards[5];
+    gameState.toggleSelectCard(c6);
+    expect(gameState.selectedCards.length).toBe(5); // Should not increase
+    expect(gameState.selectedCards).not.toContain(c6);
   });
 
   it("should game over if submits run out", () => {
@@ -199,18 +212,156 @@ describe("GameState", () => {
     gameState.restartGame();
     while (gameState.state === "INTRO") gameState.nextIntroMessage();
 
-    gameState.submitsRemaining = 1;
-    // Set enemy HP high so it doesn't die
     if (gameState.enemy) gameState.enemy.hp = 999999;
 
-    const card = gameState.hand_cards[0];
-    gameState.toggleSelectCard(card);
+    gameState.submitsRemaining = 1;
+    const c1 = gameState.hand_cards[0];
+    gameState.selectedCards = [c1];
 
     gameState.submitHand();
-    vi.advanceTimersByTime(300);
+    vi.advanceTimersByTime(1000); // Wait for hit logic
 
     expect(gameState.state).toBe("GAME_OVER");
+    vi.useRealTimers();
+  });
+
+  it("should calculate type effectiveness", () => {
+    // Mock card and type map interactions are integration tests usually,
+    // but we can test logic with known inputs.
+    // Fire vs Grass (2x)
+    const fireCard = createCard(1, ["fire"]);
+    const grassTypes = [{ type: { name: "grass" } }];
+    expect(gameState.getTypeEffectiveness(fireCard, grassTypes)).toBe(2);
+
+    // Water vs Fire (2x)
+    const waterCard = createCard(1, ["water"]);
+    const fireTypes = [{ type: { name: "fire" } }];
+    expect(gameState.getTypeEffectiveness(waterCard, fireTypes)).toBe(2);
+
+    // Normal vs Ghost (0x)
+    const normalCard = createCard(1, ["normal"]);
+    const ghostTypes = [{ type: { name: "ghost" } }];
+    expect(gameState.getTypeEffectiveness(normalCard, ghostTypes)).toBe(0);
+  });
+
+  it("should evaluate hand stats with chips and mult", () => {
+    // Pair of 5s (Fire vs Grass -> 2x effectiveness on chips)
+    const c1 = createCard(5, ["fire"]);
+    const c2 = createCard(5, ["fire"]);
+
+    gameState.selectedCards = [c1, c2];
+
+    // Mock Enemy
+    gameState.enemy = {
+      pokemon: createCard(1, ["grass"]),
+      hp: 100,
+      maxHp: 100,
+      damageTaken: 0,
+    };
+
+    const stats = gameState.calculateCurrentHandStats();
+    expect(stats.handName).toBe("Pair");
+
+    // Chips:
+    // Base Hand Chips for Pair: 10
+    // Card 1: Value 5 -> 50 base. Eff 2x -> 100.
+    // Card 2: Value 5 -> 50 base. Eff 2x -> 100.
+    // Total Chips: 10 + 100 + 100 = 210.
+    expect(stats.damage).toBe(210);
+
+    // Mult:
+    // Base Hand Mult for Pair: 2
+    expect(stats.multiplier).toBe(2);
+  });
+
+  it("should submit hand dealing correct damage", () => {
+    vi.useFakeTimers();
+    gameState.restartGame();
+    while (gameState.state === "INTRO") gameState.nextIntroMessage();
+
+    // Mock Enemy HP
+    if (gameState.enemy) gameState.enemy.hp = 1000;
+
+    const c1 = createCard(5, ["fire"]); // Value 5
+    gameState.hand_cards = [c1];
+    gameState.selectedCards = [c1];
+
+    // Mock enemy types to nothing to avoid varying multipliers
+    if (gameState.enemy) gameState.enemy.pokemon.types = [];
+
+    // High Card Stats:
+    // Chips: 5 (Base) + 50 (Card: 5*10 * 1eff) = 55.
+    // Mult: 1.
+    // Total: 55.
+
+    gameState.submitHand();
+    vi.advanceTimersByTime(500);
+
+    // Enemy HP should reduce by 55
+    expect(gameState.enemy?.hp).toBe(1000 - 55);
+    vi.useRealTimers();
+  });
+
+  it("should reset submitsRemaining on enemy kill", () => {
+    vi.useFakeTimers();
+    gameState.restartGame();
+    while (gameState.state === "INTRO") gameState.nextIntroMessage();
+
+    if (gameState.enemy) gameState.enemy.hp = 1;
+
+    const c1 = createCard(5, ["fire"]);
+    gameState.hand_cards = [c1];
+    gameState.selectedCards = [c1];
+
+    gameState.submitHand(); // Should kill
+    vi.advanceTimersByTime(500);
+
+    expect(gameState.enemies_defeated).toBe(1);
+    expect(gameState.submitsRemaining).toBe(4); // Reset to 4
+    expect(gameState.enemy?.hp).toBeGreaterThan(1); // New enemy
 
     vi.useRealTimers();
+  });
+
+  it("should discard selected cards and refill hand", () => {
+    gameState.restartGame();
+    while (gameState.state === "INTRO") gameState.nextIntroMessage();
+
+    expect(gameState.hand_cards.length).toBe(8);
+    expect(gameState.discardsRemaining).toBe(3);
+
+    // Select 2 cards
+    const c1 = gameState.hand_cards[0];
+    const c2 = gameState.hand_cards[1];
+    gameState.selectedCards = [c1, c2];
+
+    gameState.discardSelected();
+
+    // Discard should decrease
+    expect(gameState.discardsRemaining).toBe(2);
+
+    // Hand should be full again
+    expect(gameState.hand_cards.length).toBe(8);
+
+    // Hand should not contain discarded cards (assuming deck has enough cards and random doesn't pick same if referenced,
+    // but logic removes them from deck so they shouldn't reappear immediately unless deck wraps around or similar.
+    // The current implementation draws from deck. deck length is 40.
+    expect(gameState.hand_cards).not.toContain(c1);
+    expect(gameState.hand_cards).not.toContain(c2);
+  });
+
+  it("should not discard if 0 discards remaining", () => {
+    gameState.restartGame();
+    while (gameState.state === "INTRO") gameState.nextIntroMessage();
+
+    gameState.discardsRemaining = 0;
+
+    const c1 = gameState.hand_cards[0];
+    gameState.selectedCards = [c1];
+
+    gameState.discardSelected();
+
+    expect(gameState.discardsRemaining).toBe(0);
+    expect(gameState.hand_cards).toContain(c1);
   });
 });

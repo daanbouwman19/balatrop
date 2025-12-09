@@ -4,7 +4,7 @@ import RotateDevice from "./components/RotateDevice.vue";
 import CurrentMoney from "./components/CurrentMoney.vue";
 import PokemonCard from "./components/PokemonCard.vue";
 import { GameState } from "./game/GameState";
-import { computed, ref, onMounted, onUnmounted, reactive, watch } from "vue";
+import { ref, onMounted, onUnmounted, reactive, computed, watch } from "vue";
 
 const width = ref(window.innerWidth);
 const orientation = ref(window.screen.orientation?.type || "portrait");
@@ -21,19 +21,121 @@ const rotateDevice = computed(() => {
 });
 
 const isMounted = ref(false);
-const isHit = ref(false);
 
 // Initialize GameState as reactive so refs are unwrapped in template
 const game = reactive(new GameState());
 
+const enemyImageRef = ref<HTMLElement | null>(null);
+const hoveredCardIndex = ref(-1);
+
+// --- Damage Numbers ---
+interface DamageNumber {
+  id: number;
+  value: string;
+  x: number;
+  y: number;
+}
+const damageNumbers = ref<DamageNumber[]>([]);
+
+// --- Screen Shake ---
+const isShaking = ref(false);
+
+const triggerScreenShake = () => {
+  isShaking.value = true;
+  setTimeout(() => (isShaking.value = false), 200);
+};
+
+const triggerEnemyHit = (damage: number) => {
+  if (!enemyImageRef.value) return;
+
+  // 1. Movement Animation (Existing - Keep composite: 'add' for stacking hits)
+  enemyImageRef.value.animate(
+    [
+      { transform: "translate(0, 0) scale(1, 1)", offset: 0 },
+      // Strong Knockback (Fly Up/Back) - No rotation to prevent spin stacking
+      { transform: `translate(0, -40px) scale(0.95, 1.05)`, offset: 0.1 },
+      // Hover/Hang briefly at peak
+      { transform: `translate(0, -35px) scale(0.98, 1.02)`, offset: 0.3 },
+      // Slow Return with overshoot
+      { transform: "translate(0, 10px) scale(1.02, 0.98)", offset: 0.6 },
+      { transform: "translate(0, 0) scale(1, 1)", offset: 1 },
+    ],
+    {
+      duration: 800,
+      easing: "cubic-bezier(0.2, 0.8, 0.2, 1)", // Smooth ease out-in
+      composite: "add",
+    },
+  );
+
+  // 2. Flash Animation (New - Visual feedback)
+  enemyImageRef.value.animate(
+    [
+      {
+        filter: "brightness(1) sepia(0) hue-rotate(0deg) saturate(1)",
+        offset: 0,
+      },
+      {
+        filter: "brightness(2) sepia(1) hue-rotate(-50deg) saturate(5)",
+        offset: 0.1,
+      }, // Flash Red
+      {
+        filter: "brightness(1) sepia(0) hue-rotate(0deg) saturate(1)",
+        offset: 1,
+      },
+    ],
+    {
+      duration: 300,
+      easing: "ease-out",
+    },
+  );
+
+  // 3. Spawn Damage Number
+  const rect = enemyImageRef.value.getBoundingClientRect();
+  const randomX = (Math.random() - 0.5) * 40;
+  const randomY = (Math.random() - 0.5) * 40;
+
+  const newNumber: DamageNumber = {
+    id: Date.now() + Math.random(),
+    value: damage.toString(),
+    x: rect.left + rect.width / 2 + randomX,
+    y: rect.top + randomY,
+  };
+
+  damageNumbers.value.push(newNumber);
+  setTimeout(() => {
+    damageNumbers.value = damageNumbers.value.filter(
+      (n) => n.id !== newNumber.id,
+    );
+  }, 1000);
+
+  // 4. Screen Shake (Random chance)
+  if (Math.random() > 0.7) {
+    triggerScreenShake();
+  }
+};
+
 watch(
-  () => game.enemy?.hp,
-  (newHp, oldHp) => {
-    if (oldHp !== undefined && newHp !== undefined && newHp < oldHp) {
-      isHit.value = true;
+  () => game.lastSubmittedHand,
+  (submission) => {
+    if (!submission) return;
+
+    // Trigger hit for each card
+    if (submission.cards) {
+      submission.cards.forEach((cardFn, index) => {
+        // Delay to sync with the last card's impact animation
+        // onLeave delay is index * 100
+        // onLeave animation total is 1500ms? No, hitTime was index * 100 + 450.
+        const animationDelay = 450 + index * 100;
+        setTimeout(() => {
+          triggerEnemyHit(cardFn.damage);
+        }, animationDelay);
+      });
+    } else {
+      // Fallback for safety or legacy
+      const animationDelay = 450 + (submission.cardCount - 1) * 100;
       setTimeout(() => {
-        isHit.value = false;
-      }, 500);
+        triggerEnemyHit(submission.damage);
+      }, animationDelay);
     }
   },
 );
@@ -41,14 +143,25 @@ watch(
 const onLeave = (el: Element, done: () => void) => {
   const element = el as HTMLElement;
   const rect = element.getBoundingClientRect();
+  const index = parseInt(element.dataset.index || "0");
 
-  // Target: Center of screen, where enemy is (approx 20% from top)
-  const targetX = window.innerWidth / 2 - rect.width / 2;
-  const targetY = window.innerHeight * 0.2;
+  let targetX = window.innerWidth / 2;
+  let targetY = window.innerHeight * 0.2;
+
+  // Use actual enemy position if available
+  if (enemyImageRef.value) {
+    const enemyRect = enemyImageRef.value.getBoundingClientRect();
+    // Target X: Center of card aligns with center of enemy
+    targetX = enemyRect.left + enemyRect.width / 2 - rect.width / 2;
+
+    // Target Y: Top of card aligns with Center of enemy
+    // absolute Y position of where we want the card top to be.
+    targetY = enemyRect.top + enemyRect.height / 2;
+  }
 
   // Fall destination: Bottom of screen with random spread
-  const fallX = targetX + (Math.random() * 400 - 200); // Spread +/- 200px
-  const fallY = window.innerHeight + 200; // Below screen
+  const fallX = targetX + (Math.random() * 400 - 200);
+  const fallY = window.innerHeight + 200;
 
   // Animation Sequence
   const animation = element.animate(
@@ -58,31 +171,47 @@ const onLeave = (el: Element, done: () => void) => {
         opacity: 1,
         zIndex: 100,
         offset: 0,
-        easing: "cubic-bezier(0.25, 1, 0.5, 1)", // Strong ease-out (throw)
+        easing: "cubic-bezier(0.25, 1, 0.5, 1)",
       },
       {
+        // Impact Point
         transform: `translate(${targetX - rect.left}px, ${
           targetY - rect.top
         }px) scale(0.8) rotate(${Math.random() * 60 - 30}deg)`,
         opacity: 1,
         zIndex: 100,
-        offset: 0.3, // Hit at 30% (300ms)
-        easing: "cubic-bezier(0.4, 0, 1, 1)", // Gravity start (ease-in)
+        offset: 0.3,
+        easing: "cubic-bezier(0.4, 0, 1, 1)",
       },
       {
+        // Bounce Back/Up (Impact Reaction)
+        // Move partially back towards start and up slightly
+        transform: `translate(${(targetX - rect.left) * 0.9}px, ${
+          targetY - rect.top - 50
+        }px) scale(0.7) rotate(${Math.random() * 120 - 60}deg)`,
+        opacity: 1,
+        zIndex: 100,
+        offset: 0.45,
+        easing: "ease-out",
+      },
+      {
+        // Fall off screen
         transform: `translate(${fallX - rect.left}px, ${
           fallY - rect.top
         }px) scale(0.4) rotate(${Math.random() * 720 - 360}deg)`,
-        opacity: 0,
+        opacity: 1,
         zIndex: 100,
         offset: 1,
       },
     ],
     {
-      duration: 1000,
+      duration: 1500,
+      delay: index * 100,
       fill: "forwards",
     },
   );
+
+  // Removed old setTimeout trigger
 
   animation.onfinish = () => {
     done();
@@ -142,14 +271,15 @@ onUnmounted(() => {
       <!-- Game Board (Center) -->
       <div
         class="flex-grow flex flex-col items-center justify-between p-4 bg-[url('/images/pixel_background.jpg')] bg-cover relative border-[20px] border-score-board-background m-2 rounded-lg box-border"
+        :class="{ 'animate-shake': isShaking }"
       >
         <!-- Enemy Area -->
         <div v-if="game.enemy" class="flex flex-col items-center mt-4 w-full">
           <div class="relative flex flex-col items-center">
             <img
+              ref="enemyImageRef"
               :src="game.enemy.pokemon.image"
-              class="w-48 h-48 object-contain drop-shadow-2xl transition-transform duration-100"
-              :class="{ 'animate-bounce-slow': !isHit, 'animate-hit': isHit }"
+              class="w-48 h-48 object-contain drop-shadow-2xl transition-transform duration-100 animate-bounce-slow"
             />
 
             <!-- Health Bar -->
@@ -196,6 +326,19 @@ onUnmounted(() => {
             </div>
           </button>
 
+          <button
+            class="px-6 py-3 bg-red-600 text-white font-bold rounded-lg shadow-lg hover:bg-red-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors border-2 border-red-800 mt-4"
+            :disabled="
+              game.discardsRemaining <= 0 || game.selectedCards.length === 0
+            "
+            @click="game.discardSelected()"
+          >
+            Discard
+            <div class="text-xs font-normal">
+              Remaining: {{ game.discardsRemaining }}
+            </div>
+          </button>
+
           <!-- Predicted Damage Info -->
           <div
             v-if="game.selectedCards.length > 0"
@@ -209,6 +352,7 @@ onUnmounted(() => {
         <!-- Hand Area -->
         <div
           class="w-full flex justify-center items-end h-[260px] relative mb-4"
+          @mouseleave="hoveredCardIndex = -1"
         >
           <TransitionGroup
             name="hand"
@@ -219,15 +363,26 @@ onUnmounted(() => {
             <div
               v-for="(card, index) in game.hand_cards"
               :key="card.id"
-              class="relative transition-all duration-300 hover:z-20 hover:-translate-y-12 origin-bottom"
+              :data-index="index"
+              class="relative transition-all duration-300 origin-bottom ease-out"
               :class="{
                 'z-10 -translate-y-10': game.selectedCards.includes(card),
+                'z-20': hoveredCardIndex === index,
               }"
+              :style="{
+                transform:
+                  hoveredCardIndex !== -1 && hoveredCardIndex !== index
+                    ? `translateX(${index < hoveredCardIndex ? '-30px' : '30px'})`
+                    : '',
+              }"
+              @mouseenter="hoveredCardIndex = index"
             >
               <PokemonCard
                 class="w-full h-full"
                 :class="{
-                  'animate-idle-bounce': !game.selectedCards.includes(card),
+                  'animate-idle-bounce':
+                    !game.selectedCards.includes(card) &&
+                    hoveredCardIndex === -1,
                 }"
                 :style="{ animationDelay: `${index * 0.1}s` }"
                 :card="card"
@@ -245,6 +400,20 @@ onUnmounted(() => {
         :game="game"
         class="fixed top-4 right-4 z-40"
       />
+
+      <!-- Damage Numbers Overlay -->
+      <div class="fixed inset-0 pointer-events-none z-50 overflow-hidden">
+        <TransitionGroup name="damage-number">
+          <div
+            v-for="num in damageNumbers"
+            :key="num.id"
+            class="absolute text-4xl font-black text-white stroke-black text-shadow-lg"
+            :style="{ left: `${num.x}px`, top: `${num.y}px` }"
+          >
+            {{ num.value }}
+          </div>
+        </TransitionGroup>
+      </div>
     </div>
   </div>
   <div v-else>
@@ -304,24 +473,54 @@ onUnmounted(() => {
 
 .animate-hit {
   animation: hit 0.5s ease-in-out;
-  filter: brightness(2) sepia(1) hue-rotate(-50deg) saturate(5); /* Flash red/white */
 }
 
 @keyframes hit {
   0% {
-    transform: translate(0, 0) rotate(0deg);
+    filter: brightness(1);
   }
   25% {
-    transform: translate(-10px, 5px) rotate(-5deg);
-  }
-  50% {
-    transform: translate(10px, -5px) rotate(5deg);
-  }
-  75% {
-    transform: translate(-10px, 5px) rotate(-5deg);
+    filter: brightness(2) sepia(1) hue-rotate(-50deg) saturate(5);
   }
   100% {
-    transform: translate(0, 0) rotate(0deg);
+    filter: brightness(1);
   }
+}
+
+@keyframes shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-5px) translateY(2px);
+  }
+  75% {
+    transform: translateX(5px) translateY(-2px);
+  }
+}
+
+.animate-shake {
+  animation: shake 0.2s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+}
+
+.stroke-black {
+  -webkit-text-stroke: 2px black;
+}
+
+/* Damage Number Transitions */
+.damage-number-enter-active {
+  transition: all 0.5s ease-out;
+}
+.damage-number-enter-from {
+  opacity: 0;
+  transform: translateY(20px) scale(0.5);
+}
+.damage-number-leave-active {
+  transition: all 0.5s ease-in;
+}
+.damage-number-leave-to {
+  opacity: 0;
+  transform: translateY(-50px) scale(1.5);
 }
 </style>

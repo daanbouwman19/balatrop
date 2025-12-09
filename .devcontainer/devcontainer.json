@@ -1,0 +1,23 @@
+{
+	"name": "Balatrop Dev",
+	"image": "mcr.microsoft.com/devcontainers/typescript-node:1-24-bookworm",
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"Vue.volar",
+				"dbaeumer.vscode-eslint",
+				"esbenp.prettier-vscode",
+				"bradlc.vscode-tailwindcss"
+			]
+		}
+	},
+	"postCreateCommand": "npm install",
+	"postAttachCommand": "npm run dev",
+	"forwardPorts": [5173],
+	"portsAttributes": {
+		"5173": {
+			"label": "Application",
+			"onAutoForward": "notify"
+		}
+	}
+}

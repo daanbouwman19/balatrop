@@ -13,9 +13,12 @@ defineProps<{
 </script>
 
 <template>
-  <div v-if="isMounted" class="h-full text-text-color overflow-visible">
+  <div
+    v-if="isMounted"
+    class="h-full text-text-color overflow-visible relative"
+  >
     <div
-      class="w-[8vw] h-[8vw] bg-[navy] rounded-full border-background border-4 absolute top-[5vh] left-[5vh] shadow-2xl"
+      class="w-32 h-32 bg-[navy] rounded-full border-background border-4 absolute top-4 left-1/2 -translate-x-1/2 shadow-2xl z-10"
     />
     <div
       class="h-full w-52 bg-score-board-background flex flex-col flex-1 justify-center shadow-inner gap"

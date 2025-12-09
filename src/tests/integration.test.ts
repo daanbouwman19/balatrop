@@ -41,7 +41,8 @@ describe("Game Integration", () => {
     expect(game.hand_cards.length).toBe(3); // 8 - 5
 
     // Advance time for damage
-    vi.advanceTimersByTime(300);
+    // Damage delay is now dynamic: 300 + (cards * 100). For 5 cards = 800ms.
+    vi.advanceTimersByTime(1000);
 
     // Check enemy HP
     const expectedHp = Math.max(0, enemyMaxHp - totalDamage);
@@ -52,12 +53,12 @@ describe("Game Integration", () => {
       // Enemy died and respawned
       expect(game.enemies_defeated).toBe(1);
       expect(game.enemy!.hp).toBe(game.enemy!.maxHp); // Full HP new enemy
-      expect(game.submitsRemaining).toBe(3); // Reset
+      expect(game.submitsRemaining).toBe(4); // Reset to 4
       expect(game.hand_cards.length).toBe(8); // Hand refilled
     } else {
       // Enemy took damage
       expect(game.enemy!.hp).toBe(expectedHp);
-      expect(game.submitsRemaining).toBe(2);
+      expect(game.submitsRemaining).toBe(3);
     }
 
     vi.useRealTimers();
