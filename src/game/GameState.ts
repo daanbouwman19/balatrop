@@ -191,7 +191,12 @@ export class GameState {
     const card =
       availableCards[Math.floor(Math.random() * availableCards.length)];
     this.drawed_this_round.push(card);
-    return card;
+    
+    // Return a clone with a unique ID to allow duplicates in hand without selection bugs
+    return {
+        ...card,
+        id: crypto.randomUUID()
+    };
   }
 
   fillHand() {
@@ -359,13 +364,22 @@ export class GameState {
     const stats = this.calculateCurrentHandStats();
     const totalScore = stats.damage * stats.multiplier;
 
+    // Capture number of cards for animation timing
+    const cardCount = this.selectedCards.length;
+
     // Remove played cards (Starts animation)
     this.hand_cards = this.hand_cards.filter(
       (c) => !this.selectedCards.includes(c),
     );
     this.selectedCards = [];
 
-    // Delay damage application to sync with animation
+    // Delay damage application to sync with stored animation (approx 300ms per card staggered)
+    // Base delay 300ms + 100ms per card index
+    // Let's settle on the updates happening when the "bulk" of cards hit?
+    // Or just push it to the end.
+    // If animations are staggered by 100ms, last card hits at 300 + (N-1)*100.
+    const delay = 300 + (cardCount * 100);
+
     setTimeout(() => {
       // Apply Damage
       if (this.enemy) {
@@ -388,7 +402,7 @@ export class GameState {
           }
         }
       }
-    }, 300);
+    }, delay);
   }
 
   get currentMultiplier() {

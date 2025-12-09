@@ -41,7 +41,8 @@ describe("Game Integration", () => {
     expect(game.hand_cards.length).toBe(3); // 8 - 5
 
     // Advance time for damage
-    vi.advanceTimersByTime(300);
+    // Damage delay is now dynamic: 300 + (cards * 100). For 5 cards = 800ms.
+    vi.advanceTimersByTime(1000);
 
     // Check enemy HP
     const expectedHp = Math.max(0, enemyMaxHp - totalDamage);

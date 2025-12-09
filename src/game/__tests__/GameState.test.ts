@@ -234,7 +234,7 @@ describe("GameState", () => {
      // Total: 55.
      
      gameState.submitHand();
-     vi.advanceTimersByTime(300);
+     vi.advanceTimersByTime(500);
      
      // Enemy HP should reduce by 55
      expect(gameState.enemy?.hp).toBe(1000 - 55);
@@ -253,7 +253,7 @@ describe("GameState", () => {
       gameState.selectedCards = [c1];
       
       gameState.submitHand(); // Should kill
-      vi.advanceTimersByTime(300);
+      vi.advanceTimersByTime(500);
       
       expect(gameState.enemies_defeated).toBe(1);
       expect(gameState.submitsRemaining).toBe(4); // Reset to 4
