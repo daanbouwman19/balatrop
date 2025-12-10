@@ -130,9 +130,9 @@ describe("App.vue", () => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const vm = wrapper.vm as any;
 
-    // Select a card via method
-    const card = vm.game.hand_cards[0];
-    vm.game.toggleSelectCard(card);
+    // Select a card via interaction
+    const cardStub = wrapper.find(".pokemon-card-stub");
+    await cardStub.trigger("click");
     await wrapper.vm.$nextTick();
 
     expect(discardBtn?.element.disabled).toBe(false);
