@@ -15,7 +15,7 @@ describe("CurrentScore.vue", () => {
       image: "",
       types: [{ type: { name: "electric" } }],
       id: "1",
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } as any;
 
     game.selectedCards.push(card);
@@ -38,7 +38,7 @@ describe("CurrentScore.vue", () => {
       image: "",
       types: [{ type: { name: "electric" } }],
       id: "1",
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } as any;
 
     game.selectedCards.push(card);
@@ -57,7 +57,7 @@ describe("CurrentScore.vue", () => {
 
     // Check reactivity
     expect(wrapper.text()).toContain("110"); // Damage
-    expect(wrapper.text()).toContain("2");   // Mult
+    expect(wrapper.text()).toContain("2"); // Mult
     expect(wrapper.text()).toContain("220"); // Total
   });
 });

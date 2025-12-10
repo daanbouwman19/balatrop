@@ -25,7 +25,7 @@ describe("EnemyHeader.vue", () => {
       },
       hp: 100,
       maxHp: 100,
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } as any;
 
     const wrapper = mount(EnemyHeader, {

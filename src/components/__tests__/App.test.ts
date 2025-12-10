@@ -6,7 +6,7 @@ import App from "../../App.vue";
 vi.mock("../../components/score-bar/ScoreBar.vue", () => ({
   default: {
     props: ["game", "isMounted"],
-    template: '<div class="score-bar-stub"></div>'
+    template: '<div class="score-bar-stub"></div>',
   },
 }));
 vi.mock("../../components/RotateDevice.vue", () => ({
@@ -19,7 +19,8 @@ vi.mock("../../components/PokemonCard.vue", () => ({
   default: {
     props: ["card", "selected"],
     emits: ["click"],
-    template: '<div class="pokemon-card-stub" :class="{ selected }" @click="$emit(\'click\')"></div>',
+    template:
+      '<div class="pokemon-card-stub" :class="{ selected }" @click="$emit(\'click\')"></div>',
   },
 }));
 
@@ -55,7 +56,8 @@ describe("App.vue", () => {
     });
 
     // Mock animate
-    HTMLElement.prototype.animate = mockAnimate as unknown as typeof HTMLElement.prototype.animate;
+    HTMLElement.prototype.animate =
+      mockAnimate as unknown as typeof HTMLElement.prototype.animate;
   });
 
   afterEach(() => {
@@ -95,7 +97,9 @@ describe("App.vue", () => {
   it("transitions from Intro to Game on click", async () => {
     const wrapper = mount(App);
     await skipIntro(wrapper);
-    expect(wrapper.find(".absolute.inset-0.z-50.bg-black").exists()).toBe(false);
+    expect(wrapper.find(".absolute.inset-0.z-50.bg-black").exists()).toBe(
+      false,
+    );
     expect(wrapper.find(".score-bar-stub").exists()).toBe(true);
   });
 
@@ -171,7 +175,7 @@ describe("App.vue", () => {
 
   it("triggers animations and damage numbers on enemy hit", async () => {
     vi.useFakeTimers();
-    const div = document.createElement('div');
+    const div = document.createElement("div");
     document.body.appendChild(div);
     const wrapper = mount(App, { attachTo: div });
 
@@ -183,10 +187,10 @@ describe("App.vue", () => {
     expect(enemyImg.exists()).toBe(true);
 
     vm.game.lastSubmittedHand = {
-        damage: 100,
-        cardCount: 1,
-        timestamp: Date.now(),
-        cards: [{ damage: 100, id: "123" }]
+      damage: 100,
+      cardCount: 1,
+      timestamp: Date.now(),
+      cards: [{ damage: 100, id: "123" }],
     };
 
     await wrapper.vm.$nextTick();
@@ -202,45 +206,45 @@ describe("App.vue", () => {
   });
 
   it("triggers screen shake", async () => {
-      vi.useFakeTimers();
+    vi.useFakeTimers();
 
-      const div = document.createElement('div');
-      document.body.appendChild(div);
-      const wrapper = mount(App, { attachTo: div });
+    const div = document.createElement("div");
+    document.body.appendChild(div);
+    const wrapper = mount(App, { attachTo: div });
 
-      await skipIntro(wrapper);
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const vm = wrapper.vm as any;
+    await skipIntro(wrapper);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const vm = wrapper.vm as any;
 
-      expect(wrapper.find("img").exists()).toBe(true);
+    expect(wrapper.find("img").exists()).toBe(true);
 
-      const randomSpy = vi.spyOn(Math, 'random').mockReturnValue(0.99);
+    const randomSpy = vi.spyOn(Math, "random").mockReturnValue(0.99);
 
-      vm.game.lastSubmittedHand = {
-        damage: 50,
-        cardCount: 1,
-        timestamp: Date.now(),
-        cards: [{ damage: 50, id: "123" }]
-      };
+    vm.game.lastSubmittedHand = {
+      damage: 50,
+      cardCount: 1,
+      timestamp: Date.now(),
+      cards: [{ damage: 50, id: "123" }],
+    };
 
-      await wrapper.vm.$nextTick();
-      vi.advanceTimersByTime(500);
-      await wrapper.vm.$nextTick(); // Wait for state update to propagate to DOM
+    await wrapper.vm.$nextTick();
+    vi.advanceTimersByTime(500);
+    await wrapper.vm.$nextTick(); // Wait for state update to propagate to DOM
 
-      // Ensure hit triggered
-      expect(mockAnimate).toHaveBeenCalled();
+    // Ensure hit triggered
+    expect(mockAnimate).toHaveBeenCalled();
 
-      // Check if any element has 'animate-shake' class
-      const shakeElement = wrapper.find(".animate-shake");
-      expect(shakeElement.exists()).toBe(true);
+    // Check if any element has 'animate-shake' class
+    const shakeElement = wrapper.find(".animate-shake");
+    expect(shakeElement.exists()).toBe(true);
 
-      vi.advanceTimersByTime(200);
-      await wrapper.vm.$nextTick();
-      expect(shakeElement.classes()).not.toContain("animate-shake");
+    vi.advanceTimersByTime(200);
+    await wrapper.vm.$nextTick();
+    expect(shakeElement.classes()).not.toContain("animate-shake");
 
-      randomSpy.mockRestore();
-      vi.useRealTimers();
-      wrapper.unmount();
-      div.remove();
+    randomSpy.mockRestore();
+    vi.useRealTimers();
+    wrapper.unmount();
+    div.remove();
   });
 });
