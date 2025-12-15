@@ -21,7 +21,7 @@
   "devDependencies": {
     "@babel/core": "^7.26.0",
     "@babel/eslint-parser": "^7.26.0",
-    "@eslint/js": "^9.39.1",
+    "@eslint/js": "^9.39.2",
     "@playwright/test": "^1.57.0",
     "@tailwindcss/vite": "^4.1.17",
     "@types/node": "^24.10.2",
