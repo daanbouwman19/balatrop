@@ -16,7 +16,7 @@
     "format:check": "prettier --check \"src/**/*.ts\" \"src/**/*.vue\""
   },
   "dependencies": {
-    "vue": "^3.5.12"
+    "vue": "^3.5.26"
   },
   "devDependencies": {
     "@babel/core": "^7.26.0",
