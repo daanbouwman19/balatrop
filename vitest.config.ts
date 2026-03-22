@@ -8,11 +8,15 @@ export default defineConfig({
   resolve: {
     alias: {
       "@": fileURLToPath(new URL("./src", import.meta.url)),
+      "/images": fileURLToPath(new URL("./public/images", import.meta.url)),
     },
   },
   test: {
     globals: true,
     environment: "jsdom",
+    deps: {
+      transformAssets: true,
+    },
     coverage: {
       provider: "v8",
       reporter: ["text", "json", "html"],

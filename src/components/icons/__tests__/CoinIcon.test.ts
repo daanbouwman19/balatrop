@@ -7,7 +7,7 @@ describe("CoinIcon.vue", () => {
     const wrapper = mount(CoinIcon);
     const img = wrapper.find("img");
     expect(img.exists()).toBe(true);
-    expect(img.attributes("src")).toBe("/images/coin.png");
+    expect(img.attributes("src")).toMatch(/\/images\/coin.*\.png$/);
     expect(img.classes()).toContain("pixelated");
   });
 });
