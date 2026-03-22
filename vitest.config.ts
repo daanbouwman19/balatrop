@@ -15,9 +15,7 @@ export default defineConfig({
     globals: true,
     environment: "jsdom",
     deps: {
-      client: {
-        transformAssets: true,
-      },
+      transformAssets: true,
     },
     coverage: {
       provider: "v8",
